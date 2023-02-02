@@ -56,4 +56,4 @@ jobs:
           cd(fullfile(getenv('GITHUB_WORKSPACE'), '.github', 'workflows')); run Tests_Matlab_GH;
 
     - name: Check unit tests
-      run: cat part_1/test_report.log | grep 0
+      run: cat doc/part_1/test_report.log | grep 0

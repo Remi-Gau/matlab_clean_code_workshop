@@ -4,4 +4,9 @@
 
 # Clean code workshop: MATLAB
 
-https://remi-gau.github.io/matlab_clean_code_workshop/
+Website: https://remi-gau.github.io/matlab_clean_code_workshop/
+
+Report bugs by opening an issue:
+
+- on github: https://github.com/Remi-Gau/matlab_clean_code_workshop/issues
+- on gitlab: https://gitlab.com/Remi-Gau/matlab_clean_code_workshop/issues
