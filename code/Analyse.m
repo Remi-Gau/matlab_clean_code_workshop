@@ -453,7 +453,7 @@ end;
 
 clear G Color i n List Trials legend t Temp X Y
 
-SavedMat = strcat('Results_', SubjID, '_new.mat');
+SavedMat = strcat('Results_', SubjID, '.mat');
 
 % Saving the data
 save (SavedMat);

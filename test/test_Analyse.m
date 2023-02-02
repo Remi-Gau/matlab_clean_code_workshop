@@ -17,7 +17,7 @@ function test_Analyse_basic()
     Analyse()
 
     old_data = load(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1.mat'));
-    new_data = load(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1_new.mat'));
+    new_data = load(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1.mat'));
 
     assertEqual(old_data.NbValidTrials, new_data.NbValidTrials)
     assertEqual(old_data.NbMcGURKinCON, new_data.NbMcGURKinCON)
