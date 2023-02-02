@@ -1,7 +1,3 @@
 {
-  "recommendations": [
-    "gimly81.matlab",
-    "oderwat.indent-rainbow",
-    "usernamehw.errorlens"
-  ]
+  "recommendations": ["gimly81.matlab", "usernamehw.errorlens"]
 }
