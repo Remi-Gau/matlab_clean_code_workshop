@@ -53,7 +53,7 @@ jobs:
       uses: matlab-actions/run-command@v1.1.2
       with:
         command: |
-          cd(fullfile(getenv('GITHUB_WORKSPACE'), 'part_1')); run Tests_Matlab;
+          cd(fullfile(getenv('GITHUB_WORKSPACE'), '.github', 'workflows')); run Tests_Matlab;
 
     - name: Check unit tests
       run: cat test_report.log | grep 0
