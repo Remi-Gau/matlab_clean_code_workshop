@@ -24,6 +24,10 @@ Those 2 MATLAB toolboxes will help with running tests and code coverage:
 - [MOxUnit](https://github.com/MOxUnit/MOxUnit)
 - [MOcov](https://github.com/MOcov/MOcov)
 
+!!! note
+
+    Recent versions of MATLAB also have their own [testing framework](https://nl.mathworks.com/help/matlab/matlab-unit-test-framework.html).
+
 ### GIT
 
 - command line or GUI: whatever you prefer
@@ -53,5 +57,14 @@ VS-code has many extensions. Two that may be useful:
 
 - [miss_hit](https://misshit.org/download.html) for MATLAB code style checking,
   formatting and linting
+
+```bash
+pip install miss_hit
+```
+
 - [pre-commit](https://pre-commit.com/#installation) for applying code style
   checks before committing
+
+```bash
+pip install pre-commit
+```

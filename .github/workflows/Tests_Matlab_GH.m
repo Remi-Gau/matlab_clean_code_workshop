@@ -1,6 +1,8 @@
 % (C) Copyright 2023 Remi Gau developers
 
-curent_directory = pwd;
+% script to run the tests in github CI with MOxUnit
+
+current_directory = pwd;
 
 root_dir = getenv('GITHUB_WORKSPACE');
 
@@ -16,7 +18,7 @@ else
     root_dir = fullfile(fileparts(mfilename('fullpath')), '..', '..');
 end
 
-cd(fullfile(root_dir, 'part_1'));
+cd(fullfile(root_dir, 'doc', 'part_1'));
 run Run_Tests;
 
-cd(curent_directory);
+cd(current_directory);

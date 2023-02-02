@@ -19,6 +19,10 @@ docs_dir: doc
 # Pages
 nav:
 - Welcome: index.md
+- 1 - Testing: part_1.md
+- 2 - Formatting: part_2.md
+- 3 - Refactoring: part_3.md
+- 4 - Automating: part_4.md
 
 # list of extension
 markdown_extensions:
