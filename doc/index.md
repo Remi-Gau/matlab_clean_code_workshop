@@ -1,5 +1,8 @@
 # Clean code workshop: MATLAB
 
+This workshop aims to show some good coding practices to use with MATLAB or
+Octave.
+
 ## Requirements
 
 ### MATLAB
@@ -10,13 +13,15 @@
 
 #### MATLAB toolboxes
 
+Those 2 MATLAB toolboxes will help with running tests and code coverage:
+
 - [MOxUnit](https://github.com/MOxUnit/MOxUnit)
 - [MOcov](https://github.com/MOcov/MOcov)
 
 ### GIT
 
 - command line or GUI: whatever you prefer
-- a gitlab account
+- a [gitlab](https://gitlab.com/) account
 
 ### Code editor
 
