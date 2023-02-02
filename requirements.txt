@@ -1,5 +1,5 @@
 mkdocs-material
 pymdown-extensions
-# pre-commit
-# codespell
-# miss_hit
+pre-commit
+codespell
+miss_hit
