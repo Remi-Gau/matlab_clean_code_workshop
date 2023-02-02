@@ -33,7 +33,7 @@ close all
 n=1;
 
 
-cd Subjects_Data
+cd Behavioral
 
 
 try
@@ -467,6 +467,9 @@ cd ..
 lasterror
 end
 
+
+function value = IsOctave()
+ value = false;
 
 
 
