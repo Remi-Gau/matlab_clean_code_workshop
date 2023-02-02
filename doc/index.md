@@ -7,15 +7,17 @@ Octave.
 
     This workshop is still under development.
     Requirements and content may still be updated in the coming days.
-    Make sure sure to check this page regularly.
+
+    **Make sure sure to check this page regularly.**
 
 ## Requirements
 
 ### MATLAB
 
-- it does not need to be recent version
-- let me know if you need access to a MATLAB license for the duration of the
-  workshop
+- It does not need to be recent version.
+- Let me know (by
+  [opening an issue](https://github.com/Remi-Gau/matlab_clean_code_workshop/issues/new))
+  if you need access to a MATLAB license for the duration of the workshop.
 
 #### MATLAB toolboxes
 
@@ -26,19 +28,18 @@ Those 2 MATLAB toolboxes will help with running tests and code coverage:
 
 !!! note
 
-    Recent versions of MATLAB also have their own [testing framework](https://nl.mathworks.com/help/matlab/matlab-unit-test-framework.html).
+    Recent versions of MATLAB also have their own [testing framework](https://nl.mathworks.com/help/matlab/matlab-unit-test-framework.html). But I will not use it in this workshop.
 
 ### GIT
 
-- command line or GUI: whatever you prefer
+- command line or [GUI](https://git-scm.com/downloads/guis): whatever you
+  prefer! 😄
 - a [gitlab](https://gitlab.com/) account
 
 ### Code editor
 
-A proper code editor will be useful when editing files that are not MATLAB
-scripts or functions.
-
-Install [VS-code](https://code.visualstudio.com/).
+Install [VS-code](https://code.visualstudio.com/) as a proper code editor will
+be useful when working with files that are not MATLAB scripts or functions.
 
 #### VS-code extensions
 
@@ -49,11 +50,12 @@ VS-code has many extensions. Two that may be useful:
 - [error-lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
   highlights errors in the code.
 
-### python
+### Python
 
-- for example installed via conda
+- For example installed via
+  [conda](https://docs.conda.io/en/latest/miniconda.html#system-requirements).
 
-#### python packages
+#### Python packages
 
 - [miss_hit](https://misshit.org/download.html) for MATLAB code style checking,
   formatting and linting
