@@ -3,6 +3,12 @@
 This workshop aims to show some good coding practices to use with MATLAB or
 Octave.
 
+!!! warning
+
+    This workshop is still under development.
+    Requirements and content may still be updated in the coming days.
+    Make sure sure to check this page regularly.
+
 ## Requirements
 
 ### MATLAB
