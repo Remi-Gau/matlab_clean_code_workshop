@@ -12,6 +12,9 @@ Octave.
 
 ## Requirements
 
+Please make sure you have the following installed on your computer before the
+workshop.
+
 ### MATLAB
 
 - It does not need to be recent version.
@@ -34,7 +37,11 @@ Those 2 MATLAB toolboxes will help with running tests and code coverage:
 
 - command line or [GUI](https://git-scm.com/downloads/guis): whatever you
   prefer! 😄
-- a [gitlab](https://gitlab.com/) account
+- a [gitlab](https://gitlab.com/) account (the one from your university is
+  probably fine).
+
+To make sure you are set for the workshop, please make sure you can fork this
+[repository](https://gitlab.com/Remi-Gau/matlab_clean_code_workshop).
 
 ### Code editor
 
@@ -70,3 +77,8 @@ pip install miss_hit
 ```bash
 pip install pre-commit
 ```
+
+## Sample code and data
+
+If you do not come to the workshop with your own code, you can use the sample
+code and data provided in this repository.
