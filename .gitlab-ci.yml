@@ -7,7 +7,7 @@
     MLM_LICENSE_FILE: 27000@MyLicenseServer # Replace the value with the port number and DNS address for your network license manager
 
 stages:
-- set-up
+- build
 - test
 
 set-up:
