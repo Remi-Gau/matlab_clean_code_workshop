@@ -30,8 +30,6 @@ on:
 
 jobs:
   test:
-    if: github.repository_owner == 'cpp-lln-lab'
-
     runs-on: ubuntu-latest
 
     steps:

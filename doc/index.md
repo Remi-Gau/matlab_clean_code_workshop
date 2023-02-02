@@ -18,3 +18,6 @@
     - [error-lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
 - python
   - for example installed via conda
+  - python packages:
+    - miss_hit
+    - pre-commit
