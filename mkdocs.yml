@@ -1,0 +1,29 @@
+---
+# Project information
+site_name: "Clean code workshop: MATLAB edition"
+repo_name: Remi-Gau/matlab_clean_code_workshop
+repo_url: https://github.com/Remi-Gau/matlab_clean_code_workshop
+# docs_dir: alternative_path # docs/ is the default folder
+copyright: CC-BY-4.0
+
+# This will use Material them
+theme:
+  name: material
+  language: en
+  palette:
+    primary: dark blue
+    accent: light blue
+
+docs_dir: doc
+
+# Pages
+nav:
+  - Welcome: index.md
+
+# list of extension
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - toc:
+      anchorlink: true
+  - pymdownx.superfences
