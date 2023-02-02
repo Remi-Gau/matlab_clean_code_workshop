@@ -20,12 +20,19 @@
 
 ### Code editor
 
-[vscode](https://code.visualstudio.com/)
+A proper code editor will be useful when editing files that are not MATLAB
+scripts or functions.
 
-#### vs-code extensions
+Install [VS-code](https://code.visualstudio.com/).
+
+#### VS-code extensions
+
+VS-code has many extensions. Two that may be useful:
 
 - [MATLAB](https://marketplace.visualstudio.com/items?itemName=Gimly81.matlab)
+  allows MATLAB syntax highlighting.
 - [error-lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
+  highlights errors in the code.
 
 ### python
 
@@ -33,5 +40,7 @@
 
 #### python packages
 
-- miss_hit
-- pre-commit
+- [miss_hit](https://misshit.org/download.html) for MATLAB code style checking,
+  formatting and linting
+- [pre-commit](https://pre-commit.com/#installation) for applying code style
+  checks before committing
