@@ -6,7 +6,7 @@ current_directory = pwd;
 
 disp(curent_directory);
 
-root_dir = current_directory;
+root_dir = getenv('CI_PROJECT_DIR');
 
 disp(root_dir);
 
@@ -21,7 +21,8 @@ if ~isempty(root_dir)
 
     % set up for local
 else
-    root_dir = fullfile(fileparts(mfilename('fullpath')), '..', '..');
+    root_dir = fullfile(fileparts(mfilename('fullpath')));
+
 end
 
 cd(fullfile(root_dir, 'doc', 'part_1'));

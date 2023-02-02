@@ -16,6 +16,7 @@ if ~isempty(root_dir)
     % set up for local
 else
     root_dir = fullfile(fileparts(mfilename('fullpath')), '..', '..');
+
 end
 
 cd(fullfile(root_dir, 'doc', 'part_1'));
