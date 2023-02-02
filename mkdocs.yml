@@ -1,6 +1,6 @@
 ---
 # Project information
-site_name: 'Clean code workshop: MATLAB edition'
+site_name: 'Clean code workshop: MATLAB'
 repo_name: Remi-Gau/matlab_clean_code_workshop
 repo_url: https://github.com/Remi-Gau/matlab_clean_code_workshop
 # docs_dir: alternative_path # docs/ is the default folder
@@ -11,8 +11,8 @@ theme:
   name: material
   language: en
   palette:
-    primary: dark blue
-    accent: light blue
+    primary: deep orange
+    accent: cyan
 
 docs_dir: doc
 

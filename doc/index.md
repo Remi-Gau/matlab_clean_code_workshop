@@ -1,1 +1,1 @@
-# Clean code workshop: MATLAB edition
+# Clean code workshop: MATLAB
