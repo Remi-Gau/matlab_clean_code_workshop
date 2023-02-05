@@ -6,6 +6,8 @@
 *.ps
 *.eps
 
+coverage_html
+
 ###############################################################################
 ## MATLAB / OCTAVE gitignore template
 

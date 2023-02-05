@@ -1,0 +1,40 @@
+## References and resources
+
+- [documentation](https://github.com/mathworks/matlab-gitlab-ci-template)
+
+- [template](https://gitlab.com/gitlab-org/gitlab-foss/-/blob/master/lib/gitlab/ci/templates/MATLAB.gitlab-ci.yml)
+
+https://remi-gau.github.io/2022/03/31/clean-matlab.html
+
+https://github.com/Remi-Gau/template_matlab_analysis
+
+https://github.com/Remi-Gau/template_matlab_analysis#install-with-cookiecutter
+
+Agah Karakuzu: OHBM Brainhack 2020 talk
+
+Danielle Navarro: “Transition your workflow”
+
+Adina Wagner: “What I learned from porting a MatLab toolbox”
+
+Olivia Guest: “I Hate Matlab: How an IDE, a Language, and a Mentality Harm”
+
+https://github.com/nschloe/matlab-guidelines
+
+https://nl.mathworks.com/matlabcentral/fileexchange/46056-matlab-style-guidelines-2-0
+
+https://misshit.org/
+
+https://www.vitalsource.com/ie/products/the-art-of-readable-code-dustin-boswell-v9781449314217
+
+https://remi-gau.github.io/2022/03/31/clean-matlab.html
+
+https://twitter.com/wmvanvliet/status/1240907591791886337
+
+https://users.aalto.fi/~vanvlm1/papers/van_vliet_2020b.pdf
+
+https://refactoring.guru/refactoring/what-is-refactoring
+
+https://www.oreilly.com/library/view/clean-code-a/9780136083238/
+
+
+https://refactoring.com/

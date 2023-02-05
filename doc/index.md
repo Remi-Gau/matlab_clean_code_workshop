@@ -81,4 +81,4 @@ pip install pre-commit
 ## Sample code and data
 
 If you do not come to the workshop with your own code, you can use the sample
-code and data provided in this repository.
+code and data provided in this repository (see `code` and `data` folders).

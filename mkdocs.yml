@@ -3,7 +3,7 @@
 site_name: 'Clean code workshop: MATLAB'
 repo_name: Remi-Gau/matlab_clean_code_workshop
 repo_url: https://github.com/Remi-Gau/matlab_clean_code_workshop
-# docs_dir: alternative_path # docs/ is the default folder
+
 copyright: CC-BY-4.0
 
 # This will use Material them
@@ -19,10 +19,10 @@ docs_dir: doc
 # Pages
 nav:
 - Welcome: index.md
-- 1 - Testing: part_1.md
-- 2 - Formatting: part_2.md
-- 3 - Refactoring: part_3.md
-- 4 - Automating: part_4.md
+- 1 - Testing: testing/testing.md
+- 2 - Formatting: formatting.md
+- 3 - Refactoring: refactoring.md
+- 4 - Automating: automating.md
 
 # list of extension
 markdown_extensions:
@@ -30,4 +30,9 @@ markdown_extensions:
 - pymdownx.details
 - toc:
     anchorlink: true
-- pymdownx.superfences
+    permalink: '#'
+- pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !%21python/name:pymdownx.superfences.fence_code_format

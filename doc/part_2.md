@@ -1,3 +1,0 @@
-# Formatting
-
-## References
