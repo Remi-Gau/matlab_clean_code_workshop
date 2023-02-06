@@ -103,4 +103,10 @@ pip install pre-commit
 ## Sample code and data
 
 If you do not come to the workshop with your own code, you can use the sample
-code and data provided in this repository (see `code` and `data` folders).
+code and data provided in this repository - see the folders
+`code` 
+(on [gitlab](https://gitlab.com/Remi-Gau/matlab_clean_code_workshop/-/tree/main/code) 
+or [github](https://github.com/Remi-Gau/matlab_clean_code_workshop/tree/main/code)) 
+and `data` 
+(on [gitlab](https://gitlab.com/Remi-Gau/matlab_clean_code_workshop/-/tree/main/data) 
+or [github](https://github.com/Remi-Gau/matlab_clean_code_workshop/tree/main/data)) .
