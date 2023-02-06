@@ -1,5 +1,6 @@
 mkdocs-material
 pymdown-extensions
+mkdocs-include-markdown-plugin 
 pre-commit
 codespell
 miss_hit
