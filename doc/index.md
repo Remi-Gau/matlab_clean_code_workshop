@@ -7,7 +7,7 @@ this contains a lot of very generic rules that are language independent
 and that that will work equally well, 
 whether you are coding in MATLAB, Octave, Python...
 
-!!! Next workshop
+!!! "next workshop"
 
     The next workshop will be: 
 
