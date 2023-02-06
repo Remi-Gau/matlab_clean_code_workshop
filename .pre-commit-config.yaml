@@ -11,11 +11,6 @@ repos:
   - id: check-case-conflict
   - id: check-merge-conflict
 
-- repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-  rev: 0.2.2
-  hooks:
-  - id: yamlfmt
-    args: [--mapping, '2', --sequence, '2', --offset, '0']
 # - repo: local
 #   hooks:
 #   - id: mh_style

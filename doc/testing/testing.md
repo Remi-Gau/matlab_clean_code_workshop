@@ -1,5 +1,9 @@
 # Testing
 
+!!! quote ""
+    
+    Untested code is broken code.
+
 
 ``` mermaid
 graph LR
@@ -13,9 +17,11 @@ graph LR
 
 ## Using `assert`
 
-> Some testing is better then no testing
+!!! quote ""
+    
+    Some testing is better then no testing
 
-``` mermaid
+```mermaid
 graph LR
     A[input] --> B(function)
     B --> C[output]
@@ -28,7 +34,7 @@ graph LR
 
 ## Smoke test
 
-``` mermaid
+```mermaid
 flowchart LR
     subgraph test
         direction LR
@@ -37,10 +43,14 @@ flowchart LR
     end
 ```
 
+```matlab
+{% include "tests/test_add_numbers_smoke.m" %}
+```
+
 ## Unit test
 
 
-``` mermaid
+```mermaid
 flowchart LR
     subgraph test
         direction LR
@@ -49,6 +59,10 @@ flowchart LR
         C --> E(assertEqual)
         D[expected_output] --> E
     end
+```
+
+```matlab
+{% include "tests/test_add_numbers_unit.m" %}
 ```
 
 ## Using a testing framework

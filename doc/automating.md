@@ -1,6 +1,9 @@
 # Automating
 
-## Pre-commit-CI
+!!! note
+    This page is a work in progress.
+
+<!-- ## Pre-commit-CI
 
 !!! warning
 
@@ -10,6 +13,6 @@
 
 ### Setting up a CI/CD pipeline
 
-!!! tips
+!!! tip 
 
-    Create scripts that you can run locally and in CI.
+    Create scripts that you can run locally and in CI. -->

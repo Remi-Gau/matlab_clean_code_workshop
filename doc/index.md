@@ -7,7 +7,7 @@ this contains a lot of very generic rules that are language independent
 and that that will work equally well, 
 whether you are coding in MATLAB, Octave, Python...
 
-!!! "next workshop"
+!!! info "Next workshop"
 
     The next workshop will be: 
 
@@ -26,6 +26,16 @@ whether you are coding in MATLAB, Octave, Python...
 
 Please make sure you have the following installed on your computer before the
 workshop.
+
+!!! info "Open office"
+
+    If you have issues opening some of the required tools, 
+    there will be some "open office hours":
+
+    - Tuesday, February 7th, 3:30pm-5pm, on zoom,
+    - on both workshop days:
+        - during the hour before the start of the workshop (9am-10am)
+        - during lunch time 
 
 ### MATLAB
 
