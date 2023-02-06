@@ -19,7 +19,7 @@ else
 
 end
 
-cd(fullfile(root_dir, 'doc', 'part_1'));
+cd(fullfile(root_dir, 'doc', 'testing'));
 run Run_Tests;
 
 cd(current_directory);
