@@ -23,6 +23,7 @@ nav:
 - 2 - Formatting: formatting.md
 - 3 - Refactoring: refactoring.md
 - 4 - Automating: automating.md
+- References and resources: references.md
 
 # list of extension
 markdown_extensions:
@@ -36,3 +37,6 @@ markdown_extensions:
     - name: mermaid
       class: mermaid
       format: !%21python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+- include-markdown

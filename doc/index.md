@@ -1,7 +1,17 @@
 # Clean code workshop: MATLAB
 
-This workshop aims to show some good coding practices to use with MATLAB or
-Octave.
+This workshop aims to show some good coding practices to use with MATLAB.
+
+Even though the examples rely on MATLAB code,
+this contains a lot of very generic rules that are language independent
+and that that will work equally well, 
+whether you are coding in MATLAB, Octave, Python...
+
+!!! Next workshop
+
+    The next workshop will be: 
+    - on the 9th and 10th of February 2021 
+    - at the University of Marburg (DSA Sprachatlas, Pilgrimstein, Marburg)
 
 !!! warning
 
