@@ -12,11 +12,11 @@ stages:
 
 set-up:
   stage: build
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-    - MOxUnit
-    - MOcov
+  # cache:
+  #   key: $CI_COMMIT_REF_SLUG
+  #   paths:
+  #   - MOxUnit
+  #   - MOcov
   script:
   - echo "Installing MOcov and MOxUnit."
   - git clone https://github.com/MOxUnit/MOxUnit.git --depth 1
@@ -27,11 +27,11 @@ set-up:
 
 test:
   stage: test
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-    - MOxUnit
-    - MOcov
+  # cache:
+  #   key: $CI_COMMIT_REF_SLUG
+  #   paths:
+  #   - MOxUnit
+  #   - MOcov
   extends: .matlab_defaults
   script:
   - echo "Testing the code..."
