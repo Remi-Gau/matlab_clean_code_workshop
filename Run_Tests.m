@@ -1,4 +1,7 @@
-% (C) Copyright 2023 Remi Gau developers
+% Script to: 
+% - run all the mowunit tests 
+% - generate an coverage HTM and XML report
+% - create a log file to report if any test failed (used in CI)
 
 folderToCover = fullfile(pwd, 'code');
 testFolder = fullfile(pwd, 'tests');

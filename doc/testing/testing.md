@@ -15,6 +15,8 @@ graph LR
 {% include "src/add_numbers.m" %}
 ```
 
+Code without tests is code that you are afraid to change.
+
 ## Using `assert`
 
 !!! quote ""
@@ -49,7 +51,6 @@ flowchart LR
 
 ## Unit test
 
-
 ```mermaid
 flowchart LR
     subgraph test
@@ -67,15 +68,48 @@ flowchart LR
 
 ## Using a testing framework
 
-With MoxUnit
+### With MoxUnit
 
 ```matlab
-{% include "tests/test_add_numbers.m" %}
+{% include "tests/test_add_numbers_moxunit.m" %}
+```
+
+```matlab
+success = moxunit_runtests(test_folder, ...
+                           '-verbose', ...
+                           '-recursive', ...
+                           '-cover', source_cover)
+```
+
+### With MATLAB
+
+```matlab
+{% include "tests/test_add_numbers_matlab.m" %}
 ```
 
 ## Code coverage
 
+```matlab
+success = moxunit_runtests(testFolder, ...
+                           '-verbose', ...
+                           '-recursive', ...
+                           '-with_coverage', ...
+                           '-cover', folderToCover, ...
+                           '-cover_html_dir', fullfile(pwd, 'coverage_html'));
+```                           
+
 ## Adding test to your code
+
+
+## F.I.R.S.T.
+
+Test should be:
+
+- Fast
+- Independent
+- Repeatable
+- Self-validating
+- Timely
 
 ## References
 

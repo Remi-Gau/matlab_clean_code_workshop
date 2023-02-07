@@ -3,7 +3,13 @@
 !!! note
     This page is a work in progress.
 
-<!-- ## Pre-commit-CI
+## Pre-commit
+
+
+
+<!-- 
+
+## Pre-commit-CI
 
 !!! warning
 
@@ -15,4 +21,6 @@
 
 !!! tip 
 
-    Create scripts that you can run locally and in CI. -->
+    Create scripts that you can run locally and in CI. 
+    
+-->

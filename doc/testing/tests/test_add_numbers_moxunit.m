@@ -1,5 +1,4 @@
-function test_suite = test_add_numbers %#ok<STOUT>
-    % (C) Copyright 2023 Remi Gau developers
+function test_suite = test_add_numbers_moxunit %#ok<STOUT>
     try % assignment of 'localfunctions' is necessary in Matlab >= 2016
         test_functions = localfunctions(); %#ok<NASGU>
     catch % no problem; early Matlab versions can use initTestSuite fine
@@ -14,6 +13,6 @@ function test_add_numbers_basic()
 
     c = add_numbers(a, b);
 
-    assert(c == 3);
+    assertEqual(c, 3);
 
 end
