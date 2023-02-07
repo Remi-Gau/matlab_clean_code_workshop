@@ -5,4 +5,6 @@ function test_add_numbers_smoke()
 
     c = add_numbers(a, b);
 
+    assert(c == 3);
+
 end

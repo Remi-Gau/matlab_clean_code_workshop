@@ -65,4 +65,7 @@ https://users.aalto.fi/~vanvlm1/papers/van_vliet_2020b.pdf
 - [Matlab clean code](https://remi-gau.github.io/2022/03/31/clean-matlab.html)
 - [Transition your workflow](https://slides.com/djnavarro/workflow)
 - [What I learned from porting a MatLab toolbox](https://www.adina-wagner.com/posts/portcode/_portmatlab/)
-- [I Hate Matlab: How an IDE, a Language, and a Mentality Harm](https://neuroplausible.com/matlab) -->
+- [I Hate Matlab: How an IDE, a Language, and a Mentality Harm](https://neuroplausible.com/matlab) 
+- [Matlab is a terrible programming language](https://www.rath.org/matlab-is-a-terrible-programming-language.html)
+
+-->

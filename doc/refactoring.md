@@ -25,6 +25,12 @@
 
 ### Nesting 
 
-## Comments -->
+## Comments 
+
+## Struture your code
+
+### Minimize entries to the path
+
+-->
 
 

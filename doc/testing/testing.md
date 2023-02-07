@@ -67,6 +67,12 @@ flowchart LR
 
 ## Using a testing framework
 
+With MoxUnit
+
+```matlab
+{% include "tests/test_add_numbers.m" %}
+```
+
 ## Code coverage
 
 ## Adding test to your code
