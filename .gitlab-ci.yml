@@ -12,6 +12,7 @@ stages:
 - test
 
 miss_hit:
+  image: python:latest
   stage: lint
   script:
   - echo "Lint"
