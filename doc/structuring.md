@@ -16,6 +16,13 @@
 - Don’t rely on letter case.
 - Use separators in a meaningful way.
 
+## File formats
+
+Save to csv, tsv as much as possible
+No `.mat` file
+No `.fig` file
+
+
 ## External libraries
 
 - Ship your code with the libraries it depends on.

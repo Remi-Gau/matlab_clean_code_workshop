@@ -17,6 +17,8 @@ graph LR
 
 Code without tests is code that you are afraid to change.
 
+Code without tests is code with undefined behavior.
+
 ## Using `assert`
 
 !!! quote ""
