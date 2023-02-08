@@ -5,11 +5,11 @@
 
 <!-- 
 
+## Style guide
+
 ## Indent your code 
 
 ## Use consistent case
-
-## Style guide
 
 You use paragraph and typography punctuation rules in your article, do so in your code too.
 

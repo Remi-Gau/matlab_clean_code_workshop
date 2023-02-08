@@ -11,13 +11,14 @@ graph LR
     B --> C[output]
 ```
 
+<!-- 
 ```matlab
 {% include "src/add_numbers.m" %}
 ```
-
 Code without tests is code that you are afraid to change.
 
-Code without tests is code with undefined behavior.
+Code without tests is code with undefined behavior. 
+-->
 
 ## Using `assert`
 
@@ -32,9 +33,11 @@ graph LR
     C --> D(assert)
 ```
 
+<!--
 ```matlab
 {% include "src/add_numbers_with_assert.m" %}
 ```
+-->
 
 ## Smoke test
 
@@ -47,9 +50,11 @@ flowchart LR
     end
 ```
 
+<!--
 ```matlab
 {% include "tests/test_add_numbers_smoke.m" %}
 ```
+-->
 
 ## Unit test
 
@@ -63,15 +68,17 @@ flowchart LR
         D[expected_output] --> E
     end
 ```
-
+<!-- 
 ```matlab
 {% include "tests/test_add_numbers_unit.m" %}
 ```
+-->
 
 ## Using a testing framework
 
 ### With MoxUnit
 
+<!--
 ```matlab
 {% include "tests/test_add_numbers_moxunit.m" %}
 ```
@@ -82,15 +89,19 @@ success = moxunit_runtests(test_folder, ...
                            '-recursive', ...
                            '-cover', source_cover)
 ```
+-->
 
 ### With MATLAB
 
+<!--
 ```matlab
 {% include "tests/test_add_numbers_matlab.m" %}
 ```
+-->
 
 ## Code coverage
 
+<!--
 ```matlab
 success = moxunit_runtests(testFolder, ...
                            '-verbose', ...
@@ -98,10 +109,10 @@ success = moxunit_runtests(testFolder, ...
                            '-with_coverage', ...
                            '-cover', folderToCover, ...
                            '-cover_html_dir', fullfile(pwd, 'coverage_html'));
-```                           
+```
+-->
 
 ## Adding test to your code
-
 
 ## F.I.R.S.T.
 

@@ -1,13 +1,16 @@
 # Structuring your project
 
-- Each analysis step is one script
-- A script either processes a single recording or aggregates across recordings, never both
-- One master script to run the entire analysis
-- Save all intermediate results
-- Visualize all intermediate results
-- Each parameter and file name is defined only once
-- Distinguish files that are part of the official pipeline from other scripts
+!!! quote "Seven quick tips for analysis scripts in neuroimaging"
 
+    - Each analysis step is one script
+    - A script either processes a single recording or aggregates across recordings, never both
+    - One master script to run the entire analysis
+    - Save all intermediate results
+    - Visualize all intermediate results
+    - Each parameter and file name is defined only once
+    - Distinguish files that are part of the official pipeline from other scripts
+
+    [source](https://users.aalto.fi/~vanvlm1/papers/van_vliet_2020b.pdf)
 
 ## Filenames
 
@@ -18,10 +21,11 @@
 
 ## File formats
 
-Save to csv, tsv as much as possible
-No `.mat` file
-No `.fig` file
+Save to .csv, .tsv as much as possible:
 
+- No `.xlsx` file
+- No `.mat` file
+- No `.fig` file
 
 ## External libraries
 
