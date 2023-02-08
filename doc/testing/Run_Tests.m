@@ -1,4 +1,4 @@
-% Script to: 
+% Script to:
 % - run all the moxunit tests on the McGurk analysis code
 % - generate an coverage HTM and XML report
 % - create a log file to report if any test failed (used in CI)

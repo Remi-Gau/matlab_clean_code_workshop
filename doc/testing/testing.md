@@ -13,6 +13,8 @@ graph LR
     B --> C[output]
 ```
 
+[ ] create a function
+
 <!-- 
 ```matlab
 {% include "src/add_numbers.m" %}
@@ -37,6 +39,9 @@ graph LR
     C --> D(assert)
 ```
 
+[ ] use `assert` inside the function to check some aspect 
+    of the behavior of the function
+
 <!--
 ```matlab
 {% include "src/add_numbers_with_assert.m" %}
@@ -53,6 +58,9 @@ flowchart LR
         B --> C[some_output]
     end
 ```
+
+[ ] create a "smoke" test by writing a function 
+    that calls the function with some input
 
 <!--
 ```matlab
@@ -72,13 +80,22 @@ flowchart LR
         D[expected_output] --> E
     end
 ```
+
+[ ] create a unit test by writing a function that calls the function 
+    with a specific input and assert that that the output is as expected
+
 <!-- 
 ```matlab
 {% include "tests/test_add_numbers_unit.m" %}
 ```
 -->
 
+[ ] test the function with a variety of inputs
+
 ## Using a testing framework
+
+[ ] rewrite the unit test so that it can be run 
+    with MOxUnit or MATLAB testing framework
 
 ### With MoxUnit
 
@@ -105,6 +122,9 @@ success = moxunit_runtests(test_folder, ...
 
 ## Code coverage
 
+[ ] write a script to use MoxUnit to run all the tests 
+    and generate a code coverage report
+
 <!--
 ```matlab
 success = moxunit_runtests(testFolder, ...
@@ -117,6 +137,13 @@ success = moxunit_runtests(testFolder, ...
 -->
 
 ## Testing "legacy" code
+
+
+- [ ] create a new repository and add the `code` and `data` folder in it
+- [ ] add tests for the functions in `code`
+      The test should check that the data saved by each function
+      is "equivalent" to the one already present in the `data` folder.
+
 
 <!-- 
 ## F.I.R.S.T.

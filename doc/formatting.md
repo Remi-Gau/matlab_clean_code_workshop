@@ -29,15 +29,23 @@ mh_style
 mh_style --fix
 ```
 
+[ ] auto-fix all the style errors
+[ ] commit
+
 #### Linter `mh_lint`
 
 ```bash
 mh_lint
 ```
 
+[ ] fid all the linting errors
+[ ] commit
 
 #### Adapt miss_hit configuration 
 
-- adapt line length
-- adapt copyright
-- ...
+[ ] adapt configuration till you do not get any errors
+    - adapt line length
+    - adapt copyright
+    - ...
+  
+[ ] commit
