@@ -1,9 +1,6 @@
 # Automating
 
-!!! note
-    This page is a work in progress.
-
-How to make sure your code STAYS clean.
+<!-- How to make sure your code STAYS clean. -->
 
 ## MISS HIT
 
@@ -11,9 +8,7 @@ How to make sure your code STAYS clean.
 
 code metric tool for MATLAB or Octave code
 
-### Bug finding `mh_lint`
 
-code linter for MATLAB or Octave code.
 
 
 

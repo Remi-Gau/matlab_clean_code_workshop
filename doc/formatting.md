@@ -1,21 +1,17 @@
 # Formatting
 
-!!! note
-    This page is a work in progress.
-
-<!-- 
-
 ## Style guide
 
-## Indent your code 
-
-## Use consistent case
-
-You use paragraph and typography punctuation rules in your article, do so in your code too.
+ - indent your code
+ - line length 
+ - spacing between operators
+ - add trailing semicolon
+ - remove trailing whitespaces
+ - no more than one consecutive empty line
 
 ## Use a formatter
 
-## MISS HIT
+### MISS HIT
 
 MATLAB Independent, Small & Safe, High Integrity Tools
 
@@ -23,8 +19,25 @@ MATLAB Independent, Small & Safe, High Integrity Tools
 pip install miss_hit
 ```
 
-### Style Checker `mh_style`
+#### Style Checker `mh_style`
 
-code style checker and code formatter for MATLAB or Octave code.
+```bash
+mh_style
+```
 
--->
+```bash
+mh_style --fix
+```
+
+#### Linter `mh_lint`
+
+```bash
+mh_lint
+```
+
+
+#### Adapt miss_hit configuration 
+
+- adapt line length
+- adapt copyright
+- ...

@@ -23,14 +23,18 @@
 
 Save to .csv, .tsv as much as possible:
 
-- No `.xlsx` file
-- No `.mat` file
-- No `.fig` file
+- no `.xlsx` file
+- no `.mat` file
 
 ## External libraries
 
 - Ship your code with the libraries it depends on.
 - Use a `lib` (or `ext`) folder at the root of your project.
+- Minimize permanent entries to the MATLAB path.
+
+## Use project templates
+
+See the [references](references.md#templates) page for more information.
 
 ## Data
 

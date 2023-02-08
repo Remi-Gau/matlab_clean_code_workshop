@@ -1,8 +1,10 @@
 # Testing
 
+<!-- 
 !!! quote ""
     
     Untested code is broken code.
+-->
 
 
 ``` mermaid
@@ -22,9 +24,11 @@ Code without tests is code with undefined behavior.
 
 ## Using `assert`
 
+<!-- 
 !!! quote ""
     
     Some testing is better then no testing
+-->
 
 ```mermaid
 graph LR
@@ -112,8 +116,9 @@ success = moxunit_runtests(testFolder, ...
 ```
 -->
 
-## Adding test to your code
+## Testing "legacy" code
 
+<!-- 
 ## F.I.R.S.T.
 
 Test should be:
@@ -123,6 +128,7 @@ Test should be:
 - Repeatable
 - Self-validating
 - Timely
+-->
 
 ## References
 
