@@ -15,12 +15,11 @@ whether you are coding in MATLAB, Octave, Python...
   
     - at the **University of Marburg (DSA Sprachatlas, Pilgrimstein, Marburg)**
 
-!!! warning
+!!! note
 
-    This workshop is still under development.
-    Requirements and content may still be updated in the coming days.
+    Shared note taking:
 
-    **Make sure sure to check this page regularly.**
+    https://hackmd.io/@YhHdXTcuRDac-GPev3pRkQ/ByjEl4faj/edit
 
 ## Requirements
 
