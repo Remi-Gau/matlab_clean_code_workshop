@@ -10,3 +10,7 @@ Report bugs by opening an issue:
 
 - on github: https://github.com/Remi-Gau/matlab_clean_code_workshop/issues
 - on gitlab: https://gitlab.com/Remi-Gau/matlab_clean_code_workshop/issues
+
+## Shared note taking
+
+https://hackmd.io/@YhHdXTcuRDac-GPev3pRkQ/ByjEl4faj/edit
