@@ -17,9 +17,7 @@ whether you are coding in MATLAB, Octave, Python...
 
 !!! note
 
-    Shared note taking:
-
-    https://hackmd.io/@YhHdXTcuRDac-GPev3pRkQ/ByjEl4faj/edit
+    [Shared note taking](https://hackmd.io/@YhHdXTcuRDac-GPev3pRkQ/ByjEl4faj/edit)
 
 ## Requirements
 
