@@ -30,4 +30,8 @@ function test_analyse_basic()
     % tear down
     delete(fullfile(subject_dir, 'Behavioral', '*.eps'));
     delete(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1.mat'));
+
+    close all;
+    clear;
+
 end

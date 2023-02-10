@@ -24,7 +24,7 @@ function analyse(cfg)
     %                     1 --> Hit;
     %                     0 --> Miss
     %                 For McGurk trials :
-    %                     0 --> McGurk effect worked;
+    %                     1 --> McGurk effect worked;
     %                     0 --> Miss
     %
     % {2,1} contains the name of the stim used
@@ -99,16 +99,20 @@ function analyse(cfg)
         if reaction_time_sec <= cfg.reaction_time_threshold
             continue
         end
+        %         if TotalTrials{1, 1}(i, 8) == 999
+        %             continue
+        %         end
 
         TrialType = TotalTrials{1, 1}(i, 5);
 
         switch TrialType
             case 0
-                WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbCongMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbCongMovies, StimByStimRespRecap, TrialType);
             case 1
-                WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbIncongMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbIncongMovies, StimByStimRespRecap, TrialType);
             case 2
-                WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbMcMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMcMovies, StimByStimRespRecap, TrialType);
+
         end
 
         Context = TotalTrials{1, 1}(i, 4);
@@ -223,6 +227,10 @@ function analyse(cfg)
 
     cd ..;
 
+end
+
+function WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMovies, StimByStimRespRecap, TrialType)
+    WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
 end
 
 function RightResp = correct_response(TotalTrials, i, TrialType)
