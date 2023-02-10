@@ -29,8 +29,6 @@ function analyse
 
     cd Behavioral;
 
-    try
-
         ResultsFilesList = dir ('Subject*.mat');
         SizeFilesList = size(ResultsFilesList, 1);
         NbRunsDone = SizeFilesList;
@@ -378,10 +376,7 @@ function analyse
 
         cd ..;
 
-    catch
-        cd ..;
-        lasterror;
-    end
+end
 
 function value = is_octave()
     value = false;
