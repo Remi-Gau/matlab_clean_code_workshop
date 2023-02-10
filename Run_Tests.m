@@ -19,3 +19,6 @@ if success
 else
     system('echo 1 > test_report.log');
 end
+
+close all;
+clear;

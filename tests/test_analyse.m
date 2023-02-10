@@ -15,6 +15,7 @@ function test_analyse_basic()
     subject_dir = fullfile(data_dir, 'sub-01');
 
     cd(subject_dir);
+
     analyse();
 
     expected = load(fullfile(subject_dir, 'Behavioral', 'expected_results.mat'));
@@ -22,4 +23,8 @@ function test_analyse_basic()
 
     assertEqual(results, expected);
 
+    % tear down
+    delete(fullfile(subject_dir, 'Behavioral', '*.ps'));
+    delete(fullfile(subject_dir, 'Behavioral', '*.eps'));
+    delete(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1.mat'));
 end

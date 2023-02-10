@@ -106,7 +106,7 @@ function analyse
 
                 Context = TotalTrials{1, 1}(i, 4); % What block we are in
 
-                TrialType = TotalTrials{1, 1}(i, 5); % What type of trial this is
+                TrialType = TotalTrials{1, 1}(i, 5);
 
                 if TotalTrials{1, 1}(i, 8) == 1
                     switch TrialType
@@ -351,7 +351,7 @@ function analyse
         if is_octave == 0
 
             figure(1);
-            print(gcf, 'Figures.ps', '-dpsc2'); % Print figures in ps format
+            print(gcf, 'Figures.ps', '-dpsc2');
             for i = 2:(n - 1)
                 figure(i);
                 print(gcf, 'Figures.ps', '-dpsc2', '-append');
@@ -359,16 +359,14 @@ function analyse
 
             for i = 1:(n - 1)
                 figure(i);
-                print(gcf, strcat('Fig', num2str(i), '.eps'), '-depsc'); % Print figures in vector format
+                print(gcf, strcat('Fig', num2str(i), '.eps'), '-depsc');
             end
 
         else
-            % Prints the results in a vector graphic file !!!
-            % Find a way to loop this as well !!!
             for i = 1:(n - 1)
                 figure(i);
-                print(gcf, strcat('Fig', num2str(i), '.svg'), '-dsvg'); % Print figures in vector format
-                print(gcf, strcat('Fig', num2str(i), '.pdf'), '-dpdf'); % Print figures in pdf format
+                print(gcf, strcat('Fig', num2str(i), '.svg'), '-dsvg');
+                print(gcf, strcat('Fig', num2str(i), '.pdf'), '-dpdf');
             end
         end
 
@@ -376,7 +374,6 @@ function analyse
 
         SavedMat = strcat('Results_', SubjID, '.mat');
 
-        % Saving the data
         save (SavedMat);
 
         cd ..;
