@@ -40,13 +40,13 @@ pip install pre-commit
     - [ ] install Matlab
     - [ ] run your tests
 
-<!-- 
+<!--
 ## CI/CD in gitlab
 
 ### Setting up a CI/CD pipeline
 
-!!! tip 
+!!! tip
 
-    Create scripts that you can run locally and in CI. 
-    
+    Create scripts that you can run locally and in CI.
+
 -->

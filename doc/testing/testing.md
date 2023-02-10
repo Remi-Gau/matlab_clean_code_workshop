@@ -1,8 +1,8 @@
 # Testing
 
-<!-- 
+<!--
 !!! quote ""
-    
+
     Untested code is broken code.
 -->
 
@@ -15,20 +15,20 @@ graph LR
 
 [ ] create a function
 
-<!-- 
+<!--
 ```matlab
 {% include "src/add_numbers.m" %}
 ```
 Code without tests is code that you are afraid to change.
 
-Code without tests is code with undefined behavior. 
+Code without tests is code with undefined behavior.
 -->
 
 ## Using `assert`
 
-<!-- 
+<!--
 !!! quote ""
-    
+
     Some testing is better then no testing
 -->
 
@@ -39,7 +39,7 @@ graph LR
     C --> D(assert)
 ```
 
-[ ] use `assert` inside the function to check some aspect 
+[ ] use `assert` inside the function to check some aspect
     of the behavior of the function
 
 <!--
@@ -59,7 +59,7 @@ flowchart LR
     end
 ```
 
-[ ] create a "smoke" test by writing a function 
+[ ] create a "smoke" test by writing a function
     that calls the function with some input
 
 <!--
@@ -81,10 +81,10 @@ flowchart LR
     end
 ```
 
-[ ] create a unit test by writing a function that calls the function 
+[ ] create a unit test by writing a function that calls the function
     with a specific input and assert that that the output is as expected
 
-<!-- 
+<!--
 ```matlab
 {% include "tests/test_add_numbers_unit.m" %}
 ```
@@ -94,7 +94,7 @@ flowchart LR
 
 ## Using a testing framework
 
-[ ] rewrite the unit test so that it can be run 
+[ ] rewrite the unit test so that it can be run
     with MOxUnit or MATLAB testing framework
 
 ### With MoxUnit
@@ -122,7 +122,7 @@ success = moxunit_runtests(test_folder, ...
 
 ## Code coverage
 
-[ ] write a script to use MoxUnit to run all the tests 
+[ ] write a script to use MoxUnit to run all the tests
     and generate a code coverage report
 
 <!--
@@ -145,7 +145,7 @@ success = moxunit_runtests(testFolder, ...
       is "equivalent" to the one already present in the `data` folder.
 - [ ] get a code coverage report for the tests
 
-<!-- 
+<!--
 ## F.I.R.S.T.
 
 Test should be:

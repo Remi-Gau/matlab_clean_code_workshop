@@ -1,4 +1,6 @@
 function tests = test_add_numbers_matlab
+    % (C) Copyright 2023 Remi Gau
+
     tests = functiontests(localfunctions);
 end
 

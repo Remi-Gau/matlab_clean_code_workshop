@@ -1,4 +1,4 @@
-% (C) Copyright 2023 Remi Gau developers
+% (C) Copyright 2023 Remi Gau
 
 % script to run the tests in gitlab CI with MOxUnit
 

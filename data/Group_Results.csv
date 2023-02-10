@@ -1,5 +1,5 @@
-Reaction times for the whole group 
-Subject, RT_CON, RT_INC, RT_McGURK_OK_inCON, RT_McGURK_OK_inINC, RT_McGURK_NO_inCON, RT_McGURK_NO_inINC 
+Reaction times for the whole group
+Subject, RT_CON, RT_INC, RT_McGURK_OK_inCON, RT_McGURK_OK_inINC, RT_McGURK_NO_inCON, RT_McGURK_NO_inINC
 
 PIEMSI_1, 1.942, 1.991, 1.857, 1.878, 2.137, 2.071,
 PIEMSI_13, 1.512, 1.534, 1.443, 1.458, 1.607, 1.650,
@@ -20,7 +20,7 @@ PIEMSI_98, 1.496, 1.558, 1.407, 1.419, 1.595, 1.530,
 
 
 
-Responses for all McGurk movies 
+Responses for all McGurk movies
 , ,Auditory Be - Visual Ge, ,Auditory Bi - Visual Gi, ,Auditory Pa - Visual Ka, ,Auditory Pe - Visual Ke, ,Auditory Pi - Visual Ki, ,
 PIEMSI_1, 1.000, 1.000, 0.920, 0.923,   NaN,   NaN, 0.455, 0.304, 0.296, 0.320,
 PIEMSI_13, 1.000, 0.969, 1.000, 1.000,   NaN,   NaN, 0.688, 0.613, 0.969, 0.875,

@@ -1,5 +1,7 @@
-% Script to: 
-% - run all the mowunit tests 
+% (C) Copyright 2023 Remi Gau
+
+% Script to:
+% - run all the mowunit tests
 % - generate an coverage HTM and XML report
 % - create a log file to report if any test failed (used in CI)
 
