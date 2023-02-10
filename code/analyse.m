@@ -20,8 +20,6 @@ function analyse(cfg)
     % {4,1} contains the absolute path of the corresponding movie to be played
     % {5,1} contains the absolute path of the corresponding sound to be played
 
-    figure_counter = 1;
-
     cd Behavioral;
 
     ResultsFilesList = dir ('Subject*.mat');
@@ -45,8 +43,6 @@ function analyse(cfg)
     if exist('NoiseRange') == 0
         NoiseRange = zeros(1, NbMcMovies);
     end
-
-    figure_counter = figure_reaction_time(figure_counter, TotalTrials);
 
     StimByStimRespRecap = cell(1, 2, 3);
     McGurkStimByStimRespRecap = cell(NbMcMovies, 2);
@@ -91,6 +87,7 @@ function analyse(cfg)
 
         TrialType = TotalTrials{1, 1}(i, 5);
 
+        RightResp = 2;
         if TotalTrials{1, 1}(i, 8) == 1
             switch TrialType
                 case 0
@@ -109,12 +106,11 @@ function analyse(cfg)
                 case 2
                     RightResp = 1;
             end
-        else
-            RightResp = 2;
         end
 
         RT = TotalTrials{1, 1}(i, 6);
 
+        Resp = 7;
         if ismac
             switch KbName(TotalTrials{1, 1}(i, 7)) % Check responses given
                 case RespB
@@ -134,12 +130,7 @@ function analyse(cfg)
 
                 case RespT
                     Resp = 6;
-
-                otherwise
-                    Resp = 7;
             end
-        else
-            Resp = 7;
         end
 
         switch TrialType
@@ -194,15 +185,6 @@ function analyse(cfg)
     NbCON = sum(sum(ResponsesCell{1, 1}(1:2, :)));
     CONinCON_Correct = sum(ResponsesCell{1, 1}(1, :)) / sum(sum(ResponsesCell{1, 1}(1:2, :)));
 
-    display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
-                    NbMcGURKinCON, NbMcGURKinINC, McGURKinCON_Correct, McGURKinINC_Correct, NbMcMovies, McGurkStimByStimRespRecap, ...
-                    NbINC, INCinINC_Correct, NbIncongMovies, INCStimByStimRespRecap, ...
-                    NbCON, CONinCON_Correct, CONStimByStimRespRecap);
-
-    figure_counter = histogram_percent_correct_mc_gurk(figure_counter, McGURKinCON_Correct, McGURKinINC_Correct, ResponsesCell);
-
-    figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, ResponsesCell, NbTrialsPerBlock);
-
     %% reaction time
 
     RT_CON_OK = nanmedian(ReactionTimesCell{1, 1, 1});
@@ -217,63 +199,33 @@ function analyse(cfg)
     RT_McGURK_NO_inCON_TOTAL = nanmedian(ReactionTimesCell{3, 2, 1});
     RT_McGURK_NO_inINC_TOTAL = nanmedian(ReactionTimesCell{3, 2, 2});
 
+    %% display results
+    display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
+                    NbMcGURKinCON, NbMcGURKinINC, McGURKinCON_Correct, McGURKinINC_Correct, NbMcMovies, McGurkStimByStimRespRecap, ...
+                    NbINC, INCinINC_Correct, NbIncongMovies, INCStimByStimRespRecap, ...
+                    NbCON, CONinCON_Correct, CONStimByStimRespRecap);
+
     display_reaction_time_results(ReactionTimesCell, ...
                                   RT_CON_OK, RT_CON_NO, ...
                                   RT_INC_OK, RT_INC_NO, ...
                                   RT_McGURK_OK_inCON_TOTAL, RT_McGURK_OK_inINC_TOTAL, ...
                                   RT_McGURK_NO_inCON_TOTAL, RT_McGURK_NO_inINC_TOTAL);
 
-    % --------------------------------------------- FIGURE --------------------------------------------------------
-    figure(figure_counter);
-    figure_counter = figure_counter + 1;
+    %% figures
+    figure_counter = 1;
 
-    for j = 1:NbMcMovies
+    figure_counter = figure_reaction_time(figure_counter, TotalTrials);
 
-        subplot (2, 4, j);
+    figure_counter = histogram_percent_correct_mc_gurk(figure_counter, McGURKinCON_Correct, McGURKinINC_Correct, ResponsesCell);
 
-        for i = 1:max(NbTrialsPerBlock)
-            Temp = StimByStimRespRecap{1, 2, 3}(j, :, i, 1);
-            G (i, :) = Temp / sum(Temp);
-        end
+    figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, ResponsesCell, NbTrialsPerBlock);
 
-        bar(G, 'stacked');
-
-        t = title (StimByStimRespRecap{1, 1, 3}(j, :));
-        set(t, 'fontsize', 15);
-        set(gca, 'tickdir', 'out', 'xtick', 1:max(NbTrialsPerBlock), 'xticklabel', 1:max(NbTrialsPerBlock), 'ticklength', [0.005 0], 'fontsize', 13);
-        axis 'tight';
-
-    end
-
-    for j = 1:NbMcMovies
-
-        subplot (2, 4, j + NbMcMovies);
-
-        for i = 1:max(NbTrialsPerBlock)
-            Temp = StimByStimRespRecap{1, 2, 3}(j, :, i, 2);
-            G (i, :) = Temp / sum(Temp);
-        end
-
-        bar(G, 'stacked');
-
-        set(t, 'fontsize', 15);
-        set(gca, 'tickdir', 'out', 'xtick', 1:max(NbTrialsPerBlock), 'xticklabel', 1:max(NbTrialsPerBlock), 'ticklength', [0.005 0], 'fontsize', 13);
-        axis 'tight';
-
-    end
-
-    legend(['b'; 'd'; 'g'; 'k'; 'p'; 't'; ' ']);
-
-    subplot (2, 4, 1);
-    ylabel 'After CON';
-
-    subplot (2, 4, 5);
-    ylabel 'After INC';
+    figure_counter = figure_response_type_across_block_for_gurk_movies(figure_counter, NbMcMovies, NbTrialsPerBlock, StimByStimRespRecap);
 
     print_figures(figure_counter);
 
-    clear G Color i n List Trials legend t Temp X Y figure_counter cfg reaction_time_sec;
-
+    clear Color i n List Trials legend X Y figure_counter cfg reaction_time_sec;
+    j = NbMcMovies;
     SavedMat = strcat('Results_', SubjID, '.mat');
     save (SavedMat);
 
@@ -348,6 +300,60 @@ function display_reaction_time_results(ReactionTimesCell, RT_CON_OK, RT_CON_NO, 
 
     disp(RT_McGURK_NO_inCON_TOTAL);
     disp(RT_McGURK_NO_inINC_TOTAL);
+end
+
+function figure_counter = figure_response_type_across_block_for_gurk_movies(figure_counter, NbMcMovies, NbTrialsPerBlock, StimByStimRespRecap)
+
+    figure(figure_counter);
+    figure_counter = figure_counter + 1;
+
+    for j = 1:NbMcMovies
+
+        subplot (2, 4, j);
+
+        for i = 1:max(NbTrialsPerBlock)
+            Temp = StimByStimRespRecap{1, 2, 3}(j, :, i, 1);
+            G (i, :) = Temp / sum(Temp);
+        end
+
+        bar(G, 'stacked');
+
+        t = title (StimByStimRespRecap{1, 1, 3}(j, :));
+        set(t, 'fontsize', 15);
+        set(gca, ...
+            'tickdir', 'out', ...
+            'xtick', 1:max(NbTrialsPerBlock), ...
+            'xticklabel', 1:max(NbTrialsPerBlock), ...
+            'ticklength', [0.005 0], ...
+            'fontsize', 13);
+        axis 'tight';
+
+    end
+
+    for j = 1:NbMcMovies
+
+        subplot (2, 4, j + NbMcMovies);
+
+        for i = 1:max(NbTrialsPerBlock)
+            Temp = StimByStimRespRecap{1, 2, 3}(j, :, i, 2);
+            G (i, :) = Temp / sum(Temp);
+        end
+
+        bar(G, 'stacked');
+
+        set(t, 'fontsize', 15);
+        set(gca, 'tickdir', 'out', 'xtick', 1:max(NbTrialsPerBlock), 'xticklabel', 1:max(NbTrialsPerBlock), 'ticklength', [0.005 0], 'fontsize', 13);
+        axis 'tight';
+
+    end
+
+    legend(['b'; 'd'; 'g'; 'k'; 'p'; 't'; ' ']);
+
+    subplot (2, 4, 1);
+    ylabel 'After CON';
+
+    subplot (2, 4, 5);
+    ylabel 'After INC';
 end
 
 function  figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, ResponsesCell, NbTrialsPerBlock)
