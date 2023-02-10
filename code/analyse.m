@@ -1,4 +1,4 @@
-function analyse
+function analyse(cfg)
 
     % (C) Copyright 2023 Remi Gau
 
@@ -19,10 +19,6 @@ function analyse
     % {3,1} contains the level of noise used for this stimuli
     % {4,1} contains the absolute path of the corresponding movie to be played
     % {5,1} contains the absolute path of the corresponding sound to be played
-
-    clc;
-    clear all;
-    close all;
 
     figure_counter = 1;
 
@@ -87,7 +83,7 @@ function analyse
     for i = 1:NbTrials
 
         reaction_time_sec = TotalTrials{1, 1}(i, 6);
-        if reaction_time_sec <= 0.5
+        if reaction_time_sec <= cfg.reaction_time_threshold
             continue
         end
 
@@ -181,24 +177,10 @@ function analyse
 
     clear TrialType Context RT RightResp i WhichStim Resp NoiseRange;
 
-    disp('%%%%%%%%%%%%');
-    disp('% RESULSTS %');
-    disp('%%%%%%%%%%%%');
-    fprintf('\n\n\n');
-
-    NoiseRangeCompil(3, 1:4, :);
-
-    NbTrials;
-
+    %%
     NbValidTrials = NbTrials - length([find(TotalTrials{1, 1}(:, 7) == 999)']);
 
-    fprintf('\n\n');
-    disp('RESPONSES');
-
     Missed = length([find(TotalTrials{1, 1}(:, 7) == 999)']) / length (TotalTrials{1, 1}(:, 6));
-
-    fprintf('\n\n');
-    fprintf('Mc Gurk \n\n');
 
     NbMcGURKinCON = sum(sum(ResponsesCell{3, 1}(1:2, :)));
     NbMcGURKinINC = sum(sum(ResponsesCell{3, 2}(1:2, :)));
@@ -206,60 +188,40 @@ function analyse
     McGURKinCON_Correct = sum(ResponsesCell{3, 1}(1, :)) / sum(sum(ResponsesCell{3, 1}(1:2, :)));
     McGURKinINC_Correct = sum(ResponsesCell{3, 2}(1, :)) / sum(sum(ResponsesCell{3, 2}(1:2, :)));
 
-    for i = 1:NbMcMovies
-        disp(McGurkStimByStimRespRecap{i, 1});
-        disp(McGurkStimByStimRespRecap{i, 2}(:, 1) ./ sum(McGurkStimByStimRespRecap{i, 2}, 2));
-    end
-
-    fprintf('\n\n');
-    fprintf('INCONGRUENT \n\n');
-
     NbINC = sum(sum(ResponsesCell{2, 2}(1:2, :)));
     INCinINC_Correct = sum(ResponsesCell{2, 2}(1, :)) / sum(sum(ResponsesCell{2, 2}(1:2, :)));
-
-    for i = 1:NbIncongMovies
-        disp(INCStimByStimRespRecap{i, 1});
-        disp(INCStimByStimRespRecap{i, 2}(1) / sum(INCStimByStimRespRecap{i, 2}));
-    end
-
-    fprintf('\n\n');
-    fprintf('CONGRUENT \n\n');
 
     NbCON = sum(sum(ResponsesCell{1, 1}(1:2, :)));
     CONinCON_Correct = sum(ResponsesCell{1, 1}(1, :)) / sum(sum(ResponsesCell{1, 1}(1:2, :)));
 
-    for i = 1:NbIncongMovies
-        disp(CONStimByStimRespRecap{i, 1});
-        disp(CONStimByStimRespRecap{i, 2}(1) / sum(CONStimByStimRespRecap{i, 2}));
-    end
+    display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
+                    NbMcGURKinCON, NbMcGURKinINC, McGURKinCON_Correct, McGURKinINC_Correct, NbMcMovies, McGurkStimByStimRespRecap, ...
+                    NbINC, INCinINC_Correct, NbIncongMovies, INCStimByStimRespRecap, ...
+                    NbCON, CONinCON_Correct, CONStimByStimRespRecap);
 
     figure_counter = histogram_percent_correct_mc_gurk(figure_counter, McGURKinCON_Correct, McGURKinINC_Correct, ResponsesCell);
 
     figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, ResponsesCell, NbTrialsPerBlock);
 
-    fprintf('\n\n');
-    disp('REACTION TIMES');
+    %% reaction time
 
-    fprintf('\n\n');
-    ReactionTimesCell;
-
-    fprintf('\n\n');
-    fprintf('CONGRUENT \n\n');
     RT_CON_OK = nanmedian(ReactionTimesCell{1, 1, 1});
     RT_CON_NO = nanmedian(ReactionTimesCell{1, 2, 1});
 
-    fprintf('\n\n');
-    fprintf('INCONGRUENT \n\n');
     RT_INC_OK = nanmedian(ReactionTimesCell{2, 1, 2});
     RT_INC_NO = nanmedian(ReactionTimesCell{2, 2, 2});
 
-    fprintf('\n\n');
-    fprintf('Mc Gurk \n\n');
     RT_McGURK_OK_inCON_TOTAL = nanmedian(ReactionTimesCell{3, 1, 1});
     RT_McGURK_OK_inINC_TOTAL = nanmedian(ReactionTimesCell{3, 1, 2});
 
     RT_McGURK_NO_inCON_TOTAL = nanmedian(ReactionTimesCell{3, 2, 1});
     RT_McGURK_NO_inINC_TOTAL = nanmedian(ReactionTimesCell{3, 2, 2});
+
+    display_reaction_time_results(ReactionTimesCell, ...
+                                  RT_CON_OK, RT_CON_NO, ...
+                                  RT_INC_OK, RT_INC_NO, ...
+                                  RT_McGURK_OK_inCON_TOTAL, RT_McGURK_OK_inINC_TOTAL, ...
+                                  RT_McGURK_NO_inCON_TOTAL, RT_McGURK_NO_inINC_TOTAL);
 
     % --------------------------------------------- FIGURE --------------------------------------------------------
     figure(figure_counter);
@@ -310,13 +272,82 @@ function analyse
 
     print_figures(figure_counter);
 
-    clear G Color i n List Trials legend t Temp X Y figure_counter;
+    clear G Color i n List Trials legend t Temp X Y figure_counter cfg reaction_time_sec;
 
     SavedMat = strcat('Results_', SubjID, '.mat');
     save (SavedMat);
 
     cd ..;
 
+end
+
+function display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
+                         NbMcGURKinCON, NbMcGURKinINC, McGURKinCON_Correct, McGURKinINC_Correct, NbMcMovies, McGurkStimByStimRespRecap, ...
+                         NbINC, INCinINC_Correct, NbIncongMovies, INCStimByStimRespRecap, ...
+                         NbCON, CONinCON_Correct, CONStimByStimRespRecap)
+    fprintf('\n\n');
+    disp(NoiseRangeCompil(3, 1:4, :));
+    disp(NbTrials);
+    disp(NbValidTrials);
+
+    fprintf('\n\n');
+    disp('RESPONSES');
+    disp(Missed);
+
+    fprintf('\n\n');
+    disp('Mc Gurk');
+    disp(NbMcGURKinCON);
+    disp(NbMcGURKinINC);
+    disp(McGURKinCON_Correct);
+    disp(McGURKinINC_Correct);
+    for i = 1:NbMcMovies
+        disp(McGurkStimByStimRespRecap{i, 1});
+        disp(McGurkStimByStimRespRecap{i, 2}(:, 1) ./ sum(McGurkStimByStimRespRecap{i, 2}, 2));
+    end
+
+    fprintf('\n\n');
+    disp('INCONGRUENT');
+    disp(NbINC);
+    disp(INCinINC_Correct);
+    for i = 1:NbIncongMovies
+        disp(INCStimByStimRespRecap{i, 1});
+        disp(INCStimByStimRespRecap{i, 2}(1) / sum(INCStimByStimRespRecap{i, 2}));
+    end
+
+    fprintf('\n\n');
+    disp('CONGRUENT');
+    disp(NbCON);
+    disp(CONinCON_Correct);
+    for i = 1:NbIncongMovies
+        disp(CONStimByStimRespRecap{i, 1});
+        disp(CONStimByStimRespRecap{i, 2}(1) / sum(CONStimByStimRespRecap{i, 2}));
+    end
+end
+
+function display_reaction_time_results(ReactionTimesCell, RT_CON_OK, RT_CON_NO, RT_INC_OK, RT_INC_NO, RT_McGURK_OK_inCON_TOTAL, RT_McGURK_OK_inINC_TOTAL, RT_McGURK_NO_inCON_TOTAL, RT_McGURK_NO_inINC_TOTAL)
+    fprintf('\n\n');
+    disp('REACTION TIMES');
+
+    fprintf('\n\n');
+    disp(ReactionTimesCell);
+
+    fprintf('\n\n');
+    fprintf('CONGRUENT \n\n');
+    disp(RT_CON_OK);
+    disp(RT_CON_NO);
+
+    fprintf('\n\n');
+    fprintf('INCONGRUENT \n\n');
+    disp(RT_INC_OK);
+    disp(RT_INC_NO);
+
+    fprintf('\n\n');
+    fprintf('Mc Gurk \n\n');
+    disp(RT_McGURK_OK_inCON_TOTAL);
+    disp(RT_McGURK_OK_inINC_TOTAL);
+
+    disp(RT_McGURK_NO_inCON_TOTAL);
+    disp(RT_McGURK_NO_inINC_TOTAL);
 end
 
 function  figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, ResponsesCell, NbTrialsPerBlock)

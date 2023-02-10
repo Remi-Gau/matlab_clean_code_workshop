@@ -16,7 +16,9 @@ function test_analyse_basic()
 
     cd(subject_dir);
 
-    analyse();
+    cfg.reaction_time_threshold = 0.5;
+
+    analyse(cfg);
 
     expected = load(fullfile(subject_dir, 'Behavioral', 'expected_results.mat'));
     results = load(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1.mat'));
