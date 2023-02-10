@@ -99,9 +99,6 @@ function analyse(cfg)
         if reaction_time_sec <= cfg.reaction_time_threshold
             continue
         end
-        %         if TotalTrials{1, 1}(i, 8) == 999
-        %             continue
-        %         end
 
         TrialType = TotalTrials{1, 1}(i, 5);
 
@@ -119,35 +116,33 @@ function analyse(cfg)
 
         RightResp = correct_response(TotalTrials, i, TrialType);
 
-        if TotalTrials{1, 1}(i, 8) ~= 999
-            ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) = ...
-                ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) + 1;
-        end
-
         Resp = response_given(TotalTrials, i);
 
         StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) = ...
             StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) + 1;
 
-        RT = TotalTrials{1, 1}(i, 6);
-        if TotalTrials{1, 1}(i, 8) ~= 999
-            ReactionTimesCell{TrialType + 1, RightResp, Context + 1} = ...
-                [ReactionTimesCell{TrialType + 1, RightResp, Context + 1} RT];
+        if TotalTrials{1, 1}(i, 8) == 999
+            continue
         end
 
-        if TotalTrials{1, 1}(i, 8) ~= 999
-            switch TrialType
-                case 2
-                    McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) = ...
-                        McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) + 1;
-                case 1
-                    INCStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
-                        INCStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
-                case 0
-                    CONStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
-                        CONStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+        ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) = ...
+            ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) + 1;
 
-            end
+        RT = TotalTrials{1, 1}(i, 6);
+        ReactionTimesCell{TrialType + 1, RightResp, Context + 1} = ...
+            [ReactionTimesCell{TrialType + 1, RightResp, Context + 1} RT];
+
+        switch TrialType
+            case 2
+                McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) = ...
+                    McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) + 1;
+            case 1
+                INCStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
+                    INCStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+            case 0
+                CONStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
+                    CONStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+
         end
 
     end
