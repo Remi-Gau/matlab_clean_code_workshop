@@ -32,7 +32,7 @@ function analyse
     SizeFilesList = size(ResultsFilesList, 1);
     NbRunsDone = SizeFilesList;
 
-        TotalTrials = cell(2, 1);
+    TotalTrials = cell(2, 1);
     for RunNb = 1:SizeFilesList
 
         ResultsFilesList = dir ('Subject*.mat');
@@ -86,98 +86,97 @@ function analyse
 
     for i = 1:NbTrials
 
-         reaction_time_sec = TotalTrials{1, 1}(i, 6);
+        reaction_time_sec = TotalTrials{1, 1}(i, 6);
         if reaction_time_sec <= 0.5
             continue
         end
 
-            Context = TotalTrials{1, 1}(i, 4); % What block we are in
+        Context = TotalTrials{1, 1}(i, 4); % What block we are in
 
-            TrialType = TotalTrials{1, 1}(i, 5);
+        TrialType = TotalTrials{1, 1}(i, 5);
 
-            if TotalTrials{1, 1}(i, 8) == 1
-                switch TrialType
-                    case 0
-                        RightResp = 1;
-                    case 1
-                        RightResp = 1;
-                    case 2
-                        RightResp = 2;
-                end
-            elseif TotalTrials{1, 1}(i, 8) == 0
-                switch TrialType
-                    case 0
-                        RightResp = 2;
-                    case 1
-                        RightResp = 2;
-                    case 2
-                        RightResp = 1;
-                end
-            else
-                RightResp = 2;
-            end
-
-            RT = TotalTrials{1, 1}(i, 6);
-
-            if ismac
-                switch KbName(TotalTrials{1, 1}(i, 7)) % Check responses given
-                    case RespB
-                        Resp = 1;
-
-                    case RespD
-                        Resp = 2;
-
-                    case RespG
-                        Resp = 3;
-
-                    case RespK
-                        Resp = 4;
-
-                    case RespP
-                        Resp = 5;
-
-                    case RespT
-                        Resp = 6;
-
-                    otherwise
-                        Resp = 7;
-                end
-            else
-                Resp = 7;
-            end
-
+        if TotalTrials{1, 1}(i, 8) == 1
             switch TrialType
                 case 0
-                    WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbCongMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+                    RightResp = 1;
                 case 1
-                    WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbIncongMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+                    RightResp = 1;
                 case 2
-                    WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbMcMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+                    RightResp = 2;
             end
-
-            if TotalTrials{1, 1}(i, 8) ~= 999
-                ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) = ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) + 1;
+        elseif TotalTrials{1, 1}(i, 8) == 0
+            switch TrialType
+                case 0
+                    RightResp = 2;
+                case 1
+                    RightResp = 2;
+                case 2
+                    RightResp = 1;
             end
+        else
+            RightResp = 2;
+        end
 
-            StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) = StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) + 1;
+        RT = TotalTrials{1, 1}(i, 6);
 
-            if TotalTrials{1, 1}(i, 8) ~= 999
-                ReactionTimesCell{TrialType + 1, RightResp, Context + 1} = [ReactionTimesCell{TrialType + 1, RightResp, Context + 1} RT];
+        if ismac
+            switch KbName(TotalTrials{1, 1}(i, 7)) % Check responses given
+                case RespB
+                    Resp = 1;
+
+                case RespD
+                    Resp = 2;
+
+                case RespG
+                    Resp = 3;
+
+                case RespK
+                    Resp = 4;
+
+                case RespP
+                    Resp = 5;
+
+                case RespT
+                    Resp = 6;
+
+                otherwise
+                    Resp = 7;
             end
+        else
+            Resp = 7;
+        end
 
-            if TotalTrials{1, 1}(i, 8) ~= 999
-                switch TrialType
-                    case 2
-                        McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) = McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) + 1;
-                    case 1
-                        INCStimByStimRespRecap{WhichStim, 2}(RightResp) = INCStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
-                    case 0
-                        CONStimByStimRespRecap{WhichStim, 2}(RightResp) = CONStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+        switch TrialType
+            case 0
+                WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbCongMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+            case 1
+                WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbIncongMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+            case 2
+                WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbMcMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+        end
 
-                end
+        if TotalTrials{1, 1}(i, 8) ~= 999
+            ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) = ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) + 1;
+        end
+
+        StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) = StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) + 1;
+
+        if TotalTrials{1, 1}(i, 8) ~= 999
+            ReactionTimesCell{TrialType + 1, RightResp, Context + 1} = [ReactionTimesCell{TrialType + 1, RightResp, Context + 1} RT];
+        end
+
+        if TotalTrials{1, 1}(i, 8) ~= 999
+            switch TrialType
+                case 2
+                    McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) = McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) + 1;
+                case 1
+                    INCStimByStimRespRecap{WhichStim, 2}(RightResp) = INCStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+                case 0
+                    CONStimByStimRespRecap{WhichStim, 2}(RightResp) = CONStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+
             end
+        end
 
-        
     end
 
     clear TrialType Context RT RightResp i WhichStim Resp NoiseRange;
@@ -319,7 +318,6 @@ function analyse
     cd ..;
 
 end
-
 
 function  figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, ResponsesCell, NbTrialsPerBlock)
 
