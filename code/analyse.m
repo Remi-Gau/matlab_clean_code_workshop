@@ -85,31 +85,6 @@ function analyse(cfg)
 
         TrialType = TotalTrials{1, 1}(i, 5);
 
-        RightResp = 2;
-        if TotalTrials{1, 1}(i, 8) == 1
-            switch TrialType
-                case 0
-                    RightResp = 1;
-                case 1
-                    RightResp = 1;
-                case 2
-                    RightResp = 2;
-            end
-        elseif TotalTrials{1, 1}(i, 8) == 0
-            switch TrialType
-                case 0
-                    RightResp = 2;
-                case 1
-                    RightResp = 2;
-                case 2
-                    RightResp = 1;
-            end
-        end
-
-        RT = TotalTrials{1, 1}(i, 6);
-
-        Resp = response_given(TotalTrials, i);
-
         switch TrialType
             case 0
                 WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbCongMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
@@ -119,27 +94,37 @@ function analyse(cfg)
                 WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbMcMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
         end
 
-        % What block we are in
         Context = TotalTrials{1, 1}(i, 4);
 
+        RightResp = correct_response(TotalTrials, i, TrialType);
+
         if TotalTrials{1, 1}(i, 8) ~= 999
-            ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) = ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) + 1;
+            ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) = ...
+                ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) + 1;
         end
 
-        StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) = StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) + 1;
+        Resp = response_given(TotalTrials, i);
 
+        StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) = ...
+            StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) + 1;
+
+        RT = TotalTrials{1, 1}(i, 6);
         if TotalTrials{1, 1}(i, 8) ~= 999
-            ReactionTimesCell{TrialType + 1, RightResp, Context + 1} = [ReactionTimesCell{TrialType + 1, RightResp, Context + 1} RT];
+            ReactionTimesCell{TrialType + 1, RightResp, Context + 1} = ...
+                [ReactionTimesCell{TrialType + 1, RightResp, Context + 1} RT];
         end
 
         if TotalTrials{1, 1}(i, 8) ~= 999
             switch TrialType
                 case 2
-                    McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) = McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) + 1;
+                    McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) = ...
+                        McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) + 1;
                 case 1
-                    INCStimByStimRespRecap{WhichStim, 2}(RightResp) = INCStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+                    INCStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
+                        INCStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
                 case 0
-                    CONStimByStimRespRecap{WhichStim, 2}(RightResp) = CONStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+                    CONStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
+                        CONStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
 
             end
         end
@@ -212,6 +197,29 @@ function analyse(cfg)
 
     cd ..;
 
+end
+
+function RightResp = correct_response(TotalTrials, i, TrialType)
+    RightResp = 2;
+    if TotalTrials{1, 1}(i, 8) == 1
+        switch TrialType
+            case 0
+                RightResp = 1;
+            case 1
+                RightResp = 1;
+            case 2
+                RightResp = 2;
+        end
+    elseif TotalTrials{1, 1}(i, 8) == 0
+        switch TrialType
+            case 0
+                RightResp = 2;
+            case 1
+                RightResp = 2;
+            case 2
+                RightResp = 1;
+        end
+    end
 end
 
 function Resp = response_given(TotalTrials, i)
