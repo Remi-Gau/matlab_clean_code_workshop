@@ -32,8 +32,7 @@ function analyse
     SizeFilesList = size(ResultsFilesList, 1);
     NbRunsDone = SizeFilesList;
 
-    % Compile all the trials of all the runs
-    TotalTrials = cell(2, 1);
+        TotalTrials = cell(2, 1);
     for RunNb = 1:SizeFilesList
 
         ResultsFilesList = dir ('Subject*.mat');
@@ -87,7 +86,10 @@ function analyse
 
     for i = 1:NbTrials
 
-        if TotalTrials{1, 1}(i, 6) > 0.5 % & TotalTrials{1,1}(i,6)<2.9      % Skips trials where answer came after responses window or with impossible RT (negative or before the beginning of the movie)
+         reaction_time_sec = TotalTrials{1, 1}(i, 6);
+        if reaction_time_sec <= 0.5
+            continue
+        end
 
             Context = TotalTrials{1, 1}(i, 4); % What block we are in
 
@@ -175,7 +177,7 @@ function analyse
                 end
             end
 
-        end
+        
     end
 
     clear TrialType Context RT RightResp i WhichStim Resp NoiseRange;
@@ -317,6 +319,7 @@ function analyse
     cd ..;
 
 end
+
 
 function  figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, ResponsesCell, NbTrialsPerBlock)
 
