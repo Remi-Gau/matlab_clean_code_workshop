@@ -143,7 +143,7 @@ success = moxunit_runtests(testFolder, ...
 - [ ] add tests for the functions in `code`
       The test should check that the data saved by each function
       is "equivalent" to the one already present in the `data` folder.
-
+- [ ] get a code coverage report for the tests
 
 <!-- 
 ## F.I.R.S.T.
