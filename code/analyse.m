@@ -2,23 +2,40 @@ function analyse(cfg)
 
     % (C) Copyright 2023 Remi Gau
 
-    % Returns a {5,1,rMAX} cell where rMAX is the total number of run
-
+    % Trials {5,1,rMAX} cell where rMAX is the total number of run
+    %
     % {1,1} contains the trial number and the type of stimuli presented on this trial
-    % Trials(i,1:5) = [i p Choice n m RT Resp RespCat];
-    % i      is the trial number
-    % p      is the trial number in the current block
-    % TrialOnset
-    % BlockType
-    % Choice     contains the type of stimuli presented on this trial : 0--> Congruent, 1--> Incongruent, 2--> Counterphase.
-    % RT
-    % Resp
-    % RespCat    For Congruent trials : 1 --> Hit; 0 --> Miss // For Incongruent trials : 1 --> Hit; 0 --> Miss // For McGurk trials : 0 --> McGurk effect worked; 0 --> Miss
-
+    %           Trials(i,1:5) = [i p Choice n m RT Resp RespCat];
+    %           i      is the trial number
+    %           p      is the trial number in the current block
+    %           TrialOnset
+    %           BlockType
+    %           Choice     contains the type of stimuli presented on this trial
+    %                 0--> Congruent,
+    %                 1--> Incongruent,
+    %                 2--> Counterphase.
+    %           RT
+    %           Resp
+    %           RespCat
+    %                 For Congruent trials :
+    %                     1 --> Hit;
+    %                     0 --> Miss
+    %                 For Incongruent trials :
+    %                     1 --> Hit;
+    %                     0 --> Miss
+    %                 For McGurk trials :
+    %                     0 --> McGurk effect worked;
+    %                     0 --> Miss
+    %
     % {2,1} contains the name of the stim used
     % {3,1} contains the level of noise used for this stimuli
     % {4,1} contains the absolute path of the corresponding movie to be played
     % {5,1} contains the absolute path of the corresponding sound to be played
+
+    cfg.visible = 'off';
+    if cfg.verbose
+        cfg.visible = 'on';
+    end
 
     cd Behavioral;
 
@@ -136,19 +153,24 @@ function analyse(cfg)
     %%
     NbValidTrials = NbTrials - length(find(TotalTrials{1, 1}(:, 7) == 999)');
 
-    Missed = length(find(TotalTrials{1, 1}(:, 7) == 999)') / length (TotalTrials{1, 1}(:, 6));
+    Missed = length(find(TotalTrials{1, 1}(:, 7) == 999)') / ...
+        length(TotalTrials{1, 1}(:, 6));
 
     NbMcGURKinCON = sum(sum(ResponsesCell{3, 1}(1:2, :)));
     NbMcGURKinINC = sum(sum(ResponsesCell{3, 2}(1:2, :)));
 
-    McGURKinCON_Correct = sum(ResponsesCell{3, 1}(1, :)) / sum(sum(ResponsesCell{3, 1}(1:2, :)));
-    McGURKinINC_Correct = sum(ResponsesCell{3, 2}(1, :)) / sum(sum(ResponsesCell{3, 2}(1:2, :)));
+    McGURKinCON_Correct = sum(ResponsesCell{3, 1}(1, :)) / ...
+        sum(sum(ResponsesCell{3, 1}(1:2, :)));
+    McGURKinINC_Correct = sum(ResponsesCell{3, 2}(1, :)) / ...
+        sum(sum(ResponsesCell{3, 2}(1:2, :)));
 
     NbINC = sum(sum(ResponsesCell{2, 2}(1:2, :)));
-    INCinINC_Correct = sum(ResponsesCell{2, 2}(1, :)) / sum(sum(ResponsesCell{2, 2}(1:2, :)));
+    INCinINC_Correct = sum(ResponsesCell{2, 2}(1, :)) / ...
+        sum(sum(ResponsesCell{2, 2}(1:2, :)));
 
     NbCON = sum(sum(ResponsesCell{1, 1}(1:2, :)));
-    CONinCON_Correct = sum(ResponsesCell{1, 1}(1, :)) / sum(sum(ResponsesCell{1, 1}(1:2, :)));
+    CONinCON_Correct = sum(ResponsesCell{1, 1}(1, :)) / ...
+        sum(sum(ResponsesCell{1, 1}(1:2, :)));
 
     %% reaction time
 
@@ -165,31 +187,35 @@ function analyse(cfg)
     RT_McGURK_NO_inINC_TOTAL = nanmedian(ReactionTimesCell{3, 2, 2});
 
     %% display results
-    display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
-                    NbMcGURKinCON, NbMcGURKinINC, McGURKinCON_Correct, McGURKinINC_Correct, NbMcMovies, McGurkStimByStimRespRecap, ...
-                    NbINC, INCinINC_Correct, NbIncongMovies, INCStimByStimRespRecap, ...
-                    NbCON, CONinCON_Correct, CONStimByStimRespRecap);
+    if cfg.verbose
+        display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
+                        NbMcGURKinCON, NbMcGURKinINC, McGURKinCON_Correct, McGURKinINC_Correct, NbMcMovies, McGurkStimByStimRespRecap, ...
+                        NbINC, INCinINC_Correct, NbIncongMovies, INCStimByStimRespRecap, ...
+                        NbCON, CONinCON_Correct, CONStimByStimRespRecap);
 
-    display_reaction_time_results(ReactionTimesCell, ...
-                                  RT_CON_OK, RT_CON_NO, ...
-                                  RT_INC_OK, RT_INC_NO, ...
-                                  RT_McGURK_OK_inCON_TOTAL, RT_McGURK_OK_inINC_TOTAL, ...
-                                  RT_McGURK_NO_inCON_TOTAL, RT_McGURK_NO_inINC_TOTAL);
+        display_reaction_time_results(ReactionTimesCell, ...
+                                      RT_CON_OK, RT_CON_NO, ...
+                                      RT_INC_OK, RT_INC_NO, ...
+                                      RT_McGURK_OK_inCON_TOTAL, RT_McGURK_OK_inINC_TOTAL, ...
+                                      RT_McGURK_NO_inCON_TOTAL, RT_McGURK_NO_inINC_TOTAL);
+    end
 
     %% figures
-    figure_counter = 1;
+    figure_reaction_time(cfg, TotalTrials);
+    print_figure();
 
-    figure_counter = figure_reaction_time(figure_counter, TotalTrials);
+    histogram_percent_correct_mc_gurk(cfg, McGURKinCON_Correct, McGURKinINC_Correct, ResponsesCell);
+    print_figure();
 
-    figure_counter = histogram_percent_correct_mc_gurk(figure_counter, McGURKinCON_Correct, McGURKinINC_Correct, ResponsesCell);
+    plot_mc_gurk_responses_across_blocks(cfg, ResponsesCell, NbTrialsPerBlock);
+    print_figure();
 
-    figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, ResponsesCell, NbTrialsPerBlock);
-
-    figure_counter = figure_response_type_across_block_for_gurk_movies(figure_counter, NbMcMovies, NbTrialsPerBlock, StimByStimRespRecap);
-
-    print_figures(figure_counter);
+    figure_response_type_across_block_for_gurk_movies(cfg, NbMcMovies, NbTrialsPerBlock, StimByStimRespRecap);
+    print_figure();
 
     %% Save
+    % TODO
+    % once refactoring is done, just save the required values.
     clear Color i n List Trials legend X Y figure_counter cfg reaction_time_sec;
     j = NbMcMovies;
     SavedMat = strcat('Results_', SubjID, '.mat');
@@ -316,10 +342,11 @@ function display_reaction_time_results(ReactionTimesCell, RT_CON_OK, RT_CON_NO, 
     disp(RT_McGURK_NO_inINC_TOTAL);
 end
 
-function figure_counter = figure_response_type_across_block_for_gurk_movies(figure_counter, NbMcMovies, NbTrialsPerBlock, StimByStimRespRecap)
+function figure_response_type_across_block_for_gurk_movies(cfg, NbMcMovies, NbTrialsPerBlock, StimByStimRespRecap)
 
-    figure(figure_counter);
-    figure_counter = figure_counter + 1;
+    figure('name', 'response_type_across_block_for_gurk_movies', ...
+           'visible', cfg.visible, ...
+           'position', cfg.position);
 
     for j = 1:NbMcMovies
 
@@ -329,18 +356,12 @@ function figure_counter = figure_response_type_across_block_for_gurk_movies(figu
             tmp = StimByStimRespRecap{1, 2, 3}(j, :, i, 1);
             G(i, :) = tmp / sum(tmp); %#ok<*AGROW>
         end
-
         bar(G, 'stacked');
 
-        t = title (StimByStimRespRecap{1, 1, 3}(j, :));
-        set(t, 'fontsize', 15);
         set(gca, ...
-            'tickdir', 'out', ...
             'xtick', 1:max(NbTrialsPerBlock), ...
-            'xticklabel', 1:max(NbTrialsPerBlock), ...
-            'ticklength', [0.005 0], ...
-            'fontsize', 13);
-        axis 'tight';
+            'xticklabel', 1:max(NbTrialsPerBlock));
+        set_axis();
 
     end
 
@@ -352,17 +373,14 @@ function figure_counter = figure_response_type_across_block_for_gurk_movies(figu
             tmp = StimByStimRespRecap{1, 2, 3}(j, :, i, 2);
             G(i, :) = tmp / sum(tmp);
         end
-
         bar(G, 'stacked');
 
+        t = title (StimByStimRespRecap{1, 1, 3}(j, :));
         set(t, 'fontsize', 15);
         set(gca, ...
-            'tickdir', 'out', ...
             'xtick', 1:max(NbTrialsPerBlock), ...
-            'xticklabel', 1:max(NbTrialsPerBlock), ...
-            'ticklength', [0.005 0], ...
-            'fontsize', 13);
-        axis 'tight';
+            'xticklabel', 1:max(NbTrialsPerBlock));
+        set_axis();
 
     end
 
@@ -375,10 +393,11 @@ function figure_counter = figure_response_type_across_block_for_gurk_movies(figu
     ylabel 'After INC';
 end
 
-function  figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, ResponsesCell, NbTrialsPerBlock)
+function  plot_mc_gurk_responses_across_blocks(cfg, ResponsesCell, NbTrialsPerBlock)
 
-    figure(figure_counter);
-    figure_counter = figure_counter + 1;
+    figure('name', 'mc_gurk_responses_across_blocks', ...
+           'visible', cfg.visible, ...
+           'position', cfg.position);
 
     hold on;
 
@@ -387,21 +406,19 @@ function  figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, 
 
     t = title ('McGurk');
     set(t, 'fontsize', 15);
-    axis('tight');
     set(gca, ...
-        'tickdir', 'out', ...
         'xtick', 1:max(NbTrialsPerBlock), ...
         'xticklabel', 1:max(NbTrialsPerBlock), ...
-        'ticklength', [0.005 0], ...
-        'fontsize', 13, ...
         'ylim', [0 1]);
+    set_axis();
     legend(['In a CON Block'; 'In a INC Block'], 'Location', 'SouthEast');
 end
 
-function figure_counter = histogram_percent_correct_mc_gurk(figure_counter, McGURKinCON_Correct, McGURKinINC_Correct, ResponsesCell)
+function histogram_percent_correct_mc_gurk(cfg, McGURKinCON_Correct, McGURKinINC_Correct, ResponsesCell)
 
-    figure(figure_counter);
-    figure_counter = figure_counter + 1;
+    figure('name', 'percent_correct_mc_gurk', ...
+           'visible', cfg.visible, ...
+           'position', cfg.position);
 
     hold on;
 
@@ -416,61 +433,43 @@ function figure_counter = histogram_percent_correct_mc_gurk(figure_counter, McGU
     set(t, 'fontsize', 15);
 
     set(gca, ...
-        'tickdir', 'out', ...
         'xtick', 1:2, ...
-        'xticklabel', ['In a CON Block'; 'In a INC Block'], ...
-        'ticklength', [0.005 0], ...
-        'fontsize', 13);
+        'xticklabel', ['In a CON Block'; 'In a INC Block']);
+    set_axis();
 
     legend(['In a CON Block'; 'In a INC Block'], 'Location', 'SouthEast');
 
     axis([0.5 2.5 0 1]);
 end
 
-function figure_counter = figure_reaction_time(figure_counter, TotalTrials)
+function figure_reaction_time(cfg, TotalTrials)
 
-    figure(figure_counter);
-    figure_counter = figure_counter + 1;
+    figure('name', 'reaction_time', ...
+           'visible', cfg.visible, ...
+           'position', cfg.position);
 
     scatter(15 * TotalTrials{1, 1}(:, 5) + TotalTrials{1, 1}(:, 2), TotalTrials{1, 1}(:, 6));
 
     xlabel 'Trial Number';
     ylabel 'Response Time';
     set(gca, ...
-        'tickdir', 'out', ...
         'xtick', [1 16 31], ...
         'xticklabel', 'Congruent|Incongruent|McGurk', ...
-        'ticklength', [0.002 0], ...
-        'fontsize', 13);
-    axis 'tight';
-    set(gca, 'ylim', [-.5 10]);
+        'ylim', [-.5 10]);
+    set_axis();
 
 end
 
-function print_figures(figure_counter)
-    if is_octave == 0
-
-        figure(1);
-        print(gcf, 'Figures.ps', '-dpsc2');
-        for i = 2:(figure_counter - 1)
-            figure(i);
-            print(gcf, 'Figures.ps', '-dpsc2', '-append');
-        end
-
-        for i = 1:(figure_counter - 1)
-            figure(i);
-            print(gcf, strcat('Fig', num2str(i), '.eps'), '-depsc');
-        end
-
-    else
-        for i = 1:(figure_counter - 1)
-            figure(i);
-            print(gcf, strcat('Fig', num2str(i), '.svg'), '-dsvg');
-            print(gcf, strcat('Fig', num2str(i), '.pdf'), '-dpdf');
-        end
-    end
+function set_axis()
+    axis('tight');
+    set(gca, ...
+        'tickdir', 'out', ...
+        'ticklength', [0.005 0], ...
+        'fontsize', 13, ...
+        'ylim', [0 1]);
 end
 
-function value = is_octave()
-    value = false;
+function print_figure()
+    handle = gcf;
+    print(gcf, strcat('figure_', handle.Name, '.eps'), '-depsc');
 end

@@ -17,6 +17,8 @@ function test_analyse_basic()
     cd(subject_dir);
 
     cfg.reaction_time_threshold = 0.5;
+    cfg.verbose = true;
+    cfg.position = [50 50 1000 1000];
 
     analyse(cfg);
 
@@ -26,7 +28,6 @@ function test_analyse_basic()
     assertEqual(results, expected);
 
     % tear down
-    delete(fullfile(subject_dir, 'Behavioral', '*.ps'));
     delete(fullfile(subject_dir, 'Behavioral', '*.eps'));
     delete(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1.mat'));
 end
