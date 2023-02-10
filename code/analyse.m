@@ -83,8 +83,6 @@ function analyse(cfg)
             continue
         end
 
-        Context = TotalTrials{1, 1}(i, 4); % What block we are in
-
         TrialType = TotalTrials{1, 1}(i, 5);
 
         RightResp = 2;
@@ -110,28 +108,7 @@ function analyse(cfg)
 
         RT = TotalTrials{1, 1}(i, 6);
 
-        Resp = 7;
-        if ismac
-            switch KbName(TotalTrials{1, 1}(i, 7)) % Check responses given
-                case RespB
-                    Resp = 1;
-
-                case RespD
-                    Resp = 2;
-
-                case RespG
-                    Resp = 3;
-
-                case RespK
-                    Resp = 4;
-
-                case RespP
-                    Resp = 5;
-
-                case RespT
-                    Resp = 6;
-            end
-        end
+        Resp = response_given(TotalTrials, i);
 
         switch TrialType
             case 0
@@ -141,6 +118,9 @@ function analyse(cfg)
             case 2
                 WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbMcMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
         end
+
+        % What block we are in
+        Context = TotalTrials{1, 1}(i, 4);
 
         if TotalTrials{1, 1}(i, 8) ~= 999
             ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) = ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) + 1;
@@ -169,9 +149,9 @@ function analyse(cfg)
     clear TrialType Context RT RightResp i WhichStim Resp NoiseRange;
 
     %%
-    NbValidTrials = NbTrials - length([find(TotalTrials{1, 1}(:, 7) == 999)']);
+    NbValidTrials = NbTrials - length(find(TotalTrials{1, 1}(:, 7) == 999)');
 
-    Missed = length([find(TotalTrials{1, 1}(:, 7) == 999)']) / length (TotalTrials{1, 1}(:, 6));
+    Missed = length(find(TotalTrials{1, 1}(:, 7) == 999)') / length (TotalTrials{1, 1}(:, 6));
 
     NbMcGURKinCON = sum(sum(ResponsesCell{3, 1}(1:2, :)));
     NbMcGURKinINC = sum(sum(ResponsesCell{3, 2}(1:2, :)));
@@ -224,6 +204,7 @@ function analyse(cfg)
 
     print_figures(figure_counter);
 
+    %% Save
     clear Color i n List Trials legend X Y figure_counter cfg reaction_time_sec;
     j = NbMcMovies;
     SavedMat = strcat('Results_', SubjID, '.mat');
@@ -231,6 +212,31 @@ function analyse(cfg)
 
     cd ..;
 
+end
+
+function Resp = response_given(TotalTrials, i)
+    Resp = 7;
+    if ismac
+        switch KbName(TotalTrials{1, 1}(i, 7))
+            case RespB
+                Resp = 1;
+
+            case RespD
+                Resp = 2;
+
+            case RespG
+                Resp = 3;
+
+            case RespK
+                Resp = 4;
+
+            case RespP
+                Resp = 5;
+
+            case RespT
+                Resp = 6;
+        end
+    end
 end
 
 function display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
@@ -312,8 +318,8 @@ function figure_counter = figure_response_type_across_block_for_gurk_movies(figu
         subplot (2, 4, j);
 
         for i = 1:max(NbTrialsPerBlock)
-            Temp = StimByStimRespRecap{1, 2, 3}(j, :, i, 1);
-            G (i, :) = Temp / sum(Temp);
+            tmp = StimByStimRespRecap{1, 2, 3}(j, :, i, 1);
+            G(i, :) = tmp / sum(tmp); %#ok<*AGROW>
         end
 
         bar(G, 'stacked');
@@ -335,14 +341,19 @@ function figure_counter = figure_response_type_across_block_for_gurk_movies(figu
         subplot (2, 4, j + NbMcMovies);
 
         for i = 1:max(NbTrialsPerBlock)
-            Temp = StimByStimRespRecap{1, 2, 3}(j, :, i, 2);
-            G (i, :) = Temp / sum(Temp);
+            tmp = StimByStimRespRecap{1, 2, 3}(j, :, i, 2);
+            G(i, :) = tmp / sum(tmp);
         end
 
         bar(G, 'stacked');
 
         set(t, 'fontsize', 15);
-        set(gca, 'tickdir', 'out', 'xtick', 1:max(NbTrialsPerBlock), 'xticklabel', 1:max(NbTrialsPerBlock), 'ticklength', [0.005 0], 'fontsize', 13);
+        set(gca, ...
+            'tickdir', 'out', ...
+            'xtick', 1:max(NbTrialsPerBlock), ...
+            'xticklabel', 1:max(NbTrialsPerBlock), ...
+            'ticklength', [0.005 0], ...
+            'fontsize', 13);
         axis 'tight';
 
     end
@@ -363,8 +374,8 @@ function  figure_counter = plot_mc_gurk_responses_across_blocks(figure_counter, 
 
     hold on;
 
-    plot([ResponsesCell{3, 1}(1, :) ./ sum(ResponsesCell{3, 1}(1:2, :))], 'g');
-    plot([ResponsesCell{3, 2}(1, :) ./ sum(ResponsesCell{3, 2}(1:2, :))], 'r');
+    plot(ResponsesCell{3, 1}(1, :) ./ sum(ResponsesCell{3, 1}(1:2, :)), 'g');
+    plot(ResponsesCell{3, 2}(1, :) ./ sum(ResponsesCell{3, 2}(1:2, :)), 'r');
 
     t = title ('McGurk');
     set(t, 'fontsize', 15);
@@ -386,10 +397,12 @@ function figure_counter = histogram_percent_correct_mc_gurk(figure_counter, McGU
 
     hold on;
 
-    bar([1], [McGURKinCON_Correct], 'g');
-    bar([2], [McGURKinINC_Correct], 'r');
-    errorbar([1], McGURKinCON_Correct, [std(ResponsesCell{3, 1}(1, 3:end) ./ sum(ResponsesCell{3, 1}(1:2, 3:end)))], 'k');
-    errorbar([2], McGURKinINC_Correct, [std(ResponsesCell{3, 2}(1, 3:end) ./ sum(ResponsesCell{3, 2}(1:2, 3:end)))], 'k');
+    bar(1, McGURKinCON_Correct, 'g');
+    bar(2, McGURKinINC_Correct, 'r');
+    errorbar(1, McGURKinCON_Correct, std(ResponsesCell{3, 1}(1, 3:end) ./ ...
+                                         sum(ResponsesCell{3, 1}(1:2, 3:end))), 'k');
+    errorbar(2, McGURKinINC_Correct, std(ResponsesCell{3, 2}(1, 3:end) ./ ...
+                                         sum(ResponsesCell{3, 2}(1:2, 3:end))), 'k');
 
     t = title ('McGurk');
     set(t, 'fontsize', 15);
