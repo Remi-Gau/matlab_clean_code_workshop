@@ -94,10 +94,12 @@ function group_level(cfg)
 
         subplot(1, SizeMatFilesList, Subject);
         hold on;
-        bar([1], [McGURKinCON_Correct], 'g');
-        bar([2], [McGURKinINC_Correct], 'r');
-        errorbar([1], McGURKinCON_Correct, [nanstd(ResponsesCell{3, 1}(1, 3:end) ./ sum(ResponsesCell{3, 1}(1:2, 3:end)))], 'k');
-        errorbar([2], McGURKinINC_Correct, [nanstd(ResponsesCell{3, 2}(1, 3:end) ./ sum(ResponsesCell{3, 2}(1:2, 3:end)))], 'k');
+        bar(1, McGURKinCON_Correct, 'g');
+        bar(2, McGURKinINC_Correct, 'r');
+        errorbar(1, McGURKinCON_Correct, nanstd(ResponsesCell{3, 1}(1, 3:end) ./ ...
+                                                sum(ResponsesCell{3, 1}(1:2, 3:end))), 'k');
+        errorbar(2, McGURKinINC_Correct, nanstd(ResponsesCell{3, 2}(1, 3:end) ./ ...
+                                                sum(ResponsesCell{3, 2}(1:2, 3:end))), 'k');
 
         set(gca, 'tickdir', 'out', 'xtick', 1:2, 'xticklabel', [' '; ' '], 'ticklength', [0.005 0], 'fontsize', 13);
 
@@ -111,15 +113,25 @@ function group_level(cfg)
             legend(['In a CON Block'; 'In a INC Block'], 'Location', 'NorthEast');
         end
 
-        GroupResponses(Subject, :) = [McGURKinCON_Correct McGURKinINC_Correct McGURKinCON_Correct - McGURKinINC_Correct CONinCON_Correct INCinINC_Correct];
+        GroupResponses(Subject, :) = [McGURKinCON_Correct, ...
+                                      McGURKinINC_Correct, ...
+                                      McGURKinCON_Correct - McGURKinINC_Correct, ...
+                                      CONinCON_Correct, ...
+                                      INCinINC_Correct];
 
-        GroupRT(Subject, :) = [RT_CON_OK RT_INC_OK RT_McGURK_OK_inCON_TOTAL RT_McGURK_OK_inINC_TOTAL RT_McGURK_NO_inCON_TOTAL RT_McGURK_NO_inINC_TOTAL];
+        GroupRT(Subject, :) = [RT_CON_OK, ...
+                               RT_INC_OK, ...
+                               RT_McGURK_OK_inCON_TOTAL, ...
+                               RT_McGURK_OK_inINC_TOTAL, ...
+                               RT_McGURK_NO_inCON_TOTAL, ...
+                               RT_McGURK_NO_inINC_TOTAL];
 
         GroupMissed = [GroupMissed; Missed];
 
         for i = 1:NbMcMovies
 
-            A = (McGurkStimByStimRespRecap{i, 2}(:, 1) ./ sum(McGurkStimByStimRespRecap{i, 2}, 2))';
+            A = (McGurkStimByStimRespRecap{i, 2}(:, 1) ./ ...
+                 sum(McGurkStimByStimRespRecap{i, 2}, 2))';
 
             switch McGurkStimByStimRespRecap{i, 1}
                 case 'V_Ge_A_Be'
@@ -164,10 +176,10 @@ function group_level(cfg)
         set(t, 'fontsize', 15);
 
         hold on;
-        bar([1], [nanmean(GroupStimByStim(i).results{1, 2}(:, 1))], 'g');
-        bar([2], [nanmean(GroupStimByStim(i).results{1, 2}(:, 2))], 'r');
-        errorbar([1], nanmean(GroupStimByStim(i).results{1, 2}(:, 1)), nanstd(GroupStimByStim(i).results{1, 2}(:, 1)), 'k');
-        errorbar([2], nanmean(GroupStimByStim(i).results{1, 2}(:, 2)), nanstd(GroupStimByStim(i).results{1, 2}(:, 2)), 'k');
+        bar(1, nanmean(GroupStimByStim(i).results{1, 2}(:, 1)), 'g');
+        bar(2, nanmean(GroupStimByStim(i).results{1, 2}(:, 2)), 'r');
+        errorbar(1, nanmean(GroupStimByStim(i).results{1, 2}(:, 1)), nanstd(GroupStimByStim(i).results{1, 2}(:, 1)), 'k');
+        errorbar(2, nanmean(GroupStimByStim(i).results{1, 2}(:, 2)), nanstd(GroupStimByStim(i).results{1, 2}(:, 2)), 'k');
 
         set(gca, 'tickdir', 'out', 'xtick', 1:2, 'xticklabel', ['CON'; 'INC'], 'ticklength', [0.005 0], 'fontsize', 15);
 
@@ -190,7 +202,8 @@ function group_level(cfg)
 
         hold on;
         for j = 1:length(GroupStimByStim(i).results{1, 2})
-            plot([1 2], [GroupStimByStim(i).results{1, 2}(j, 1) GroupStimByStim(i).results{1, 2}(j, 2)], 'k');
+            plot([1 2], [GroupStimByStim(i).results{1, 2}(j, 1), ...
+                         GroupStimByStim(i).results{1, 2}(j, 2)], 'k');
         end
 
         label = strcat('n = ', num2str(length(GroupStimByStim(i).results{1, 2})));
@@ -207,34 +220,31 @@ function group_level(cfg)
     ylabel 'Proportion of McGurk answers';
 
     %%
-    fprintf('\n');
 
     disp('MISSED');
     fprintf('%6.3f +/- %6.3f \n', nanmean(GroupMissed), nanstd(GroupMissed));
+    print_mean_std(GroupRT(:, 6));
 
-    fprintf('\n\n\n');
-
-    disp('RESPONSES');
     fprintf('\n');
+    disp('RESPONSES');
     disp('McGurk answers in CON blocks');
-    fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:, 1)), nanstd(GroupResponses(:, 1)));
+    print_mean_std(GroupResponses(:, 1));
     disp('McGurk answers in INC blocks');
-    fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:, 2)), nanstd(GroupResponses(:, 2)));
+    print_mean_std(GroupResponses(:, 2));
     disp('Differences in McGurk answers in between CON and INC blocks');
-    fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:, 3)), nanstd(GroupResponses(:, 3)));
+    print_mean_std(GroupResponses(:, 3));
     [h, p] = ttest(GroupResponses(:, 1), GroupResponses(:, 2), 0.05, 'right');
     if h == 1
         fprintf('Different from 0 with p = %6.6f \n\n', p);
     end
 
     fprintf('\n');
-
     for i = 1:5
         disp(GroupStimByStim(i).name);
         disp('McGurk answers in CON blocks');
-        fprintf('%6.3f +/- %6.3f \n', nanmean(GroupStimByStim(i).results{1, 2}(:, 1)), nanstd(GroupStimByStim(i).results{1, 2}(:, 1)));
+        print_mean_std(GroupStimByStim(i).results{1, 2}(:, 1));
         disp('McGurk answers in INC blocks');
-        fprintf('%6.3f +/- %6.3f \n', nanmean(GroupStimByStim(i).results{1, 2}(:, 2)), nanstd(GroupStimByStim(i).results{1, 2}(:, 2)));
+        print_mean_std(GroupStimByStim(i).results{1, 2}(:, 2));
         [h, p] = ttest(GroupStimByStim(i).results{1, 2}(:, 1), GroupStimByStim(i).results{1, 2}(:, 2), 0.05, 'right');
         if h == 1
             fprintf('Different with p = %6.6f \n\n', p);
@@ -245,34 +255,29 @@ function group_level(cfg)
     fprintf('\n');
 
     disp('Correct answers on CON trial in CON blocks');
-    fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:, 4)), nanstd(GroupResponses(:, 4)));
+    print_mean_std(GroupResponses(:, 4));
     disp('Correct answers on INC trial in INC blocks');
-    fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:, 5)), nanstd(GroupResponses(:, 5)));
+    print_mean_std(GroupResponses(:, 5));
 
-    fprintf('\n\n\n');
+    fprintf('\n');
 
     disp('REACTION TIMES');
-    fprintf('\n');
     disp('Congruent in CON blocks');
-    fprintf('%6.3f +/- %6.3f \n', nanmean(GroupRT(:, 1)), nanstd(GroupRT(:, 1)));
+    print_mean_std(GroupRT(:, 1));
     disp('Incongruent in INC blocks');
-    fprintf('%6.3f +/- %6.3f \n', nanmean(GroupRT(:, 2)), nanstd(GroupRT(:, 2)));
+    print_mean_std(GroupRT(:, 2));
     [h, p] = ttest(GroupRT(:, 1), GroupRT(:, 2), 0.05, 'both');
     if h == 1
         fprintf('Different from from each other with p = %6.6f \n\n', p);
     end
-
-    fprintf('\n');
-
     disp('McGurk answers in CON blocks');
-    fprintf('%6.3f +/- %6.3f \n\n', nanmean(GroupRT(:, 3)), nanstd(GroupRT(:, 3)));
+    print_mean_std(GroupRT(:, 3));
     disp('McGurk answers in INC blocks');
-    fprintf('%6.3f +/- %6.3f \n\n', nanmean(GroupRT(:, 4)), nanstd(GroupRT(:, 4)));
-
+    print_mean_std(GroupRT(:, 4));
     disp('Non McGurk answers in CON blocks');
-    fprintf('%6.3f +/- %6.3f \n\n', nanmean(GroupRT(:, 5)), nanstd(GroupRT(:, 5)));
+    print_mean_std(GroupRT(:, 5));
     disp('Non McGurk answers in INC blocks');
-    fprintf('%6.3f +/- %6.3f \n\n', nanmean(GroupRT(:, 6)), nanstd(GroupRT(:, 6)));
+    print_mean_std(GroupRT(:, 6));
 
     Subject_Lists = Subject_Lists';
     GroupNbValidTrials;
@@ -298,7 +303,13 @@ function group_level(cfg)
     clear MaxBlockLengthMAI Run SizeList Trials ans i j n t vblS Color fid;
     clear cfg;
 
+    SavedGroupTxt = 'Group_Results.csv';
+
     save(SavedGroupMat);
+end
+
+function print_mean_std(values)
+    fprintf('%6.3f +/- %6.3f \n\n', nanmean(values), nanstd(values));
 end
 
 function save_to_csv(Subject_Lists, GroupRT, GroupStimByStimAllResults)
@@ -306,7 +317,14 @@ function save_to_csv(Subject_Lists, GroupRT, GroupStimByStimAllResults)
     fid = fopen(SavedGroupTxt, 'w');
 
     fprintf (fid, 'Reaction times for the whole group \n');
-    fprintf (fid, 'Subject, RT_CON, RT_INC, RT_McGURK_OK_inCON, RT_McGURK_OK_inINC, RT_McGURK_NO_inCON, RT_McGURK_NO_inINC \n\n');
+    headers = {'Subject', ...
+               'RT_CON', ...
+               'RT_INC', ...
+               'RT_McGURK_OK_inCON', ...
+               'RT_McGURK_OK_inINC', ...
+               'RT_McGURK_NO_inCON', ...
+               'RT_McGURK_NO_inINC \n\n'};
+    fprintf (fid, strjoin(headers, ', '));
     for Subject = 1:numel(Subject_Lists)
         fprintf (fid, '%s,', Subject_Lists{Subject});
         fprintf (fid, '%6.3f,', GroupRT(Subject, :));
