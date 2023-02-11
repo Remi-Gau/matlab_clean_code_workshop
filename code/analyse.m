@@ -61,115 +61,68 @@ function analyse(cfg)
         NoiseRange = zeros(1, NbMcMovies);
     end
 
+    %% initialize variables
     StimByStimRespRecap = cell(1, 2, 3);
     McGurkStimByStimRespRecap = cell(NbMcMovies, 2);
 
     for i = 1:NbMcMovies
         StimByStimRespRecap{1, 1, 3}(i, :) = McMoviesDirList(i).name(1:end - 4);
+        McGurkStimByStimRespRecap{i, 1} = McMoviesDirList(i).name(1:end - 4);
+
         StimByStimRespRecap{1, 2, 3} = zeros(i, 7, NbTrialsPerBlock, NbBlockType);
 
         McGurkStimByStimRespRecap{i, 2} = zeros(NbBlockType, 2);
-        McGurkStimByStimRespRecap{i, 1} = McMoviesDirList(i).name(1:end - 4);
     end
 
     for i = 1:NbIncongMovies
         StimByStimRespRecap{1, 1, 1}(i, :) = CongMoviesDirList(i).name(1:end - 4); % Which stimuli
-        StimByStimRespRecap{1, 2, 1} = zeros(i, 7, NbTrialsPerBlock, NbBlockType); % What answers
-
-        CONStimByStimRespRecap{i, 2} = zeros(2, 1);
-        CONStimByStimRespRecap{i, 1} = CongMoviesDirList(i).name(1:end - 4);
-
         StimByStimRespRecap{1, 1, 2}(i, :) = IncongMoviesDirList(i).name(1:end - 4);
+        CONStimByStimRespRecap{i, 1} = CongMoviesDirList(i).name(1:end - 4);
+        INCStimByStimRespRecap{i, 1} = IncongMoviesDirList(i).name(1:end - 4);
+
+        StimByStimRespRecap{1, 2, 1} = zeros(i, 7, NbTrialsPerBlock, NbBlockType); % What answers
         StimByStimRespRecap{1, 2, 2} = zeros(i, 7, NbTrialsPerBlock, NbBlockType);
 
+        CONStimByStimRespRecap{i, 2} = zeros(2, 1);
         INCStimByStimRespRecap{i, 2} = zeros(2, 1);
-        INCStimByStimRespRecap{i, 1} = IncongMoviesDirList(i).name(1:end - 4);
-    end
-
-    ReactionTimesCell = cell(3, 2, NbBlockType);
-
-    ResponsesCell = cell(3, NbBlockType);
-    for i = 1:NbBlockType * 3
-        ResponsesCell{i} = zeros(2, NbTrialsPerBlock);
-    end
-
-    for i = 1:NbTrials
-
-        reaction_time_sec = TotalTrials{1, 1}(i, 6);
-        if reaction_time_sec <= cfg.reaction_time_threshold
-            continue
-        end
-
-        TrialType = TotalTrials{1, 1}(i, 5);
-
-        switch TrialType
-            case 0
-                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbCongMovies, StimByStimRespRecap, TrialType);
-            case 1
-                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbIncongMovies, StimByStimRespRecap, TrialType);
-            case 2
-                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMcMovies, StimByStimRespRecap, TrialType);
-
-        end
-
-        Context = TotalTrials{1, 1}(i, 4);
-
-        RightResp = correct_response(TotalTrials, i, TrialType);
-
-        Resp = response_given(TotalTrials, i);
-
-        StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) = ...
-            StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TotalTrials{1, 1}(i, 2), Context + 1) + 1;
-
-        if TotalTrials{1, 1}(i, 8) == 999
-            continue
-        end
-
-        ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) = ...
-            ResponsesCell{TrialType + 1, Context + 1}(RightResp, TotalTrials{1, 1}(i, 2)) + 1;
-
-        RT = TotalTrials{1, 1}(i, 6);
-        ReactionTimesCell{TrialType + 1, RightResp, Context + 1} = ...
-            [ReactionTimesCell{TrialType + 1, RightResp, Context + 1} RT];
-
-        switch TrialType
-            case 2
-                McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) = ...
-                    McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) + 1;
-            case 1
-                INCStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
-                    INCStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
-            case 0
-                CONStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
-                    CONStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
-
-        end
 
     end
 
-    clear TrialType Context RT RightResp i WhichStim Resp NoiseRange;
+    %% process trials
+
+    [StimByStimRespRecap, ...
+          McGurkStimByStimRespRecap, ...
+          INCStimByStimRespRecap, ...
+          CONStimByStimRespRecap, ...
+          ReactionTimesCell, ...
+          ResponsesCell] = process_trials(cfg, TotalTrials, ...
+                                          NbCongMovies, NbIncongMovies, NbMcMovies, ...
+                                          StimByStimRespRecap, ...
+                                          McGurkStimByStimRespRecap, ...
+                                          INCStimByStimRespRecap, ...
+                                          CONStimByStimRespRecap, NbBlockType, NbTrialsPerBlock);
 
     %%
     NbValidTrials = NbTrials - length(find(TotalTrials{1, 1}(:, 7) == 999)');
 
     Missed = length(find(TotalTrials{1, 1}(:, 7) == 999)') / ...
-        length(TotalTrials{1, 1}(:, 6));
+                length(TotalTrials{1, 1}(:, 6));
 
     NbMcGURKinCON = sum(sum(ResponsesCell{3, 1}(1:2, :)));
     NbMcGURKinINC = sum(sum(ResponsesCell{3, 2}(1:2, :)));
 
     McGURKinCON_Correct = sum(ResponsesCell{3, 1}(1, :)) / ...
-        sum(sum(ResponsesCell{3, 1}(1:2, :)));
+                            sum(sum(ResponsesCell{3, 1}(1:2, :)));
     McGURKinINC_Correct = sum(ResponsesCell{3, 2}(1, :)) / ...
-        sum(sum(ResponsesCell{3, 2}(1:2, :)));
+                            sum(sum(ResponsesCell{3, 2}(1:2, :)));
 
     NbINC = sum(sum(ResponsesCell{2, 2}(1:2, :)));
     INCinINC_Correct = sum(ResponsesCell{2, 2}(1, :)) / ...
-        sum(sum(ResponsesCell{2, 2}(1:2, :)));
+                        sum(sum(ResponsesCell{2, 2}(1:2, :)));
 
     NbCON = sum(sum(ResponsesCell{1, 1}(1:2, :)));
     CONinCON_Correct = sum(ResponsesCell{1, 1}(1, :)) / ...
-        sum(sum(ResponsesCell{1, 1}(1:2, :)));
+                        sum(sum(ResponsesCell{1, 1}(1:2, :)));
 
     %% reaction time
 
@@ -187,8 +140,10 @@ function analyse(cfg)
 
     %% display results
     if cfg.verbose
-        display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
-                        NbMcGURKinCON, NbMcGURKinINC, McGURKinCON_Correct, McGURKinINC_Correct, NbMcMovies, McGurkStimByStimRespRecap, ...
+        display_results(NoiseRangeCompil, ...
+                        NbTrials, NbValidTrials, Missed, ...
+                        NbMcGURKinCON, NbMcGURKinINC, McGURKinCON_Correct, McGURKinINC_Correct, ...
+                        NbMcMovies, McGurkStimByStimRespRecap, ...
                         NbINC, INCinINC_Correct, NbIncongMovies, INCStimByStimRespRecap, ...
                         NbCON, CONinCON_Correct, CONStimByStimRespRecap);
 
@@ -216,7 +171,9 @@ function analyse(cfg)
     % TODO
     % once refactoring is done, just save the required values.
     clear Color i n List Trials legend X Y figure_counter cfg reaction_time_sec;
+    clear  i NoiseRange;
     j = NbMcMovies;
+    ans = [];
     SavedMat = strcat('Results_', SubjID, '.mat');
     save (SavedMat);
 
@@ -224,8 +181,89 @@ function analyse(cfg)
 
 end
 
+function value = nb_trials(TotalTrials)
+
+    value = length(TotalTrials{1, 1}(:, 1));
+
+end
+
+function [StimByStimRespRecap, McGurkStimByStimRespRecap, INCStimByStimRespRecap,          CONStimByStimRespRecap,           ReactionTimesCell,           ResponsesCell] = process_trials(cfg, TotalTrials, ...
+                                                                                                                                                                                          NbCongMovies, NbIncongMovies, NbMcMovies, ...
+                                                                                                                                                                                          StimByStimRespRecap, ...
+                                                                                                                                                                                          McGurkStimByStimRespRecap, ...
+                                                                                                                                                                                          INCStimByStimRespRecap, ...
+                                                                                                                                                                                          CONStimByStimRespRecap, NbBlockType, NbTrialsPerBlock)
+
+    ReactionTimesCell = cell(3, 2, NbBlockType);
+
+    ResponsesCell = cell(3, NbBlockType);
+    for i = 1:NbBlockType * 3
+        ResponsesCell{i} = zeros(2, NbTrialsPerBlock);
+    end
+
+    for i = 1:nb_trials(TotalTrials)
+
+        reaction_time_sec = TotalTrials{1, 1}(i, 6);
+        if reaction_time_sec <= cfg.reaction_time_threshold
+            continue
+        end
+
+        TrialType = TotalTrials{1, 1}(i, 5);
+
+        switch TrialType
+            case 0
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbCongMovies, StimByStimRespRecap, TrialType);
+            case 1
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbIncongMovies, StimByStimRespRecap, TrialType);
+            case 2
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMcMovies, StimByStimRespRecap, TrialType);
+
+        end
+
+        Context = TotalTrials{1, 1}(i, 4);
+
+        TrialNumberInBlock = TotalTrials{1, 1}(i, 2);
+
+        RightResp = correct_response(TotalTrials, i, TrialType);
+
+        Resp = response_given(TotalTrials, i);
+
+        StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) = ...
+            StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) + 1;
+
+        if TotalTrials{1, 1}(i, 8) == 999
+            continue
+        end
+
+        switch TrialType
+            case 2
+                McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) = ...
+                    McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) + 1;
+            case 1
+                INCStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
+                    INCStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+            case 0
+                CONStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
+                    CONStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+
+        end
+
+        ResponsesCell{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) = ...
+            ResponsesCell{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) + 1;
+
+        RT = TotalTrials{1, 1}(i, 6);
+        ReactionTimesCell{TrialType + 1, RightResp, Context + 1} = ...
+            [ReactionTimesCell{TrialType + 1, RightResp, Context + 1} RT];
+
+    end
+
+end
+
 function WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMovies, StimByStimRespRecap, TrialType)
-    WhichStim = find(strcmp (cellstr(repmat(TotalTrials{2, 1}(i, :), NbMovies, 1)), StimByStimRespRecap{1, 1, TrialType + 1}));
+    WhichStim = find(strcmp(cellstr(repmat(TotalTrials{2, 1}(i, :), ...
+                                           NbMovies, ...
+                                           1)), ...
+                            StimByStimRespRecap{1, 1, TrialType + 1}));
 end
 
 function RightResp = correct_response(TotalTrials, i, TrialType)
