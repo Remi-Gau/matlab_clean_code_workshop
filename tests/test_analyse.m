@@ -14,18 +14,17 @@ function test_analyse_basic()
     data_dir = fullfile(root_dir, 'data');
     subject_dir = fullfile(data_dir, 'sub-01');
 
-    cd(subject_dir);
-
     cfg.reaction_time_threshold = 0.5;
     cfg.verbose = false;
     cfg.position = [50 50 2000 1000];
     cfg.missed_response_value = 999;
 
-    analyse(cfg);
+    analyse(subject_dir, cfg);
 
     expected = load(fullfile(subject_dir, 'Behavioral', 'expected_results.mat'));
     results = load(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1.mat'));
 
+    % test
     expected_fields = fieldnames(expected);
     for i = 1:numel(expected_fields)
         assert(isfield(results, expected_fields{i}), ...
@@ -41,7 +40,6 @@ function test_analyse_basic()
 
     % tear down
     delete(fullfile(subject_dir, 'Behavioral', '*.eps'));
-    delete(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1.mat'));
 
     close all;
     clear;

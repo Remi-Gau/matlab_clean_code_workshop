@@ -1,4 +1,4 @@
-function analyse(cfg)
+function analyse(subject_dir, cfg)
     %
     %
     % :type cfg: struct
@@ -45,18 +45,15 @@ function analyse(cfg)
         cfg.visible = 'on';
     end
 
-    cd Behavioral;
-
-    ResultsFilesList = dir ('Subject*.mat');
+    ResultsFilesList = dir(fullfile(subject_dir, 'Behavioral', 'Subject*.mat'));
     SizeFilesList = size(ResultsFilesList, 1);
     NbRunsDone = SizeFilesList;
 
     TotalTrials = cell(2, 1);
     for RunNb = 1:SizeFilesList
 
-        ResultsFilesList = dir ('Subject*.mat');
-
-        load(ResultsFilesList(RunNb).name);
+        load(fullfile(ResultsFilesList(RunNb).folder, ...
+                      ResultsFilesList(RunNb).name));
 
         TotalTrials{1, 1} = [TotalTrials{1, 1}; Trials{1, 1}];
         TotalTrials{2, 1} = [TotalTrials{2, 1}; Trials{2, 1}];
@@ -69,23 +66,28 @@ function analyse(cfg)
     StimByStimRespRecap = cell(1, 2, 3);
     McGurkStimByStimRespRecap = cell(NbMcMovies, 2);
 
+    for i = 1:NbCongMovies
+        % Which stimuli
+        StimByStimRespRecap{1, 1, 1}(i, :) = CongMoviesDirList(i).name(1:end - 4);
+        CONStimByStimRespRecap{i, 1} = CongMoviesDirList(i).name(1:end - 4);
+        % What answers
+        CONStimByStimRespRecap{i, 2} = zeros(2, 1);
+    end
+
+    for i = 1:NbIncongMovies
+        % Which stimuli
+        StimByStimRespRecap{1, 1, 2}(i, :) = IncongMoviesDirList(i).name(1:end - 4);
+        INCStimByStimRespRecap{i, 1} = IncongMoviesDirList(i).name(1:end - 4);
+        % What answers
+        INCStimByStimRespRecap{i, 2} = zeros(2, 1);
+    end
+
     for i = 1:NbMcMovies
         % Which stimuli
         StimByStimRespRecap{1, 1, 3}(i, :) = McMoviesDirList(i).name(1:end - 4);
         McGurkStimByStimRespRecap{i, 1} = McMoviesDirList(i).name(1:end - 4);
         % What answers
         McGurkStimByStimRespRecap{i, 2} = zeros(NbBlockType, 2);
-    end
-
-    for i = 1:NbIncongMovies
-        % Which stimuli
-        StimByStimRespRecap{1, 1, 1}(i, :) = CongMoviesDirList(i).name(1:end - 4);
-        StimByStimRespRecap{1, 1, 2}(i, :) = IncongMoviesDirList(i).name(1:end - 4);
-        CONStimByStimRespRecap{i, 1} = CongMoviesDirList(i).name(1:end - 4);
-        INCStimByStimRespRecap{i, 1} = IncongMoviesDirList(i).name(1:end - 4);
-        % What answers
-        CONStimByStimRespRecap{i, 2} = zeros(2, 1);
-        INCStimByStimRespRecap{i, 2} = zeros(2, 1);
     end
 
     StimByStimRespRecap{1, 2, 1} = zeros(NbIncongMovies, 7, NbTrialsPerBlock, NbBlockType);
@@ -106,7 +108,8 @@ function analyse(cfg)
                                      CONStimByStimRespRecap, NbBlockType, NbTrialsPerBlock);
 
     %%
-    MissedResponses = length(find(TotalTrials{1, 1}(:, 7) == cfg.missed_response_value)');
+    MissedResponses = length(find(TotalTrials{1, 1}(:, 7) == ...
+                                  cfg.missed_response_value)');
     NbValidTrials = NbTrials - MissedResponses;
     Missed = MissedResponses / NbTrials;
 
@@ -153,29 +156,28 @@ function analyse(cfg)
 
     %% figures
     figure_reaction_time(cfg, TotalTrials);
-    print_figure();
+    print_figure(subject_dir);
 
     histogram_percent_correct_mc_gurk(cfg, McGURKinCON_Correct, McGURKinINC_Correct, ResponsesCell);
-    print_figure();
+    print_figure(subject_dir);
 
     plot_mc_gurk_responses_across_blocks(cfg, ResponsesCell, NbTrialsPerBlock);
-    print_figure();
+    print_figure(subject_dir);
 
     figure_response_type_across_block_for_gurk_movies(cfg, NbMcMovies, NbTrialsPerBlock, StimByStimRespRecap);
-    print_figure();
+    print_figure(subject_dir);
 
     %% Save
+    SavedMat = fullfile(subject_dir, 'Behavioral', ['Results_', SubjID, '.mat']);
+
     % TODO
     % once refactoring is done, just save the required values.
     clear Color i n List Trials legend X Y figure_counter cfg reaction_time_sec;
-    clear  i NoiseRange MissedResponses;
+    clear  i NoiseRange MissedResponses subject_dir;
     j = NbMcMovies;
     ans = [];
 
-    SavedMat = strcat('Results_', SubjID, '.mat');
-    save (SavedMat);
-
-    cd ..;
+    save(SavedMat);
 
 end
 
@@ -569,7 +571,9 @@ function set_axis()
         'ylim', [0 1]);
 end
 
-function print_figure()
+function print_figure(subject_dir)
     handle = gcf;
-    print(gcf, strcat('figure_', handle.Name, '.eps'), '-depsc');
+    print(gcf, ...
+          fullfile(subject_dir, 'Behavioral', ['figure_', handle.Name, '.eps']), ...
+          '-depsc');
 end

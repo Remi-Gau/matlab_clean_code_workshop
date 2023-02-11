@@ -43,7 +43,7 @@ function group_level
 
     n = 1;
 
-    MatFilesList = dir ('Results*.mat');
+    MatFilesList = dir('Results*.mat');
 
     SizeMatFilesList = size(MatFilesList, 1);
 
@@ -321,3 +321,4 @@ function group_level
     fclose (fid);
 
     clear A B C AVOffsetMat List MaxBlockLengthMAC MaxBlockLengthMAI Run SizeList Trials ans i j n t vblS Color fid;
+end
