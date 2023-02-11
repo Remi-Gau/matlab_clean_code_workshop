@@ -83,7 +83,7 @@ function group_level(cfg)
 
         load(MatFilesList(Subject).name);
 
-        Subject_Lists{Subject} = SubjID;
+        Subject_Lists{Subject, 1} = SubjID; %#ok<*AGROW>
         GroupStimByStimAllResults{end + 1, 1} = SubjID;
 
         GroupNbValidTrials = [GroupNbValidTrials; NbValidTrials];
@@ -221,72 +221,73 @@ function group_level(cfg)
 
     %%
 
-    disp('MISSED');
-    fprintf('%6.3f +/- %6.3f \n', nanmean(GroupMissed), nanstd(GroupMissed));
-    print_mean_std(GroupRT(:, 6));
+    if cfg.verbose
+        disp('MISSED');
+        fprintf('%6.3f +/- %6.3f \n', nanmean(GroupMissed), nanstd(GroupMissed));
+        print_mean_std(GroupRT(:, 6));
 
-    fprintf('\n');
-    disp('RESPONSES');
-    disp('McGurk answers in CON blocks');
-    print_mean_std(GroupResponses(:, 1));
-    disp('McGurk answers in INC blocks');
-    print_mean_std(GroupResponses(:, 2));
-    disp('Differences in McGurk answers in between CON and INC blocks');
-    print_mean_std(GroupResponses(:, 3));
-    [h, p] = ttest(GroupResponses(:, 1), GroupResponses(:, 2), 0.05, 'right');
-    if h == 1
-        fprintf('Different from 0 with p = %6.6f \n\n', p);
-    end
-
-    fprintf('\n');
-    for i = 1:5
-        disp(GroupStimByStim(i).name);
-        disp('McGurk answers in CON blocks');
-        print_mean_std(GroupStimByStim(i).results{1, 2}(:, 1));
-        disp('McGurk answers in INC blocks');
-        print_mean_std(GroupStimByStim(i).results{1, 2}(:, 2));
-        [h, p] = ttest(GroupStimByStim(i).results{1, 2}(:, 1), GroupStimByStim(i).results{1, 2}(:, 2), 0.05, 'right');
-        if h == 1
-            fprintf('Different with p = %6.6f \n\n', p);
-        end
         fprintf('\n');
+        disp('RESPONSES');
+        disp('McGurk answers in CON blocks');
+        print_mean_std(GroupResponses(:, 1));
+        disp('McGurk answers in INC blocks');
+        print_mean_std(GroupResponses(:, 2));
+        disp('Differences in McGurk answers in between CON and INC blocks');
+        print_mean_std(GroupResponses(:, 3));
+        [h, p] = ttest(GroupResponses(:, 1), GroupResponses(:, 2), 0.05, 'right');
+        if h == 1
+            fprintf('Different from 0 with p = %6.6f \n\n', p);
+        end
+
+        fprintf('\n');
+        for i = 1:5
+            disp(GroupStimByStim(i).name);
+            disp('McGurk answers in CON blocks');
+            print_mean_std(GroupStimByStim(i).results{1, 2}(:, 1));
+            disp('McGurk answers in INC blocks');
+            print_mean_std(GroupStimByStim(i).results{1, 2}(:, 2));
+            [h, p] = ttest(GroupStimByStim(i).results{1, 2}(:, 1), GroupStimByStim(i).results{1, 2}(:, 2), 0.05, 'right');
+            if h == 1
+                fprintf('Different with p = %6.6f \n\n', p);
+            end
+            fprintf('\n');
+        end
+
+        fprintf('\n');
+
+        disp('Correct answers on CON trial in CON blocks');
+        print_mean_std(GroupResponses(:, 4));
+        disp('Correct answers on INC trial in INC blocks');
+        print_mean_std(GroupResponses(:, 5));
+
+        fprintf('\n');
+
+        disp('REACTION TIMES');
+        disp('Congruent in CON blocks');
+        print_mean_std(GroupRT(:, 1));
+        disp('Incongruent in INC blocks');
+        print_mean_std(GroupRT(:, 2));
+        [h, p] = ttest(GroupRT(:, 1), GroupRT(:, 2), 0.05, 'both');
+        if h == 1
+            fprintf('Different from from each other with p = %6.6f \n\n', p);
+        end
+        disp('McGurk answers in CON blocks');
+        print_mean_std(GroupRT(:, 3));
+        disp('McGurk answers in INC blocks');
+        print_mean_std(GroupRT(:, 4));
+        disp('Non McGurk answers in CON blocks');
+        print_mean_std(GroupRT(:, 5));
+        disp('Non McGurk answers in INC blocks');
+        print_mean_std(GroupRT(:, 6));
+
+        GroupNbValidTrials;
+        GroupNbMcGURKinCON;
+        GroupNbMcGURKinINC;
+        GroupMissed;
+        GroupResponses;
+        GroupRT;
+        GroupStimByStimAllResults;
     end
-
-    fprintf('\n');
-
-    disp('Correct answers on CON trial in CON blocks');
-    print_mean_std(GroupResponses(:, 4));
-    disp('Correct answers on INC trial in INC blocks');
-    print_mean_std(GroupResponses(:, 5));
-
-    fprintf('\n');
-
-    disp('REACTION TIMES');
-    disp('Congruent in CON blocks');
-    print_mean_std(GroupRT(:, 1));
-    disp('Incongruent in INC blocks');
-    print_mean_std(GroupRT(:, 2));
-    [h, p] = ttest(GroupRT(:, 1), GroupRT(:, 2), 0.05, 'both');
-    if h == 1
-        fprintf('Different from from each other with p = %6.6f \n\n', p);
-    end
-    disp('McGurk answers in CON blocks');
-    print_mean_std(GroupRT(:, 3));
-    disp('McGurk answers in INC blocks');
-    print_mean_std(GroupRT(:, 4));
-    disp('Non McGurk answers in CON blocks');
-    print_mean_std(GroupRT(:, 5));
-    disp('Non McGurk answers in INC blocks');
-    print_mean_std(GroupRT(:, 6));
-
-    Subject_Lists = Subject_Lists';
-    GroupNbValidTrials;
-    GroupNbMcGURKinCON;
-    GroupNbMcGURKinINC;
-    GroupMissed;
-    GroupResponses;
-    GroupRT;
-    GroupStimByStimAllResults;
 
     %%
     figure(1);
@@ -298,12 +299,6 @@ function group_level(cfg)
 
     %%
     save_to_csv(Subject_Lists, GroupRT, GroupStimByStimAllResults);
-
-    clear A B C AVOffsetMat List MaxBlockLengthMAC;
-    clear MaxBlockLengthMAI Run SizeList Trials ans i j n t vblS Color fid;
-    clear cfg;
-
-    SavedGroupTxt = 'Group_Results.csv';
 
     save(SavedGroupMat);
 end

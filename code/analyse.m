@@ -171,8 +171,6 @@ function analyse(subject_dir, cfg)
 
     % TODO
     % once refactoring is done, just save the required values.
-    clear Color i n List Trials legend X Y figure_counter cfg reaction_time_sec;
-    clear i NoiseRange MissedResponses;
     j = NbMcMovies;
     ans = [];
     SavedMat = ['Results_', SubjID, '.mat'];

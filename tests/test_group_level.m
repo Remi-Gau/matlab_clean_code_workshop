@@ -21,7 +21,10 @@ function test_group_level_basic()
 
     cd(data_dir);
 
-    group_level();
+    cfg.verbose = true;
+    cfg.position = [50 50 2000 1000];
+
+    group_level(cfg);
 
     expected = load(fullfile(data_dir, 'expected_results.mat'));
     results = load(fullfile(data_dir, 'Group_Results.mat'));
@@ -29,7 +32,7 @@ function test_group_level_basic()
     % test
     expected_fields = fieldnames(expected);
     for i = 1:numel(expected_fields)
-        if ismember(expected_fields{i}, {'MatFilesList'})
+        if ismember(expected_fields{i}, {'MatFilesList', 'h', 'p', 'SavedGroupTxt'})
             continue
         end
         assert(isfield(results, expected_fields{i}), ...
