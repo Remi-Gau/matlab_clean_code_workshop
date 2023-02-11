@@ -65,41 +65,38 @@ function analyse(cfg)
         % Which stimuli
         StimByStimRespRecap{1, 1, 3}(i, :) = McMoviesDirList(i).name(1:end - 4);
         McGurkStimByStimRespRecap{i, 1} = McMoviesDirList(i).name(1:end - 4);
-
         % What answers
-        StimByStimRespRecap{1, 2, 3} = zeros(i, 7, NbTrialsPerBlock, NbBlockType);
         McGurkStimByStimRespRecap{i, 2} = zeros(NbBlockType, 2);
     end
 
     for i = 1:NbIncongMovies
-
         % Which stimuli
         StimByStimRespRecap{1, 1, 1}(i, :) = CongMoviesDirList(i).name(1:end - 4);
         StimByStimRespRecap{1, 1, 2}(i, :) = IncongMoviesDirList(i).name(1:end - 4);
         CONStimByStimRespRecap{i, 1} = CongMoviesDirList(i).name(1:end - 4);
         INCStimByStimRespRecap{i, 1} = IncongMoviesDirList(i).name(1:end - 4);
-
         % What answers
-        StimByStimRespRecap{1, 2, 1} = zeros(i, 7, NbTrialsPerBlock, NbBlockType);
-        StimByStimRespRecap{1, 2, 2} = zeros(i, 7, NbTrialsPerBlock, NbBlockType);
         CONStimByStimRespRecap{i, 2} = zeros(2, 1);
         INCStimByStimRespRecap{i, 2} = zeros(2, 1);
-
     end
+
+    StimByStimRespRecap{1, 2, 1} = zeros(NbIncongMovies, 7, NbTrialsPerBlock, NbBlockType);
+    StimByStimRespRecap{1, 2, 2} = zeros(NbIncongMovies, 7, NbTrialsPerBlock, NbBlockType);
+    StimByStimRespRecap{1, 2, 3} = zeros(NbMcMovies, 7, NbTrialsPerBlock, NbBlockType);
 
     %% process trials
 
     [StimByStimRespRecap, ...
-          McGurkStimByStimRespRecap, ...
-          INCStimByStimRespRecap, ...
-          CONStimByStimRespRecap, ...
-          ReactionTimesCell, ...
-          ResponsesCell] = process_trials(cfg, TotalTrials, ...
-                                          NbCongMovies, NbIncongMovies, NbMcMovies, ...
-                                          StimByStimRespRecap, ...
-                                          McGurkStimByStimRespRecap, ...
-                                          INCStimByStimRespRecap, ...
-                                          CONStimByStimRespRecap, NbBlockType, NbTrialsPerBlock);
+     McGurkStimByStimRespRecap, ...
+     INCStimByStimRespRecap, ...
+     CONStimByStimRespRecap, ...
+     ReactionTimesCell, ...
+     ResponsesCell] = process_trials(cfg, TotalTrials, ...
+                                     NbCongMovies, NbIncongMovies, NbMcMovies, ...
+                                     StimByStimRespRecap, ...
+                                     McGurkStimByStimRespRecap, ...
+                                     INCStimByStimRespRecap, ...
+                                     CONStimByStimRespRecap, NbBlockType, NbTrialsPerBlock);
 
     %%
     NbValidTrials = NbTrials - length(find(TotalTrials{1, 1}(:, 7) == 999)');
@@ -186,18 +183,18 @@ function value = nb_trials(TotalTrials)
 
 end
 
-function [StimByStimRespRecap, McGurkStimByStimRespRecap, INCStimByStimRespRecap, CONStimByStimRespRecap, ReactionTimesCell, ResponsesCell] = process_trials(cfg, TotalTrials, ...
-                                                                                                                                                             NbCongMovies, NbIncongMovies, NbMcMovies, ...
-                                                                                                                                                             StimByStimRespRecap, ...
-                                                                                                                                                             McGurkStimByStimRespRecap, ...
-                                                                                                                                                             INCStimByStimRespRecap, ...
-                                                                                                                                                             CONStimByStimRespRecap, NbBlockType, NbTrialsPerBlock)
+function [StimByStim, McGurkStim, IncStim, ConStim, ReactionTimes, Responses] = process_trials(cfg, TotalTrials, ...
+                                                                                               NbCongMovies, NbIncongMovies, NbMcMovies, ...
+                                                                                               StimByStim, ...
+                                                                                               McGurkStim, ...
+                                                                                               IncStim, ...
+                                                                                               ConStim, NbBlockType, NbTrialsPerBlock)
 
-    ReactionTimesCell = cell(3, 2, NbBlockType);
+    ReactionTimes = cell(3, 2, NbBlockType);
 
-    ResponsesCell = cell(3, NbBlockType);
+    Responses = cell(3, NbBlockType);
     for i = 1:NbBlockType * 3
-        ResponsesCell{i} = zeros(2, NbTrialsPerBlock);
+        Responses{i} = zeros(2, NbTrialsPerBlock);
     end
 
     for i = 1:nb_trials(TotalTrials)
@@ -211,11 +208,11 @@ function [StimByStimRespRecap, McGurkStimByStimRespRecap, INCStimByStimRespRecap
 
         switch TrialType
             case 0
-                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbCongMovies, StimByStimRespRecap, TrialType);
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbCongMovies, StimByStim, TrialType);
             case 1
-                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbIncongMovies, StimByStimRespRecap, TrialType);
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbIncongMovies, StimByStim, TrialType);
             case 2
-                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMcMovies, StimByStimRespRecap, TrialType);
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMcMovies, StimByStim, TrialType);
 
         end
 
@@ -227,8 +224,8 @@ function [StimByStimRespRecap, McGurkStimByStimRespRecap, INCStimByStimRespRecap
 
         Resp = response_given(TotalTrials, i);
 
-        StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) = ...
-            StimByStimRespRecap{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) + 1;
+        StimByStim{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) = ...
+            StimByStim{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) + 1;
 
         if TotalTrials{1, 1}(i, 8) == 999
             continue
@@ -236,23 +233,23 @@ function [StimByStimRespRecap, McGurkStimByStimRespRecap, INCStimByStimRespRecap
 
         switch TrialType
             case 2
-                McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) = ...
-                    McGurkStimByStimRespRecap{WhichStim, 2}(Context + 1, RightResp) + 1;
+                McGurkStim{WhichStim, 2}(Context + 1, RightResp) = ...
+                    McGurkStim{WhichStim, 2}(Context + 1, RightResp) + 1;
             case 1
-                INCStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
-                    INCStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+                IncStim{WhichStim, 2}(RightResp) = ...
+                    IncStim{WhichStim, 2}(RightResp) + 1;
             case 0
-                CONStimByStimRespRecap{WhichStim, 2}(RightResp) = ...
-                    CONStimByStimRespRecap{WhichStim, 2}(RightResp) + 1;
+                ConStim{WhichStim, 2}(RightResp) = ...
+                    ConStim{WhichStim, 2}(RightResp) + 1;
 
         end
 
-        ResponsesCell{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) = ...
-            ResponsesCell{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) + 1;
+        Responses{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) = ...
+            Responses{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) + 1;
 
         RT = TotalTrials{1, 1}(i, 6);
-        ReactionTimesCell{TrialType + 1, RightResp, Context + 1} = ...
-            [ReactionTimesCell{TrialType + 1, RightResp, Context + 1} RT];
+        ReactionTimes{TrialType + 1, RightResp, Context + 1} = ...
+            [ReactionTimes{TrialType + 1, RightResp, Context + 1} RT];
 
     end
 
