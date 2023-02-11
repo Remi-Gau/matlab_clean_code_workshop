@@ -43,8 +43,68 @@ function group_level(config)
     end
 
     MatFilesList = dir('Results*.mat');
+
+    [Subject_Lists, ...
+        GroupResponses, GroupRT, GroupMissed, ...
+            GroupNbValidTrials, ...
+            GroupNbMcGURKinCON, GroupNbMcGURKinINC, ...
+            GroupStimByStimAllResults, GroupStimByStim] = compile_data_across_subjects(MatFilesList);
+
+    %% plot
+    figure_proportion_mc_gurk_answers_per_subject(config, MatFilesList);
+    print_figure();
+
+    figure_proportion_mc_gurk_answers(config, GroupStimByStim);
+    print_figure();
+
+    figure_proportion_mc_gurk_answers_spaghetti(config, GroupStimByStim);
+    print_figure();
+
+    %% display
+
+    if config.verbose
+        disp('MISSED');
+        fprintf('%6.3f +/- %6.3f \n', nanmean(GroupMissed), nanstd(GroupMissed));
+        print_mean_std(GroupRT(:, 6));
+
+        display_response_results(GroupResponses, GroupStimByStim);
+
+        disp('Correct answers on CON trial in CON blocks');
+        print_mean_std(GroupResponses(:, 4));
+        disp('Correct answers on INC trial in INC blocks');
+        print_mean_std(GroupResponses(:, 5));
+
+        display_reation_time_results(GroupRT);
+
+        GroupNbValidTrials;
+        GroupNbMcGURKinCON;
+        GroupNbMcGURKinINC;
+        GroupMissed;
+        GroupResponses;
+        GroupRT;
+        GroupStimByStimAllResults;
+    end
+
+    %% save
+
+    save_to_csv(Subject_Lists, GroupRT, GroupStimByStimAllResults);
+
+    % TODO
+    % just during refactoring
+    load(MatFilesList(end).name);
+    SavedGroupMat = strcat('Group_Results.mat');
+
+    save(SavedGroupMat);
+
+end
+
+function [Subject_Lists, GroupResponses, GroupRT, GroupMissed, ...
+            GroupNbValidTrials, GroupNbMcGURKinCON, GroupNbMcGURKinINC, ...
+            GroupStimByStimAllResults, GroupStimByStim] = compile_data_across_subjects(MatFilesList)
+
     SizeMatFilesList = size(MatFilesList, 1);
 
+    %% initialize
     Subject_Lists = {};
     GroupResponses = [];
 
@@ -64,6 +124,11 @@ function group_level(config)
                                  'Auditory Pa - Visual Ka', ...
                                  'Auditory Pe - Visual Ke', ...
                                  'Auditory Pi - Visual Ki'};
+    for i = 1:SizeMatFilesList
+        for j = 1:5
+            GroupStimByStimAllResults{i + 1, j + 1} = NaN(1, 2);
+        end
+    end
 
     GroupStimByStim(1).name = 'Auditory Be - Visual Ge';
     GroupStimByStim(2).name = 'Auditory Bi - Visual Gi';
@@ -80,7 +145,6 @@ function group_level(config)
         load(MatFilesList(Subject).name);
 
         Subject_Lists{Subject, 1} = SubjID; %#ok<*AGROW>
-        GroupStimByStimAllResults{end + 1, 1} = SubjID;
 
         GroupNbValidTrials = [GroupNbValidTrials; NbValidTrials];
 
@@ -108,31 +172,41 @@ function group_level(config)
             A = (McGurkStimByStimRespRecap{i, 2}(:, 1) ./ ...
                  sum(McGurkStimByStimRespRecap{i, 2}, 2))';
 
-            switch McGurkStimByStimRespRecap{i, 1}
-                case 'V_Ge_A_Be'
-                    WichStim = 1;
-                case 'V_Gi_A_Bi'
-                    WichStim = 2;
-                case 'V_Ka_A_Pa'
-                    WichStim = 3;
-                case 'V_Ke_A_Pe'
-                    WichStim = 4;
-                case 'V_Ki_A_Pi'
-                    WichStim = 5;
-            end
+            WichStim = which_stim(McGurkStimByStimRespRecap, i);
 
             GroupStimByStim(WichStim).results{1, 1}{end + 1, 1} = SubjID;
             GroupStimByStim(WichStim).results{1, 2}(end + 1, :) = A;
 
-            GroupStimByStimAllResults{end, WichStim + 1} = A;
+            GroupStimByStimAllResults{Subject + 1, 1} = SubjID;
+            GroupStimByStimAllResults{Subject + 1, WichStim + 1} = A;
         end
 
     end
 
-    %%
+end
+
+function value = which_stim(McGurkStimByStimRespRecap, i)
+    switch McGurkStimByStimRespRecap{i, 1}
+        case 'V_Ge_A_Be'
+            value = 1;
+        case 'V_Gi_A_Bi'
+            value = 2;
+        case 'V_Ka_A_Pa'
+            value = 3;
+        case 'V_Ke_A_Pe'
+            value = 4;
+        case 'V_Ki_A_Pi'
+            value = 5;
+    end
+end
+
+function figure_proportion_mc_gurk_answers_per_subject(cfg, MatFilesList)
+
     figure('name', 'proportion_mc_gurk_answers_per_subject', ...
-           'visible', config.visible, ...
-           'position', config.position);
+           'visible', cfg.visible, ...
+           'position', cfg.position);
+
+    SizeMatFilesList = size(MatFilesList, 1);
 
     for Subject = 1:SizeMatFilesList
 
@@ -156,7 +230,7 @@ function group_level(config)
         axis([0.5 2.5 0 1.2]);
 
         if Subject == 1
-            ylabel 'Ratio of McGurk answers';
+            ylabel('Ratio of McGurk answers');
             set(gca, 'ytick', 0:0.1:1);
         end
 
@@ -165,64 +239,6 @@ function group_level(config)
         end
     end
 
-    print_figure();
-
-    %%
-    [a, b] = size(GroupStimByStimAllResults);
-
-    for i = 2:a
-        for j = 2:b
-            if isempty(GroupStimByStimAllResults{i, j})
-                GroupStimByStimAllResults{i, j} = NaN(1, 2);
-            end
-        end
-    end
-
-    %%
-    figure_proportion_mc_gurk_answers(config, GroupStimByStim);
-    print_figure();
-
-    figure_proportion_mc_gurk_answers_spaghetti(config, GroupStimByStim);
-    print_figure();
-
-    %%
-
-    if config.verbose
-        disp('MISSED');
-        fprintf('%6.3f +/- %6.3f \n', nanmean(GroupMissed), nanstd(GroupMissed));
-        print_mean_std(GroupRT(:, 6));
-
-        display_response_results(GroupResponses, GroupStimByStim);
-
-        disp('Correct answers on CON trial in CON blocks');
-        print_mean_std(GroupResponses(:, 4));
-        disp('Correct answers on INC trial in INC blocks');
-        print_mean_std(GroupResponses(:, 5));
-
-        display_reation_time_results(GroupRT);
-
-        GroupNbValidTrials;
-        GroupNbMcGURKinCON;
-        GroupNbMcGURKinINC;
-        GroupMissed;
-        GroupResponses;
-        GroupRT;
-        GroupStimByStimAllResults;
-    end
-
-    %%
-    figure(1);
-    print(gcf, 'Figures.ps', '-dpsc2');
-    for i = 1:(figure_counter - 1)
-        figure(i);
-        print(gcf, strcat('Fig', num2str(i), '.eps'), '-depsc');
-    end
-
-    %%
-    save_to_csv(Subject_Lists, GroupRT, GroupStimByStimAllResults);
-
-    SavedGroupMat = strcat('Group_Results.mat');
-    save(SavedGroupMat);
 end
 
 function figure_proportion_mc_gurk_answers(cfg, GroupStimByStim)
