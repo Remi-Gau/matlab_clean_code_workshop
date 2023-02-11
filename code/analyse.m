@@ -57,32 +57,31 @@ function analyse(cfg)
 
     NbTrials = length(TotalTrials{1, 1}(:, 1));
 
-    if exist('NoiseRange') == 0
-        NoiseRange = zeros(1, NbMcMovies);
-    end
-
     %% initialize variables
     StimByStimRespRecap = cell(1, 2, 3);
     McGurkStimByStimRespRecap = cell(NbMcMovies, 2);
 
     for i = 1:NbMcMovies
+        % Which stimuli
         StimByStimRespRecap{1, 1, 3}(i, :) = McMoviesDirList(i).name(1:end - 4);
         McGurkStimByStimRespRecap{i, 1} = McMoviesDirList(i).name(1:end - 4);
 
+        % What answers
         StimByStimRespRecap{1, 2, 3} = zeros(i, 7, NbTrialsPerBlock, NbBlockType);
-
         McGurkStimByStimRespRecap{i, 2} = zeros(NbBlockType, 2);
     end
 
     for i = 1:NbIncongMovies
-        StimByStimRespRecap{1, 1, 1}(i, :) = CongMoviesDirList(i).name(1:end - 4); % Which stimuli
+
+        % Which stimuli
+        StimByStimRespRecap{1, 1, 1}(i, :) = CongMoviesDirList(i).name(1:end - 4);
         StimByStimRespRecap{1, 1, 2}(i, :) = IncongMoviesDirList(i).name(1:end - 4);
         CONStimByStimRespRecap{i, 1} = CongMoviesDirList(i).name(1:end - 4);
         INCStimByStimRespRecap{i, 1} = IncongMoviesDirList(i).name(1:end - 4);
 
-        StimByStimRespRecap{1, 2, 1} = zeros(i, 7, NbTrialsPerBlock, NbBlockType); % What answers
+        % What answers
+        StimByStimRespRecap{1, 2, 1} = zeros(i, 7, NbTrialsPerBlock, NbBlockType);
         StimByStimRespRecap{1, 2, 2} = zeros(i, 7, NbTrialsPerBlock, NbBlockType);
-
         CONStimByStimRespRecap{i, 2} = zeros(2, 1);
         INCStimByStimRespRecap{i, 2} = zeros(2, 1);
 
@@ -187,12 +186,12 @@ function value = nb_trials(TotalTrials)
 
 end
 
-function [StimByStimRespRecap, McGurkStimByStimRespRecap, INCStimByStimRespRecap,          CONStimByStimRespRecap,           ReactionTimesCell,           ResponsesCell] = process_trials(cfg, TotalTrials, ...
-                                                                                                                                                                                          NbCongMovies, NbIncongMovies, NbMcMovies, ...
-                                                                                                                                                                                          StimByStimRespRecap, ...
-                                                                                                                                                                                          McGurkStimByStimRespRecap, ...
-                                                                                                                                                                                          INCStimByStimRespRecap, ...
-                                                                                                                                                                                          CONStimByStimRespRecap, NbBlockType, NbTrialsPerBlock)
+function [StimByStimRespRecap, McGurkStimByStimRespRecap, INCStimByStimRespRecap, CONStimByStimRespRecap, ReactionTimesCell, ResponsesCell] = process_trials(cfg, TotalTrials, ...
+                                                                                                                                                             NbCongMovies, NbIncongMovies, NbMcMovies, ...
+                                                                                                                                                             StimByStimRespRecap, ...
+                                                                                                                                                             McGurkStimByStimRespRecap, ...
+                                                                                                                                                             INCStimByStimRespRecap, ...
+                                                                                                                                                             CONStimByStimRespRecap, NbBlockType, NbTrialsPerBlock)
 
     ReactionTimesCell = cell(3, 2, NbBlockType);
 
