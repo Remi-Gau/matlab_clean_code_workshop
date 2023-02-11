@@ -168,17 +168,21 @@ function analyse(subject_dir, cfg)
     print_figure(subject_dir);
 
     %% Save
-    SavedMat = fullfile(subject_dir, 'Behavioral', ['Results_', SubjID, '.mat']);
 
     % TODO
     % once refactoring is done, just save the required values.
     clear Color i n List Trials legend X Y figure_counter cfg reaction_time_sec;
-    clear  i NoiseRange MissedResponses subject_dir;
+    clear i NoiseRange MissedResponses;
     j = NbMcMovies;
     ans = [];
+    SavedMat = ['Results_', SubjID, '.mat'];
 
-    save(SavedMat);
+    save(output_file(subject_dir, SubjID));
 
+end
+
+function value = output_file(subject_dir, SubjID)
+    value = fullfile(subject_dir, 'Behavioral', ['Results_', SubjID, '.mat']);
 end
 
 function value = nb_trials(TotalTrials)

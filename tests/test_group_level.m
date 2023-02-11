@@ -23,6 +23,20 @@ function test_group_level_basic()
 
     group_level();
 
+    expected = load(fullfile(data_dir, 'expected_results.mat'));
+    results = load(fullfile(data_dir, 'Group_Results.mat'));
+
+    % test
+    expected_fields = fieldnames(expected);
+    for i = 1:numel(expected_fields)
+        if ismember(expected_fields{i}, {'MatFilesList'})
+            continue
+        end
+        assert(isfield(results, expected_fields{i}), ...
+               sprintf('missing %s', expected_fields{i}));
+        assertEqual(results.(expected_fields{i}), expected.(expected_fields{i}));
+    end
+
     close all;
     clear;
 
