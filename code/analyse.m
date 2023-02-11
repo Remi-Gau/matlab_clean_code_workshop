@@ -242,7 +242,6 @@ function [StimByStim, McGurkStim, IncStim, ConStim, ReactionTimes, Responses] = 
                 WhichStim = which_stim_for_this_trial(TotalTrials, i, NbIncongMovies, StimByStim);
             case 2
                 WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMcMovies, StimByStim);
-
         end
 
         Context = context(TotalTrials, i);

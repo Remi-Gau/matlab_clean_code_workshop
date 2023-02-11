@@ -32,7 +32,8 @@ function test_group_level_basic()
     % test
     expected_fields = fieldnames(expected);
     for i = 1:numel(expected_fields)
-        if ismember(expected_fields{i}, {'MatFilesList', 'h', 'p', 'SavedGroupTxt'})
+        if ismember(expected_fields{i}, ...
+                    {'MatFilesList', 'h', 'p', 'SavedGroupTxt', 'label'})
             continue
         end
         assert(isfield(results, expected_fields{i}), ...
