@@ -18,7 +18,7 @@ function test_analyse_basic()
 
     cfg.reaction_time_threshold = 0.5;
     cfg.verbose = false;
-    cfg.position = [50 50 1000 1000];
+    cfg.position = [50 50 2000 1000];
     cfg.missed_response_value = 999;
 
     analyse(cfg);

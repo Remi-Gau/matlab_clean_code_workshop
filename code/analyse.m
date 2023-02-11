@@ -1,4 +1,13 @@
 function analyse(cfg)
+    %
+    %
+    % :type cfg: struct
+    % :param cfg: contains following fields
+    %               - reaction_time_threshold
+    %               - verbose
+    %               - position
+    %               - missed_response_value
+    %
 
     % (C) Copyright 2023 Remi Gau
 
@@ -11,20 +20,19 @@ function analyse(cfg)
     %           TrialOnset
     %           BlockType
     %           Choice     contains the type of stimuli presented on this trial
-    %                 0--> Congruent,
-    %                 1--> Incongruent,
-    %                 2--> Counterphase.
+    %                 0--> Congruent
+    %                 1--> Incongruent
     %           RT
     %           Resp
     %           RespCat
     %                 For Congruent trials :
-    %                     1 --> Hit;
+    %                     1 --> Hit
     %                     0 --> Miss
     %                 For Incongruent trials :
-    %                     1 --> Hit;
+    %                     1 --> Hit
     %                     0 --> Miss
     %                 For McGurk trials :
-    %                     1 --> McGurk effect worked;
+    %                     1 --> McGurk effect worked
     %                     0 --> Miss
     %
     % {2,1} contains the name of the stim used
@@ -115,7 +123,6 @@ function analyse(cfg)
     CONinCON_Correct = sum(ResponsesCell{1, 1}(1, :)) / NbCON;
 
     %% reaction time
-
     RT_CON_OK = nanmedian(ReactionTimesCell{1, 1, 1});
     RT_CON_NO = nanmedian(ReactionTimesCell{1, 2, 1});
 
@@ -173,9 +180,35 @@ function analyse(cfg)
 end
 
 function value = nb_trials(TotalTrials)
-
     value = length(TotalTrials{1, 1}(:, 1));
+end
 
+function value = trial_nb_in_block(TotalTrials, i)
+    value = TotalTrials{1, 1}(i, 2);
+end
+
+function value = context(TotalTrials, i)
+    value = TotalTrials{1, 1}(i, 4);
+end
+
+function value = trial_type(TotalTrials, i)
+    value = TotalTrials{1, 1}(i, 5);
+end
+
+function value = reaction_time(TotalTrials, i)
+    value = TotalTrials{1, 1}(i, 6);
+end
+
+function value = response_code(TotalTrials, i)
+    value = TotalTrials{1, 1}(i, 7);
+end
+
+function value = response_category(TotalTrials, i)
+    value = TotalTrials{1, 1}(i, 8);
+end
+
+function value = stim_name(TotalTrials, i)
+    value = TotalTrials{2, 1}(i, :);
 end
 
 function [StimByStim, McGurkStim, IncStim, ConStim, ReactionTimes, Responses] = process_trials(cfg, TotalTrials, ...
@@ -194,39 +227,36 @@ function [StimByStim, McGurkStim, IncStim, ConStim, ReactionTimes, Responses] = 
 
     for i = 1:nb_trials(TotalTrials)
 
-        reaction_time_sec = TotalTrials{1, 1}(i, 6);
-        if reaction_time_sec <= cfg.reaction_time_threshold
+        if reaction_time(TotalTrials, i) <= cfg.reaction_time_threshold
             continue
         end
 
-        TrialType = TotalTrials{1, 1}(i, 5);
-
-        switch TrialType
+        switch trial_type(TotalTrials, i)
             case 0
-                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbCongMovies, StimByStim, TrialType);
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbCongMovies, StimByStim);
             case 1
-                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbIncongMovies, StimByStim, TrialType);
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbIncongMovies, StimByStim);
             case 2
-                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMcMovies, StimByStim, TrialType);
+                WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMcMovies, StimByStim);
 
         end
 
-        Context = TotalTrials{1, 1}(i, 4);
+        Context = context(TotalTrials, i);
 
         TrialNumberInBlock = TotalTrials{1, 1}(i, 2);
 
-        RightResp = correct_response(TotalTrials, i, TrialType);
+        RightResp = correct_response(TotalTrials, i);
 
         Resp = response_given(TotalTrials, i);
 
-        StimByStim{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) = ...
-            StimByStim{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) + 1;
+        StimByStim{1, 2, trial_type(TotalTrials, i) + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) = ...
+            StimByStim{1, 2, trial_type(TotalTrials, i) + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) + 1;
 
-        if TotalTrials{1, 1}(i, 8) == cfg.missed_response_value
+        if response_category(TotalTrials, i) == cfg.missed_response_value
             continue
         end
 
-        switch TrialType
+        switch trial_type(TotalTrials, i)
             case 2
                 McGurkStim{WhichStim, 2}(Context + 1, RightResp) = ...
                     McGurkStim{WhichStim, 2}(Context + 1, RightResp) + 1;
@@ -239,27 +269,47 @@ function [StimByStim, McGurkStim, IncStim, ConStim, ReactionTimes, Responses] = 
 
         end
 
-        Responses{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) = ...
-            Responses{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) + 1;
+        Responses = increment_response_count(Responses, TotalTrials, i);
 
-        RT = TotalTrials{1, 1}(i, 6);
-        ReactionTimes{TrialType + 1, RightResp, Context + 1} = ...
-            [ReactionTimes{TrialType + 1, RightResp, Context + 1} RT];
+        ReactionTimes = append_reaction_time(ReactionTimes, TotalTrials, i);
 
     end
 
 end
 
-function WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMovies, StimByStimRespRecap, TrialType)
-    WhichStim = find(strcmp(cellstr(repmat(TotalTrials{2, 1}(i, :), ...
+function Responses = increment_response_count(Responses, TotalTrials, i)
+    TrialType = trial_type(TotalTrials, i);
+    Context = context(TotalTrials, i);
+    RightResp = correct_response(TotalTrials, i);
+    TrialNumberInBlock = trial_nb_in_block(TotalTrials, i);
+
+    Responses{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) = ...
+        Responses{TrialType + 1, Context + 1}(RightResp, TrialNumberInBlock) + 1;
+end
+
+function ReactionTimes = append_reaction_time(ReactionTimes, TotalTrials, i)
+    TrialType = trial_type(TotalTrials, i);
+    Context = context(TotalTrials, i);
+    RightResp = correct_response(TotalTrials, i);
+
+    ReactionTimes{TrialType + 1, RightResp, Context + 1} = ...
+        [ReactionTimes{TrialType + 1, RightResp, Context + 1} ...
+         reaction_time(TotalTrials, i)];
+end
+
+function WhichStim = which_stim_for_this_trial(TotalTrials, i, NbMovies, StimByStimRespRecap)
+    WhichStim = find(strcmp(cellstr(repmat(stim_name(TotalTrials, i), ...
                                            NbMovies, ...
                                            1)), ...
-                            StimByStimRespRecap{1, 1, TrialType + 1}));
+                            StimByStimRespRecap{1, 1, trial_type(TotalTrials, i) + 1}));
 end
 
-function RightResp = correct_response(TotalTrials, i, TrialType)
+function RightResp = correct_response(TotalTrials, i)
+
+    TrialType = trial_type(TotalTrials, i);
+
     RightResp = 2;
-    if TotalTrials{1, 1}(i, 8) == 1
+    if response_category(TotalTrials, i) == 1
         switch TrialType
             case 0
                 RightResp = 1;
@@ -268,7 +318,7 @@ function RightResp = correct_response(TotalTrials, i, TrialType)
             case 2
                 RightResp = 2;
         end
-    elseif TotalTrials{1, 1}(i, 8) == 0
+    elseif response_category(TotalTrials, i) == 0
         switch TrialType
             case 0
                 RightResp = 2;
@@ -278,12 +328,13 @@ function RightResp = correct_response(TotalTrials, i, TrialType)
                 RightResp = 1;
         end
     end
+
 end
 
 function Resp = response_given(TotalTrials, i)
     Resp = 7;
     if ismac
-        switch KbName(TotalTrials{1, 1}(i, 7))
+        switch KbName(response_code(TotalTrials, i))
             case RespB
                 Resp = 1;
 
@@ -306,9 +357,13 @@ function Resp = response_given(TotalTrials, i)
 end
 
 function display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
-                         NbMcGURKinCON, NbMcGURKinINC, McGURKinCON_Correct, McGURKinINC_Correct, NbMcMovies, McGurkStimByStimRespRecap, ...
-                         NbINC, INCinINC_Correct, NbIncongMovies, INCStimByStimRespRecap, ...
-                         NbCON, CONinCON_Correct, CONStimByStimRespRecap)
+                         NbMcGURKinCON, NbMcGURKinINC, ...
+                         McGURKinCON_Correct, McGURKinINC_Correct, ...
+                         NbMcMovies, McGurkStimByStimRespRecap, ...
+                         NbINC, INCinINC_Correct, ...
+                         NbIncongMovies, INCStimByStimRespRecap, ...
+                         NbCON, CONinCON_Correct, ...
+                         CONStimByStimRespRecap)
     fprintf('\n\n');
     disp(NoiseRangeCompil(3, 1:4, :));
     disp(NbTrials);
@@ -326,7 +381,8 @@ function display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
     disp(McGURKinINC_Correct);
     for i = 1:NbMcMovies
         disp(McGurkStimByStimRespRecap{i, 1});
-        disp(McGurkStimByStimRespRecap{i, 2}(:, 1) ./ sum(McGurkStimByStimRespRecap{i, 2}, 2));
+        disp(McGurkStimByStimRespRecap{i, 2}(:, 1) ./ ...
+             sum(McGurkStimByStimRespRecap{i, 2}, 2));
     end
 
     fprintf('\n\n');
@@ -335,7 +391,8 @@ function display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
     disp(INCinINC_Correct);
     for i = 1:NbIncongMovies
         disp(INCStimByStimRespRecap{i, 1});
-        disp(INCStimByStimRespRecap{i, 2}(1) / sum(INCStimByStimRespRecap{i, 2}));
+        disp(INCStimByStimRespRecap{i, 2}(1) / ...
+             sum(INCStimByStimRespRecap{i, 2}));
     end
 
     fprintf('\n\n');
@@ -344,11 +401,16 @@ function display_results(NoiseRangeCompil, NbTrials, NbValidTrials, Missed, ...
     disp(CONinCON_Correct);
     for i = 1:NbIncongMovies
         disp(CONStimByStimRespRecap{i, 1});
-        disp(CONStimByStimRespRecap{i, 2}(1) / sum(CONStimByStimRespRecap{i, 2}));
+        disp(CONStimByStimRespRecap{i, 2}(1) / ...
+             sum(CONStimByStimRespRecap{i, 2}));
     end
 end
 
-function display_reaction_time_results(ReactionTimesCell, RT_CON_OK, RT_CON_NO, RT_INC_OK, RT_INC_NO, RT_McGURK_OK_inCON_TOTAL, RT_McGURK_OK_inINC_TOTAL, RT_McGURK_NO_inCON_TOTAL, RT_McGURK_NO_inINC_TOTAL)
+function display_reaction_time_results(ReactionTimesCell, ...
+                                       RT_CON_OK, RT_CON_NO, ...
+                                       RT_INC_OK, RT_INC_NO, ...
+                                       RT_McGURK_OK_inCON_TOTAL, RT_McGURK_OK_inINC_TOTAL, ...
+                                       RT_McGURK_NO_inCON_TOTAL, RT_McGURK_NO_inINC_TOTAL)
     fprintf('\n\n');
     disp('REACTION TIMES');
 
@@ -390,6 +452,9 @@ function figure_response_type_across_block_for_gurk_movies(cfg, NbMcMovies, NbTr
         end
         bar(G, 'stacked');
 
+        t = title(strrep(StimByStimRespRecap{1, 1, 3}(j, :), '_', ' '));
+        set(t, 'fontsize', 15);
+
         set(gca, ...
             'xtick', 1:max(NbTrialsPerBlock), ...
             'xticklabel', 1:max(NbTrialsPerBlock));
@@ -407,8 +472,11 @@ function figure_response_type_across_block_for_gurk_movies(cfg, NbMcMovies, NbTr
         end
         bar(G, 'stacked');
 
-        t = title (StimByStimRespRecap{1, 1, 3}(j, :));
+        t = title(strrep(StimByStimRespRecap{1, 1, 3}(j, :), '_', ' '));
         set(t, 'fontsize', 15);
+
+        xlabel('Position in block');
+
         set(gca, ...
             'xtick', 1:max(NbTrialsPerBlock), ...
             'xticklabel', 1:max(NbTrialsPerBlock));
@@ -436,7 +504,7 @@ function  plot_mc_gurk_responses_across_blocks(cfg, ResponsesCell, NbTrialsPerBl
     plot(ResponsesCell{3, 1}(1, :) ./ sum(ResponsesCell{3, 1}(1:2, :)), 'g');
     plot(ResponsesCell{3, 2}(1, :) ./ sum(ResponsesCell{3, 2}(1:2, :)), 'r');
 
-    t = title ('McGurk');
+    t = title('McGurk responses across blocks');
     set(t, 'fontsize', 15);
     set(gca, ...
         'xtick', 1:max(NbTrialsPerBlock), ...
@@ -461,7 +529,7 @@ function histogram_percent_correct_mc_gurk(cfg, McGURKinCON_Correct, McGURKinINC
     errorbar(2, McGURKinINC_Correct, std(ResponsesCell{3, 2}(1, 3:end) ./ ...
                                          sum(ResponsesCell{3, 2}(1:2, 3:end))), 'k');
 
-    t = title ('McGurk');
+    t = title ('percent correct McGurk');
     set(t, 'fontsize', 15);
 
     set(gca, ...
@@ -497,7 +565,7 @@ function set_axis()
     set(gca, ...
         'tickdir', 'out', ...
         'ticklength', [0.005 0], ...
-        'fontsize', 13, ...
+        'fontsize', 12, ...
         'ylim', [0 1]);
 end
 
