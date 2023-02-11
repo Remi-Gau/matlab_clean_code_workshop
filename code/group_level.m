@@ -2,19 +2,33 @@ function group_level
 
     % (C) Copyright 2023 Remi Gau
 
-    % Returns a {5,1,rMAX} cell where rMAX is the total number of run
-
+    % {5,1,rMAX} cell where rMAX is the total number of run
+    %
     % {1,1} contains the trial number and the type of stimuli presented on this trial
     % Trials(i,1:5) = [i p Choice n m RT Resp RespCat];
     % i      is the trial number
     % p      is the trial number in the current block
-    % Choice     contains the type of stimuli presented on this trial : 0--> Congruent, 1--> Incongruent, 2--> Counterphase.
-    % n          is the variable that says what kind of block came before the present one. Equals to 666 if there was no previous block. : 0--> Congruent, 1--> Incongruent, 2--> Counterphase.
-    % m          is the variable that says the length of the block that came before the present one. Equals to 666 if there was no previous block.
+    % Choice     contains the type of stimuli presented on this trial :
+    %               0--> Congruent,
+    %               1--> Incongruent,
+    % n          is the variable that says what kind of block came before the present one.
+    %               Equals to 666 if there was no previous block. :
+    %               0--> Congruent,
+    %               1--> Incongruent,
+    % m          is the variable that says the length of the block that came before the present one.
+    %               Equals to 666 if there was no previous block.
     % RT
     % Resp
-    % RespCat    For Congruent trials : 1 --> Hit; 0 --> Miss // For Incongruent trials : 1 --> Hit; 0 --> Miss // For McGurk trials : 0 --> McGurk effect worked; 0 --> Miss
-
+    % RespCat   For Congruent trials
+    %               1 --> Hit;
+    %               0 --> Miss
+    %           For Incongruent trials
+    %               1 --> Hit
+    %               0 --> Miss
+    %           For McGurk trials
+    %               1 --> McGurk effect worked;
+    %               0 --> Miss
+    %
     % {2,1} contains the name of the stim used
     % {3,1} contains the level of noise used for this stimuli
     % {4,1} contains the absolute path of the corresponding movie to be played

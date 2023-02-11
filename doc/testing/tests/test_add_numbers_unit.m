@@ -1,4 +1,4 @@
-function test_add_numbers_smoke()
+function test_add_numbers_unit()
     % (C) Copyright 2023 Remi Gau
 
     a = 1;
