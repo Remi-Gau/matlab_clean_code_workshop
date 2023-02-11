@@ -321,4 +321,6 @@ function group_level
     fclose (fid);
 
     clear A B C AVOffsetMat List MaxBlockLengthMAC MaxBlockLengthMAI Run SizeList Trials ans i j n t vblS Color fid;
+
+    save(SavedGroupMat);
 end
