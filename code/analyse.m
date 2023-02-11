@@ -55,7 +55,7 @@ function analyse(cfg)
         NoiseRangeCompil(:, :, RunNb) = NoiseRange;
     end
 
-    NbTrials = length(TotalTrials{1, 1}(:, 1));
+    NbTrials = nb_trials(TotalTrials);
 
     %% initialize variables
     StimByStimRespRecap = cell(1, 2, 3);
@@ -85,7 +85,6 @@ function analyse(cfg)
     StimByStimRespRecap{1, 2, 3} = zeros(NbMcMovies, 7, NbTrialsPerBlock, NbBlockType);
 
     %% process trials
-
     [StimByStimRespRecap, ...
      McGurkStimByStimRespRecap, ...
      INCStimByStimRespRecap, ...
@@ -99,26 +98,21 @@ function analyse(cfg)
                                      CONStimByStimRespRecap, NbBlockType, NbTrialsPerBlock);
 
     %%
-    NbValidTrials = NbTrials - length(find(TotalTrials{1, 1}(:, 7) == 999)');
-
-    Missed = length(find(TotalTrials{1, 1}(:, 7) == 999)') / ...
-                length(TotalTrials{1, 1}(:, 6));
+    MissedResponses = length(find(TotalTrials{1, 1}(:, 7) == cfg.missed_response_value)');
+    NbValidTrials = NbTrials - MissedResponses;
+    Missed = MissedResponses / NbTrials;
 
     NbMcGURKinCON = sum(sum(ResponsesCell{3, 1}(1:2, :)));
-    NbMcGURKinINC = sum(sum(ResponsesCell{3, 2}(1:2, :)));
+    McGURKinCON_Correct = sum(ResponsesCell{3, 1}(1, :)) / NbMcGURKinCON;
 
-    McGURKinCON_Correct = sum(ResponsesCell{3, 1}(1, :)) / ...
-                            sum(sum(ResponsesCell{3, 1}(1:2, :)));
-    McGURKinINC_Correct = sum(ResponsesCell{3, 2}(1, :)) / ...
-                            sum(sum(ResponsesCell{3, 2}(1:2, :)));
+    NbMcGURKinINC = sum(sum(ResponsesCell{3, 2}(1:2, :)));
+    McGURKinINC_Correct = sum(ResponsesCell{3, 2}(1, :)) / NbMcGURKinINC;
 
     NbINC = sum(sum(ResponsesCell{2, 2}(1:2, :)));
-    INCinINC_Correct = sum(ResponsesCell{2, 2}(1, :)) / ...
-                        sum(sum(ResponsesCell{2, 2}(1:2, :)));
+    INCinINC_Correct = sum(ResponsesCell{2, 2}(1, :)) / NbINC;
 
     NbCON = sum(sum(ResponsesCell{1, 1}(1:2, :)));
-    CONinCON_Correct = sum(ResponsesCell{1, 1}(1, :)) / ...
-                        sum(sum(ResponsesCell{1, 1}(1:2, :)));
+    CONinCON_Correct = sum(ResponsesCell{1, 1}(1, :)) / NbCON;
 
     %% reaction time
 
@@ -167,9 +161,10 @@ function analyse(cfg)
     % TODO
     % once refactoring is done, just save the required values.
     clear Color i n List Trials legend X Y figure_counter cfg reaction_time_sec;
-    clear  i NoiseRange;
+    clear  i NoiseRange MissedResponses;
     j = NbMcMovies;
     ans = [];
+
     SavedMat = strcat('Results_', SubjID, '.mat');
     save (SavedMat);
 
@@ -227,7 +222,7 @@ function [StimByStim, McGurkStim, IncStim, ConStim, ReactionTimes, Responses] = 
         StimByStim{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) = ...
             StimByStim{1, 2, TrialType + 1}(WhichStim, Resp, TrialNumberInBlock, Context + 1) + 1;
 
-        if TotalTrials{1, 1}(i, 8) == 999
+        if TotalTrials{1, 1}(i, 8) == cfg.missed_response_value
             continue
         end
 
