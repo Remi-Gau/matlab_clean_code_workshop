@@ -1,4 +1,4 @@
-function group_level
+function group_level(cfg)
 
     % (C) Copyright 2023 Remi Gau
 
@@ -37,11 +37,7 @@ function group_level
     % TO DO :
     %   - add a way to analyze just one trial
 
-    clc;
-    clear all;
-    close all;
-
-    n = 1;
+    figure_counter = 1;
 
     MatFilesList = dir('Results*.mat');
 
@@ -62,7 +58,13 @@ function group_level
     GroupNbMcGURKinINC = [];
 
     GroupStimByStimAllResults = cell(SizeMatFilesList + 1, 6);
-    GroupStimByStimAllResults = {'', 'Auditory Be - Visual Ge', 'Auditory Bi - Visual Gi', 'Auditory Pa - Visual Ka', 'Auditory Pe - Visual Ke', 'Auditory Pi - Visual Ki'};
+    GroupStimByStimAllResults = { ...
+                                 '', ...
+                                 'Auditory Be - Visual Ge', ...
+                                 'Auditory Bi - Visual Gi', ...
+                                 'Auditory Pa - Visual Ka', ...
+                                 'Auditory Pe - Visual Ke', ...
+                                 'Auditory Pi - Visual Ki'};
 
     GroupStimByStim(1).name = 'Auditory Be - Visual Ge';
     GroupStimByStim(2).name = 'Auditory Bi - Visual Gi';
@@ -74,8 +76,8 @@ function group_level
         GroupStimByStim(i).results = cell(1, 2);
     end
 
-    figure(n);
-    n = n + 1;
+    figure(figure_counter);
+    figure_counter = figure_counter + 1;
 
     for Subject = 1:SizeMatFilesList
 
@@ -150,8 +152,9 @@ function group_level
         end
     end
 
-    figure(n);
-    n = n + 1;
+    %%
+    figure(figure_counter);
+    figure_counter = figure_counter + 1;
 
     for i = 1:5
 
@@ -175,8 +178,8 @@ function group_level
     subplot(1, 5, 1);
     ylabel 'Proportion of McGurk answers';
 
-    figure(n);
-    n = n + 1;
+    figure(figure_counter);
+    figure_counter = figure_counter + 1;
 
     for i = 1:5
 
@@ -203,6 +206,7 @@ function group_level
     subplot(1, 5, 1);
     ylabel 'Proportion of McGurk answers';
 
+    %%
     fprintf('\n');
 
     disp('MISSED');
@@ -279,25 +283,31 @@ function group_level
     GroupRT;
     GroupStimByStimAllResults;
 
+    %%
     figure(1);
-    print(gcf, 'Figures.ps', '-dpsc2'); % Print figures in ps format
-    for i = 2:(n - 1)
+    print(gcf, 'Figures.ps', '-dpsc2');
+    for i = 1:(figure_counter - 1)
         figure(i);
-        print(gcf, 'Figures.ps', '-dpsc2', '-append');
+        print(gcf, strcat('Fig', num2str(i), '.eps'), '-depsc');
     end
 
-    for i = 1:(n - 1)
-        figure(i);
-        print(gcf, strcat('Fig', num2str(i), '.eps'), '-depsc'); % Print figures in vector format
-    end
+    %%
+    save_to_csv(Subject_Lists, GroupRT, GroupStimByStimAllResults);
 
-    SavedGroupTxt = strcat('Group_Results.csv');
+    clear A B C AVOffsetMat List MaxBlockLengthMAC;
+    clear MaxBlockLengthMAI Run SizeList Trials ans i j n t vblS Color fid;
+    clear cfg;
 
-    fid = fopen (SavedGroupTxt, 'w');
+    save(SavedGroupMat);
+end
+
+function save_to_csv(Subject_Lists, GroupRT, GroupStimByStimAllResults)
+    SavedGroupTxt = 'Group_Results.csv';
+    fid = fopen(SavedGroupTxt, 'w');
 
     fprintf (fid, 'Reaction times for the whole group \n');
     fprintf (fid, 'Subject, RT_CON, RT_INC, RT_McGURK_OK_inCON, RT_McGURK_OK_inINC, RT_McGURK_NO_inCON, RT_McGURK_NO_inINC \n\n');
-    for Subject = 1:SizeMatFilesList
+    for Subject = 1:numel(Subject_Lists)
         fprintf (fid, '%s,', Subject_Lists{Subject});
         fprintf (fid, '%6.3f,', GroupRT(Subject, :));
         fprintf (fid, '\n');
@@ -310,7 +320,7 @@ function group_level
         fprintf (fid, '%s, ,', GroupStimByStimAllResults{1, i});
     end
     fprintf (fid, '\n');
-    for i = 1:SizeMatFilesList
+    for i = 1:numel(Subject_Lists)
         fprintf (fid, '%s,', GroupStimByStimAllResults{i + 1, 1});
         for j = 2:6
             fprintf (fid, '%6.3f,', GroupStimByStimAllResults{i + 1, j});
@@ -320,7 +330,4 @@ function group_level
 
     fclose (fid);
 
-    clear A B C AVOffsetMat List MaxBlockLengthMAC MaxBlockLengthMAI Run SizeList Trials ans i j n t vblS Color fid;
-
-    save(SavedGroupMat);
 end
