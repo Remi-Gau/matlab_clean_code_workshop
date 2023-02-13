@@ -1,10 +1,8 @@
 ---
 name: tests
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
+# Controls when the action will run.
+# Triggers the workflow on push or pull request
 on:
   push:
     branches: ['*']
@@ -14,32 +12,46 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Cancel previous runs that are not completed yet
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
+    # Defines operating system to run on
     runs-on: ubuntu-latest
 
     steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE,
+    # so your job can access it
     - name: Clone repo
+      # documentation: https://github.com/actions/checkout
       uses: actions/checkout@v3
-      with:
-        submodules: recursive
-        fetch-depth: 0
 
+    # We install the dependecies
+    # MoxUnit and MOcov for testing and coverage
+    # MATLAB via a github action for running the tests
     - name: Install Moxunit and MOcov
       run: |
         git clone https://github.com/MOxUnit/MOxUnit.git --depth 1
         git clone https://github.com/MOcov/MOcov.git --depth 1
-
     - name: Install MATLAB
+      # documentation: https://github.com/matlab-actions/setup-matlab
       uses: matlab-actions/setup-matlab@v1.2.4
       with:
         release: R2020a
 
+    # Actually run the tests by running the script:
+    #  .github/workflows/Tests_Matlab.m
     - name: Run unit tests MATLAB
+      # documentation: https://github.com/matlab-actions/run-command
       uses: matlab-actions/run-command@v1.1.2
       with:
         command: |
           cd(fullfile(getenv('GITHUB_WORKSPACE'), '.github', 'workflows')); run Tests_Matlab_GH;
 
+    # When the tests are run they generate a log file
+    # Here we check the content to see if there were any errors
     - name: Check unit tests
       run: cat doc/testing/test_report.log | grep 0

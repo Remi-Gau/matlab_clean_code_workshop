@@ -15,7 +15,6 @@ miss_hit:
   image: python:latest
   stage: lint
   script:
-  - echo "Lint"
   - pip install miss_hit
   - mh_lint
   - mh_style
@@ -33,9 +32,6 @@ set-up:
   - echo "Installing MOcov and MOxUnit."
   - git clone https://github.com/MOxUnit/MOxUnit.git --depth 1
   - git clone https://github.com/MOcov/MOcov.git --depth 1
-  - pwd
-  - ls -la
-  - echo "Done."
 
 test:
   stage: test
@@ -46,8 +42,4 @@ test:
   #   - MOcov
   extends: .matlab_defaults
   script:
-  - echo "Testing the code..."
-  - pwd
-  - ls -la
   - matlab -batch mycommand
-  - echo "Done."
