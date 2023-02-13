@@ -69,11 +69,6 @@ function group_level(config)
 
         display_response_results(GroupResponses, GroupStimByStim);
 
-        disp('Correct answers on CON trial in CON blocks');
-        print_mean_std(GroupResponses(:, 4));
-        disp('Correct answers on INC trial in INC blocks');
-        print_mean_std(GroupResponses(:, 5));
-
         display_reation_time_results(GroupRT);
 
         GroupNbValidTrials;
@@ -99,8 +94,8 @@ function group_level(config)
 end
 
 function [Subject_Lists, GroupResponses, GroupRT, GroupMissed, ...
-            GroupNbValidTrials, GroupNbMcGURKinCON, GroupNbMcGURKinINC, ...
-            GroupStimByStimAllResults, GroupStimByStim] = compile_data_across_subjects(MatFilesList)
+          GroupNbValidTrials, GroupNbMcGURKinCON, GroupNbMcGURKinINC, ...
+          GroupStimByStimAllResults, GroupStimByStim] = compile_data_across_subjects(MatFilesList)
 
     SizeMatFilesList = size(MatFilesList, 1);
 
