@@ -1,4 +1,4 @@
-function test_suite = test_Analyse %#ok<STOUT>
+function test_suite = test_analyse %#ok<STOUT>
     % (C) Copyright 2023 Remi Gau developers
     try % assignment of 'localfunctions' is necessary in Matlab >= 2016
         test_functions = localfunctions(); %#ok<NASGU>
@@ -7,7 +7,7 @@ function test_suite = test_Analyse %#ok<STOUT>
     initTestSuite;
 end
 
-function test_Analyse_basic()
+function test_analyse_basic()
 
     root_dir = fullfile(fileparts(mfilename('fullpath')), '..');
     data_dir = fullfile(root_dir, 'data');
@@ -16,8 +16,12 @@ function test_Analyse_basic()
     cd(subject_dir);
     Analyse();
 
-    expected = load(fullfile(subject_dir, 'Behavioral', 'expected_results.mat'));
-    results = load(fullfile(subject_dir, 'Behavioral', 'Results_PIEMSI_1.mat'));
+    expected = load(fullfile(subject_dir, ...
+                             'Behavioral', ...
+                             'expected_results.mat'));
+    results = load(fullfile(subject_dir, ...
+                            'Behavioral', ...
+                            'Results_PIEMSI_1.mat'));
 
     assertEqual(results, expected);
 

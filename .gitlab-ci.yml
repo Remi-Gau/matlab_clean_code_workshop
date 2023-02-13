@@ -12,34 +12,43 @@ stages:
 - test
 
 miss_hit:
-  image: python:latest
   stage: lint
+  # use a python docker image
+  image: python:latest
   script:
+  # install miss_hit
   - pip install miss_hit
+  # run miss_hit
   - mh_lint
   - mh_style
   - mh_metric --ci
 
 set-up:
   stage: build
+
+  # FIXME
+  #
   # cache:
   #   key: $CI_COMMIT_REF_SLUG
   #   paths:
   #   - MOxUnit
   #   - MOcov
+
   script:
+  # install git and get MOcov and MOxUnit
   - apk update && apk add git
-  - echo "Installing MOcov and MOxUnit."
   - git clone https://github.com/MOxUnit/MOxUnit.git --depth 1
   - git clone https://github.com/MOcov/MOcov.git --depth 1
 
-test:
-  stage: test
-  # cache:
-  #   key: $CI_COMMIT_REF_SLUG
-  #   paths:
-  #   - MOxUnit
-  #   - MOcov
-  extends: .matlab_defaults
-  script:
-  - matlab -batch mycommand
+# TODO
+#
+# test:
+#   stage: test
+#   cache:
+#     key: $CI_COMMIT_REF_SLUG
+#     paths:
+#     - MOxUnit
+#     - MOcov
+#   extends: .matlab_defaults
+#   script:
+#   - matlab -batch mycommand

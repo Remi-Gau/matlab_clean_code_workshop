@@ -15,7 +15,9 @@ function test_group_level_basic()
     subjects = dir(fullfile(data_dir, 'sub-*'));
 
     for i = 1:numel(subjects)
-        copyfile(fullfile(data_dir, subjects(i).name, 'Behavioral', 'Results*.mat'), ...
+        copyfile(fullfile(data_dir, subjects(i).name, ...
+                          'Behavioral', ...
+                          'Results*.mat'), ...
                  data_dir);
     end
 
@@ -34,7 +36,8 @@ function test_group_level_basic()
     for i = 1:numel(expected_fields)
         assert(isfield(results, expected_fields{i}), ...
                sprintf('missing %s', expected_fields{i}));
-        assertEqual(results.(expected_fields{i}), expected.(expected_fields{i}));
+        assertEqual(results.(expected_fields{i}), ...
+                    expected.(expected_fields{i}));
     end
 
     close all;
