@@ -177,4 +177,4 @@ Test should be:
 
 ## References
 
-See the [references](../references.md#testing-and-refactoring) page for more information.
+See the [references](references.md#testing-and-refactoring) page for more information.

@@ -17,6 +17,10 @@ pip install pre-commit
 - [x] run on all files
 - [x] commit
 
+```yaml
+{% include "../.pre-commit-config.yaml" %}
+```
+
 ## CI/CD in github
 
 - [x] create a github repository
@@ -26,13 +30,17 @@ pip install pre-commit
     - [x] install miss_hit
     - [x] run miss_hit on your code
 
+```yaml
+{% include "../.github/workflows/style.yml" %}
+```
+
 ## Pre-commit-CI
 
 !!! warning
 
     Only works on github repositories.
 
-## running tests in github
+## Running tests in github
 
 - [x] create a workflow to
     - [x] checkout your repository
@@ -40,13 +48,24 @@ pip install pre-commit
     - [x] install Matlab
     - [x] run your tests
 
-<!--
+This workflow is in `.github/workflows/tests.yml`.
+
+```yaml
+{% include "../.github/workflows/tests.yml" %}
+```
+
+It calls the MATLAB script `.github/workflows/Tests_Matlab.m`.
+
+```matlab
+{% include "../.github/workflows/Tests_Matlab.m" %}
+```
+
 ## CI/CD in gitlab
 
 ### Setting up a CI/CD pipeline
 
+<!--
 !!! tip
 
     Create scripts that you can run locally and in CI.
-
 -->

@@ -39,7 +39,7 @@
 
 - [x] Extract function, test and commit.
 
-### Excessive nesting
+### Excessive nesting & magic numbers
 
 - [x] Remove the try-catch in `Analyse.m`, test, commit.
 
@@ -47,9 +47,36 @@
       by continuing the loop if short reaction time,
       test, commit.
 
-### Magic numbers
-
 - [x] Create a constant, test and commit.
+
+```matlab
+for i=1:NbTrials
+
+	% Skips trials where answer came with impossible reaction time
+	% (negative or before the beginning of the movie)
+	if TotalTrials{1,1}(i,6)>0.5
+
+		% rest of the code
+
+	end
+
+end
+```
+
+```matlab
+REACTION_TIME_THRESHOLD_SEC = 0.5;
+
+for i=1:NbTrials
+
+	reaction_time_sec = TotalTrials{1,1}(i,6);
+	if reaction_time_sec <= REACTION_TIME_THRESHOLD_SEC
+		continue
+	end
+
+	% rest of the code
+
+end
+```
 
 ### Long functions
 

@@ -1,0 +1,48 @@
+---
+name: style
+
+# Controls when the action will run.
+# Triggers the workflow on push or pull request
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Cancel previous runs that are not completed yet
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    # Defines operating system to run on
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE,
+    # so your job can access it
+    - name: Clone repo
+      # documentation: https://github.com/actions/checkout
+      uses: actions/checkout@v3
+
+    # We install the dependecies
+    # python via a github action
+    # miss_hit with pip
+    - name: install python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: install miss hit
+      run: pip install miss_hit#
+
+    # run miss_hit
+    - name: lint
+      run: mh_lint .
+    - name: style
+      run: mh_style .
+    - name: metric
+      run: mh_metric --ci .
