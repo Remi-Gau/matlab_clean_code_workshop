@@ -40,10 +40,10 @@ See the [references](references.md#templates) page for more information.
 
 - Use a systematic filename pattern
 
-For example the Brain imaging data structure (BIDS) filename patterns: 
+For example the Brain imaging data structure (BIDS) filename patterns:
 
 ```text
 key1-value_key2-value_suffix.extension
 ```
 
-- bids-matlab can help you create those filenames
+- [bids-matlab](https://github.com/bids-standard/bids-matlab) can help you create those filenames

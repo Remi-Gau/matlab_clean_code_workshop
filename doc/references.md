@@ -6,22 +6,24 @@
 <a href="https://martinfowler.com/books/refactoring.html"><img src="https://martinfowler.com/books/refact2.jpg" width="200"></a>
 [![](https://learning.oreilly.com/library/cover/9780136083238/200w/)](https://www.oreilly.com/library/view/clean-code-a/9780136083238/)
 
-## Generic 
+## Generic
 
 - [The Good Research Code Handbook](https://goodresearch.dev/)
 - [OHBM Brainhack 2020 talk: #Matlab / #Octave : divide and conquer m-scripts](https://www.youtube.com/watch?v=AWfrlKTLkqw&list=PLVso6Qs8PLCiMMBXewYQjsAQLVtzAdJJX&index=4)
+- [Code aesthetic](https://www.youtube.com/@CodeAesthetic): youtube channel with short videos on  good coding
 
 
 ## Structuring your project
 
-Seven quick tips for analysis scripts in neuroimaging
-
-    - [article](https://users.aalto.fi/~vanvlm1/papers/van_vliet_2020b.pdf)
-    - [twitter thread](https://twitter.com/wmvanvliet/status/1240907591791886337)
-
 - [Structuring your data](https://psychoinformatics-de.github.io/rdm-course/02-structuring-data/index.html)
 - [naming things](http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf)
 - [Project structure](https://djnavarro.net/slides-project-structure/#1)
+
+### Seven quick tips for analysis scripts in neuroimaging
+
+- [article](https://users.aalto.fi/~vanvlm1/papers/van_vliet_2020b.pdf)
+- [twitter thread](https://twitter.com/wmvanvliet/status/1240907591791886337)
+
 
 ## Testing and refactoring
 
@@ -47,6 +49,7 @@ Seven quick tips for analysis scripts in neuroimaging
 ## Linter and formatter
 
 - [Turing way: code quality](https://the-turing-way.netlify.app/reproducible-research/code-quality.html)
+
 - [miss_hit](https://misshit.org/)
 
 
@@ -57,13 +60,13 @@ Seven quick tips for analysis scripts in neuroimaging
 - MATLAB in CI
     - [general documentation](https://github.com/mathworks)
 
-- MATLAB in gitlab CI 
+- MATLAB in gitlab CI
     - [documentation](https://github.com/mathworks/matlab-gitlab-ci-template)
     - [template pipeline](https://gitlab.com/gitlab-org/gitlab-foss/-/blob/master/lib/gitlab/ci/templates/MATLAB.gitlab-ci.yml)
 
 ## Templates
 
-- [template repo for matlab project](https://github.com/Remi-Gau/template_matlab_analysis) 
+- [template repo for matlab project](https://github.com/Remi-Gau/template_matlab_analysis)
     - [install with cookiecutter](https://github.com/Remi-Gau/template_matlab_analysis#install-with-cookiecutter)
 
 ### Blog posts
@@ -73,7 +76,7 @@ Seven quick tips for analysis scripts in neuroimaging
 - [What I learned from porting a MatLab toolbox](https://www.adina-wagner.com/posts/portcode/_portmatlab/)
 - [Continuous Integration and Delivery with MATLAB](https://qmrlab.org/2020/06/16/matlab-ci.html)
 
-<!-- 
-- [I Hate Matlab: How an IDE, a Language, and a Mentality Harm](https://neuroplausible.com/matlab) 
+<!--
+- [I Hate Matlab: How an IDE, a Language, and a Mentality Harm](https://neuroplausible.com/matlab)
 - [Matlab is a terrible programming language](https://www.rath.org/matlab-is-a-terrible-programming-language.html)
 -->

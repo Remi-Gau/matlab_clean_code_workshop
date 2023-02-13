@@ -4,16 +4,16 @@ This workshop aims to show some good coding practices to use with MATLAB.
 
 Even though the examples rely on MATLAB code,
 this contains a lot of very generic rules that are language independent
-and that that will work equally well, 
+and that that will work equally well,
 whether you are coding in MATLAB, Octave, Python...
 
-!!! info "Next workshop"
+<!-- !!! info "Next workshop"
 
-    The next workshop will be: 
+    The next workshop will be:
 
     - on the **9th and 10th of February 2021**
-  
-    - at the **University of Marburg (DSA Sprachatlas, Pilgrimstein, Marburg)**
+
+    - at the **University of Marburg (DSA Sprachatlas, Pilgrimstein, Marburg)** -->
 
 !!! note
 
@@ -24,15 +24,15 @@ whether you are coding in MATLAB, Octave, Python...
 Please make sure you have the following installed on your computer before the
 workshop.
 
-!!! info "Open office"
+<!-- !!! info "Open office"
 
-    If you have issues opening some of the required tools, 
+    If you have issues opening some of the required tools,
     there will be some "open office hours":
 
     - Tuesday, February 7th, 3:30pm-5pm, on zoom,
     - on both workshop days:
         - during the hour before the start of the workshop (9am-10am)
-        - during lunch time 
+        - during lunch time  -->
 
 ### MATLAB
 
@@ -101,9 +101,9 @@ pip install pre-commit
 
 If you do not come to the workshop with your own code, you can use the sample
 code and data provided in this repository - see the folders
-`code` 
-(on [gitlab](https://gitlab.com/Remi-Gau/matlab_clean_code_workshop/-/tree/main/code) 
-or [github](https://github.com/Remi-Gau/matlab_clean_code_workshop/tree/main/code)) 
-and `data` 
-(on [gitlab](https://gitlab.com/Remi-Gau/matlab_clean_code_workshop/-/tree/main/data) 
+`code`
+(on [gitlab](https://gitlab.com/Remi-Gau/matlab_clean_code_workshop/-/tree/main/code)
+or [github](https://github.com/Remi-Gau/matlab_clean_code_workshop/tree/main/code))
+and `data`
+(on [gitlab](https://gitlab.com/Remi-Gau/matlab_clean_code_workshop/-/tree/main/data)
 or [github](https://github.com/Remi-Gau/matlab_clean_code_workshop/tree/main/data)) .
