@@ -5,8 +5,6 @@
 % This script can be run locally or on github CI.
 %
 
-current_directory = pwd;
-
 root_dir = getenv('GITHUB_WORKSPACE');
 % set up for testing in github CI
 if ~isempty(root_dir)

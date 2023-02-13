@@ -1,4 +1,4 @@
-function AnalyseDataNew
+function GroupLevel
 
 %
 
@@ -33,7 +33,7 @@ close all
 n=1;
 
 
-	
+
 MatFilesList = dir ('Results*.mat');
 
 SizeMatFilesList = size(MatFilesList,1);
@@ -71,68 +71,68 @@ figure(n)
 n=n+1;
 
 for Subject=1:SizeMatFilesList
-	
+
 	load(MatFilesList(Subject).name);
-	
+
 	Subject_Lists{Subject} = SubjID;
     GroupStimByStimAllResults{end+1,1} = SubjID;
-	
+
 	GroupNbValidTrials = [GroupNbValidTrials ; NbValidTrials];
-    
+
     GroupNbMcGURKinCON = [GroupNbMcGURKinCON ; NbMcGURKinCON];
-    
+
     GroupNbMcGURKinINC = [GroupNbMcGURKinINC ; NbMcGURKinINC];
-	
+
 	subplot(1,SizeMatFilesList,Subject)
 	hold on
 	bar([1], [ McGURKinCON_Correct ], 'g' )
 	bar([2], [ McGURKinINC_Correct ], 'r' )
 	errorbar([1], McGURKinCON_Correct, [nanstd(ResponsesCell{3,1}(1,3:end)./sum(ResponsesCell{3,1}(1:2,3:end)))], 'k')
 	errorbar([2], McGURKinINC_Correct, [nanstd(ResponsesCell{3,2}(1,3:end)./sum(ResponsesCell{3,2}(1:2,3:end)))], 'k')
-	
-	
+
+
 	set(gca,'tickdir', 'out', 'xtick', 1:2 , 'xticklabel', [' ';' '], 'ticklength', [0.005 0], 'fontsize', 13);
-	
+
 	axis([0.5 2.5 0 1])
-	
+
 	if Subject==1
 		ylabel 'Ratio of McGurk answers';
 	end
-	
+
 	if Subject==SizeMatFilesList
 		legend(['In a CON Block';'In a INC Block'], 'Location', 'NorthEast')
 	end
-	
+
 	GroupResponses(Subject,:) = [McGURKinCON_Correct McGURKinINC_Correct McGURKinCON_Correct-McGURKinINC_Correct CONinCON_Correct INCinINC_Correct ];
-	
+
 	GroupRT(Subject,:) = [RT_CON_OK RT_INC_OK RT_McGURK_OK_inCON_TOTAL RT_McGURK_OK_inINC_TOTAL RT_McGURK_NO_inCON_TOTAL RT_McGURK_NO_inINC_TOTAL];
 
     GroupMissed = [GroupMissed ; Missed];
-    
+
     for i=1:NbMcMovies
-        
+
         A = (McGurkStimByStimRespRecap{i,2}(:,1)./sum(McGurkStimByStimRespRecap{i,2},2))';
-        
+
         switch McGurkStimByStimRespRecap{i,1}
             case 'V_Ge_A_Be'
                 WichStim=1;
             case 'V_Gi_A_Bi'
                 WichStim=2;
             case 'V_Ka_A_Pa'
-                WichStim=3;                
+                WichStim=3;
             case 'V_Ke_A_Pe'
                 WichStim=4;
             case 'V_Ki_A_Pi'
                 WichStim=5;
         end
-        
+
         GroupStimByStim(WichStim).results{1,1}{end+1,1} = SubjID;
         GroupStimByStim(WichStim).results{1,2}(end+1,:) = A;
-        
+
         GroupStimByStimAllResults{end,WichStim+1} = A;
     end
-        
-        
+
+
 end
 
 [a,b] = size(GroupStimByStimAllResults)
@@ -153,10 +153,10 @@ n=n+1;
 for i=1:5
 
 	subplot(1,5,i)
-    
+
     t = title(GroupStimByStim(i).name);
     set(t,'fontsize',15);
-    
+
 	hold on
 	bar([1], [ nanmean(GroupStimByStim(i).results{1,2}(:,1)) ], 'g' )
 	bar([2], [ nanmean(GroupStimByStim(i).results{1,2}(:,2)) ], 'r' )
@@ -164,8 +164,8 @@ for i=1:5
 	errorbar([2], nanmean(GroupStimByStim(i).results{1,2}(:,2)), nanstd(GroupStimByStim(i).results{1,2}(:,2)), 'k')
 
 	set(gca,'tickdir', 'out', 'xtick', 1:2 , 'xticklabel', ['CON';'INC'], 'ticklength', [0.005 0], 'fontsize', 15);
-	
-	axis([0.5 2.5 0 1]) 
+
+	axis([0.5 2.5 0 1])
 
 end
 
@@ -179,22 +179,22 @@ n=n+1;
 for i=1:5
 
 	subplot(1,5,i)
-    
+
     t = title(GroupStimByStim(i).name);
     set(t,'fontsize',15);
-    
+
 	hold on
     for j=1:length(GroupStimByStim(i).results{1,2})
         plot([1 2], [ GroupStimByStim(i).results{1,2}(j,1) GroupStimByStim(i).results{1,2}(j,2)], 'k' )
     end
-    
+
     label = strcat('n = ', num2str(length(GroupStimByStim(i).results{1,2})))
-    
+
     xlabel (label)
-		
+
 	set(gca,'tickdir', 'out', 'xtick', 1:2 , 'xticklabel', ['CON';'INC'], 'ticklength', [0.005 0], 'fontsize', 15);
-	
-	axis([0.5 2.5 0 1]) 
+
+	axis([0.5 2.5 0 1])
 
 end
 
@@ -215,11 +215,11 @@ fprintf('\n\n\n')
 disp('RESPONSES')
 fprintf('\n')
 disp('McGurk answers in CON blocks')
-fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,1)), nanstd(GroupResponses(:,1)) ) 
+fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,1)), nanstd(GroupResponses(:,1)) )
 disp('McGurk answers in INC blocks')
-fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,2)), nanstd(GroupResponses(:,2)) ) 
+fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,2)), nanstd(GroupResponses(:,2)) )
 disp('Differences in McGurk answers in between CON and INC blocks')
-fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,3)), nanstd(GroupResponses(:,3)) ) 
+fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,3)), nanstd(GroupResponses(:,3)) )
 [h,p] = ttest(GroupResponses(:,1),GroupResponses(:,2),0.05,'right');
 if h==1
     fprintf('Different from 0 with p = %6.6f \n\n', p)
@@ -243,9 +243,9 @@ end
 fprintf('\n')
 
 disp('Correct answers on CON trial in CON blocks')
-fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,4)), nanstd(GroupResponses(:,4)) ) 
+fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,4)), nanstd(GroupResponses(:,4)) )
 disp('Correct answers on INC trial in INC blocks')
-fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,5)), nanstd(GroupResponses(:,5)) ) 
+fprintf('%6.3f +/- %6.3f \n', nanmean(GroupResponses(:,5)), nanstd(GroupResponses(:,5)) )
 
 fprintf('\n\n\n')
 
@@ -286,11 +286,11 @@ GroupStimByStimAllResults
 
 
 
-figure(1) 
+figure(1)
 print(gcf, 'Figures.ps', '-dpsc2'); % Print figures in ps format
 for i=2:(n-1)
 	figure(i)
-	print(gcf, 'Figures.ps', '-dpsc2', '-append'); 
+	print(gcf, 'Figures.ps', '-dpsc2', '-append');
 end
 
 for i=1:(n-1)
@@ -319,7 +319,7 @@ for i=1:6
 end
 fprintf (fid, '\n');
 for i=1:SizeMatFilesList
-    fprintf (fid, '%s,', GroupStimByStimAllResults{i+1,1}); 
+    fprintf (fid, '%s,', GroupStimByStimAllResults{i+1,1});
     for j=2:6
         fprintf (fid, '%6.3f,', GroupStimByStimAllResults{i+1,j});
     end

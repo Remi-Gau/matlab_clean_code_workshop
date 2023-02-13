@@ -23,10 +23,7 @@ function test_group_level_basic()
 
     cd(data_dir);
 
-    cfg.verbose = true;
-    cfg.position = [50 50 2000 1000];
-
-    group_level(cfg);
+    GroupLevel();
 
     expected = load(fullfile(data_dir, 'expected_results.mat'));
     results = load(fullfile(data_dir, 'Group_Results.mat'));

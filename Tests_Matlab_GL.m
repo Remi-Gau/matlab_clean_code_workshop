@@ -7,13 +7,11 @@
 
 current_directory = pwd;
 
-disp(curent_directory);
+disp(current_directory);
 
 root_dir = getenv('CI_PROJECT_DIR');
 
 disp(root_dir);
-
-disp(ls);
 
 % set up for testing in gitlab CI
 if ~isempty(root_dir)
@@ -28,7 +26,7 @@ else
 
 end
 
-cd(fullfile(root_dir, 'doc', 'part_1'));
+cd(fullfile(root_dir, 'doc', 'testing'));
 run Run_Tests;
 
 % run tests on the legacy code
