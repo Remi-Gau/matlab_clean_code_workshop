@@ -6,33 +6,28 @@ function GroupLevel
 
 % {1,1} contains the trial number and the type of stimuli presented on this trial
 % Trials(i,1:5) = [i p Choice n m RT Resp RespCat];
-% i		 is the trial number
-% p		 is the trial number in the current block
-% Choice	 contains the type of stimuli presented on this trial : 0--> Congruent, 1--> Incongruent, 2--> Counterphase.
-% n 		 is the variable that says what kind of block came before the present one. Equals to 666 if there was no previous block. : 0--> Congruent, 1--> Incongruent, 2--> Counterphase.
-% m 		 is the variable that says the length of the block that came before the present one. Equals to 666 if there was no previous block.
+% i      is the trial number
+% p      is the trial number in the current block
+% Choice     contains the type of stimuli presented on this trial : 0--> Congruent, 1--> Incongruent, 2--> Counterphase.
+% n          is the variable that says what kind of block came before the present one. Equals to 666 if there was no previous block. : 0--> Congruent, 1--> Incongruent, 2--> Counterphase.
+% m          is the variable that says the length of the block that came before the present one. Equals to 666 if there was no previous block.
 % RT
 % Resp
-% RespCat	 For Congruent trials : 1 --> Hit; 0 --> Miss // For Incongruent trials : 1 --> Hit; 0 --> Miss // For McGurk trials : 0 --> McGurk effect worked; 0 --> Miss
-
+% RespCat    For Congruent trials : 1 --> Hit; 0 --> Miss // For Incongruent trials : 1 --> Hit; 0 --> Miss // For McGurk trials : 0 --> McGurk effect worked; 0 --> Miss
 
 % {2,1} contains the name of the stim used
 % {3,1} contains the level of noise used for this stimuli
 % {4,1} contains the absolute path of the corresponding movie to be played
 % {5,1} contains the absolute path of the corresponding sound to be played
 
-
 % TO DO :
-%	- add a way to analyze just one trial
+%   - add a way to analyze just one trial
 
 clc
 clear all
 close all
 
-
 n=1;
-
-
 
 MatFilesList = dir ('Results*.mat');
 
@@ -65,47 +60,44 @@ for i=1:5
     GroupStimByStim(i).results = cell(1,2);
 end
 
-
-
 figure(n)
 n=n+1;
 
 for Subject=1:SizeMatFilesList
 
-	load(MatFilesList(Subject).name);
+    load(MatFilesList(Subject).name);
 
-	Subject_Lists{Subject} = SubjID;
+    Subject_Lists{Subject} = SubjID;
     GroupStimByStimAllResults{end+1,1} = SubjID;
 
-	GroupNbValidTrials = [GroupNbValidTrials ; NbValidTrials];
+    GroupNbValidTrials = [GroupNbValidTrials ; NbValidTrials];
 
     GroupNbMcGURKinCON = [GroupNbMcGURKinCON ; NbMcGURKinCON];
 
     GroupNbMcGURKinINC = [GroupNbMcGURKinINC ; NbMcGURKinINC];
 
-	subplot(1,SizeMatFilesList,Subject)
-	hold on
-	bar([1], [ McGURKinCON_Correct ], 'g' )
-	bar([2], [ McGURKinINC_Correct ], 'r' )
-	errorbar([1], McGURKinCON_Correct, [nanstd(ResponsesCell{3,1}(1,3:end)./sum(ResponsesCell{3,1}(1:2,3:end)))], 'k')
-	errorbar([2], McGURKinINC_Correct, [nanstd(ResponsesCell{3,2}(1,3:end)./sum(ResponsesCell{3,2}(1:2,3:end)))], 'k')
+    subplot(1,SizeMatFilesList,Subject)
+    hold on
+    bar([1], [ McGURKinCON_Correct ], 'g' )
+    bar([2], [ McGURKinINC_Correct ], 'r' )
+    errorbar([1], McGURKinCON_Correct, [nanstd(ResponsesCell{3,1}(1,3:end)./sum(ResponsesCell{3,1}(1:2,3:end)))], 'k')
+    errorbar([2], McGURKinINC_Correct, [nanstd(ResponsesCell{3,2}(1,3:end)./sum(ResponsesCell{3,2}(1:2,3:end)))], 'k')
 
+    set(gca,'tickdir', 'out', 'xtick', 1:2 , 'xticklabel', [' ';' '], 'ticklength', [0.005 0], 'fontsize', 13);
 
-	set(gca,'tickdir', 'out', 'xtick', 1:2 , 'xticklabel', [' ';' '], 'ticklength', [0.005 0], 'fontsize', 13);
+    axis([0.5 2.5 0 1])
 
-	axis([0.5 2.5 0 1])
+    if Subject==1
+        ylabel 'Ratio of McGurk answers';
+    end
 
-	if Subject==1
-		ylabel 'Ratio of McGurk answers';
-	end
+    if Subject==SizeMatFilesList
+        legend(['In a CON Block';'In a INC Block'], 'Location', 'NorthEast')
+    end
 
-	if Subject==SizeMatFilesList
-		legend(['In a CON Block';'In a INC Block'], 'Location', 'NorthEast')
-	end
+    GroupResponses(Subject,:) = [McGURKinCON_Correct McGURKinINC_Correct McGURKinCON_Correct-McGURKinINC_Correct CONinCON_Correct INCinINC_Correct ];
 
-	GroupResponses(Subject,:) = [McGURKinCON_Correct McGURKinINC_Correct McGURKinCON_Correct-McGURKinINC_Correct CONinCON_Correct INCinINC_Correct ];
-
-	GroupRT(Subject,:) = [RT_CON_OK RT_INC_OK RT_McGURK_OK_inCON_TOTAL RT_McGURK_OK_inINC_TOTAL RT_McGURK_NO_inCON_TOTAL RT_McGURK_NO_inINC_TOTAL];
+    GroupRT(Subject,:) = [RT_CON_OK RT_INC_OK RT_McGURK_OK_inCON_TOTAL RT_McGURK_OK_inINC_TOTAL RT_McGURK_NO_inCON_TOTAL RT_McGURK_NO_inINC_TOTAL];
 
     GroupMissed = [GroupMissed ; Missed];
 
@@ -132,7 +124,6 @@ for Subject=1:SizeMatFilesList
         GroupStimByStimAllResults{end,WichStim+1} = A;
     end
 
-
 end
 
 [a,b] = size(GroupStimByStimAllResults)
@@ -145,45 +136,42 @@ for i=2:a
     end
 end
 
-
-
 figure(n)
 n=n+1;
 
 for i=1:5
 
-	subplot(1,5,i)
+    subplot(1,5,i)
 
     t = title(GroupStimByStim(i).name);
     set(t,'fontsize',15);
 
-	hold on
-	bar([1], [ nanmean(GroupStimByStim(i).results{1,2}(:,1)) ], 'g' )
-	bar([2], [ nanmean(GroupStimByStim(i).results{1,2}(:,2)) ], 'r' )
-	errorbar([1], nanmean(GroupStimByStim(i).results{1,2}(:,1)), nanstd(GroupStimByStim(i).results{1,2}(:,1)), 'k')
-	errorbar([2], nanmean(GroupStimByStim(i).results{1,2}(:,2)), nanstd(GroupStimByStim(i).results{1,2}(:,2)), 'k')
+    hold on
+    bar([1], [ nanmean(GroupStimByStim(i).results{1,2}(:,1)) ], 'g' )
+    bar([2], [ nanmean(GroupStimByStim(i).results{1,2}(:,2)) ], 'r' )
+    errorbar([1], nanmean(GroupStimByStim(i).results{1,2}(:,1)), nanstd(GroupStimByStim(i).results{1,2}(:,1)), 'k')
+    errorbar([2], nanmean(GroupStimByStim(i).results{1,2}(:,2)), nanstd(GroupStimByStim(i).results{1,2}(:,2)), 'k')
 
-	set(gca,'tickdir', 'out', 'xtick', 1:2 , 'xticklabel', ['CON';'INC'], 'ticklength', [0.005 0], 'fontsize', 15);
+    set(gca,'tickdir', 'out', 'xtick', 1:2 , 'xticklabel', ['CON';'INC'], 'ticklength', [0.005 0], 'fontsize', 15);
 
-	axis([0.5 2.5 0 1])
+    axis([0.5 2.5 0 1])
 
 end
 
 subplot(1,5,1)
 ylabel 'Proportion of McGurk answers';
 
-
 figure(n)
 n=n+1;
 
 for i=1:5
 
-	subplot(1,5,i)
+    subplot(1,5,i)
 
     t = title(GroupStimByStim(i).name);
     set(t,'fontsize',15);
 
-	hold on
+    hold on
     for j=1:length(GroupStimByStim(i).results{1,2})
         plot([1 2], [ GroupStimByStim(i).results{1,2}(j,1) GroupStimByStim(i).results{1,2}(j,2)], 'k' )
     end
@@ -192,18 +180,14 @@ for i=1:5
 
     xlabel (label)
 
-	set(gca,'tickdir', 'out', 'xtick', 1:2 , 'xticklabel', ['CON';'INC'], 'ticklength', [0.005 0], 'fontsize', 15);
+    set(gca,'tickdir', 'out', 'xtick', 1:2 , 'xticklabel', ['CON';'INC'], 'ticklength', [0.005 0], 'fontsize', 15);
 
-	axis([0.5 2.5 0 1])
+    axis([0.5 2.5 0 1])
 
 end
 
 subplot(1,5,1)
 ylabel 'Proportion of McGurk answers';
-
-
-
-
 
 fprintf('\n')
 
@@ -272,8 +256,6 @@ fprintf('%6.3f +/- %6.3f \n\n', nanmean(GroupRT(:,5)), nanstd(GroupRT(:,5)) )
 disp('Non McGurk answers in INC blocks')
 fprintf('%6.3f +/- %6.3f \n\n', nanmean(GroupRT(:,6)), nanstd(GroupRT(:,6)) )
 
-
-
 Subject_Lists=Subject_Lists'
 GroupNbValidTrials
 GroupNbMcGURKinCON
@@ -283,21 +265,17 @@ GroupResponses
 GroupRT
 GroupStimByStimAllResults
 
-
-
-
 figure(1)
 print(gcf, 'Figures.ps', '-dpsc2'); % Print figures in ps format
 for i=2:(n-1)
-	figure(i)
-	print(gcf, 'Figures.ps', '-dpsc2', '-append');
+    figure(i)
+    print(gcf, 'Figures.ps', '-dpsc2', '-append');
 end
 
 for i=1:(n-1)
-	figure(i)
-	print(gcf, strcat('Fig', num2str(i) ,'.eps'), '-depsc'); % Print figures in vector format
+    figure(i)
+    print(gcf, strcat('Fig', num2str(i) ,'.eps'), '-depsc'); % Print figures in vector format
 end
-
 
 SavedGroupTxt = strcat('Group_Results.csv');
 
@@ -307,7 +285,7 @@ fprintf (fid, 'Reaction times for the whole group \n');
 fprintf (fid, 'Subject, RT_CON, RT_INC, RT_McGURK_OK_inCON, RT_McGURK_OK_inINC, RT_McGURK_NO_inCON, RT_McGURK_NO_inINC \n\n');
 for Subject=1:SizeMatFilesList
     fprintf (fid, '%s,', Subject_Lists{Subject});
-	fprintf (fid, '%6.3f,', GroupRT(Subject,:));
+    fprintf (fid, '%6.3f,', GroupRT(Subject,:));
     fprintf (fid, '\n');
 end
 
@@ -327,7 +305,6 @@ for i=1:SizeMatFilesList
 end
 
 fclose (fid);
-
 
 clear A B C AVOffsetMat List MaxBlockLengthMAC MaxBlockLengthMAI Run SizeList Trials ans i j n t vblS Color fid
 clear MatFilesList ans
