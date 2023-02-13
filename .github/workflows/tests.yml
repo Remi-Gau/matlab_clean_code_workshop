@@ -49,7 +49,7 @@ jobs:
       uses: matlab-actions/run-command@v1.1.2
       with:
         command: |
-          cd(fullfile(getenv('GITHUB_WORKSPACE'), '.github', 'workflows')); run Tests_Matlab_GH;
+          cd(fullfile(getenv('GITHUB_WORKSPACE'), '.github', 'workflows')); run Tests_Matlab;
 
     # When the tests are run they generate a log file
     # Here we check the content to see if there were any errors
