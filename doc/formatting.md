@@ -3,7 +3,7 @@
 ## Style guide
 
  - indent your code
- - line length 
+ - line length
  - spacing between operators
  - add trailing semicolon
  - remove trailing whitespaces
@@ -29,8 +29,8 @@ mh_style
 mh_style --fix
 ```
 
-[ ] auto-fix all the style errors
-[ ] commit
+- [x] auto-fix all the style errors
+- [x] commit
 
 #### Linter `mh_lint`
 
@@ -38,14 +38,14 @@ mh_style --fix
 mh_lint
 ```
 
-[ ] fid all the linting errors
-[ ] commit
+- [x] fid all the linting errors
+- [x] commit
 
-#### Adapt miss_hit configuration 
+#### Adapt miss_hit configuration
 
-[ ] adapt configuration till you do not get any errors
+- [x] adapt configuration till you do not get any errors
     - adapt line length
     - adapt copyright
     - ...
-  
-[ ] commit
+
+- [x] commit

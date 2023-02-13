@@ -14,11 +14,11 @@
 
 ### Commented code, dead code
 
-- [ ] Remove and commit.
+- [x] Remove and commit.
 
 ### Useless comments
 
-- [ ] Remove and commit.
+- [x] Remove and commit.
 
 ### Express yourself in code rather than comments
 
@@ -37,25 +37,25 @@
 
 ### Duplication
 
-- [ ] Extract function, test and commit.
+- [x] Extract function, test and commit.
 
 ### Excessive nesting
 
-- [ ] Remove the try-catch in `Analyse.m`, test, commit.
+- [x] Remove the try-catch in `Analyse.m`, test, commit.
 
-- [ ] Remove one level of nesting in the main loop of `Analyse.m`,
+- [x] Remove one level of nesting in the main loop of `Analyse.m`,
       by continuing the loop if short reaction time,
       test, commit.
 
 ### Magic numbers
 
-- [ ] Create a constant, test and commit.
+- [x] Create a constant, test and commit.
 
 ### Long functions
 
 Split into smaller functions, test and commit.
 
-- [ ] create at least one function to simply plot a figure
+- [x] create at least one function to simply plot a figure
 
 ## Code Metrics `mh_metric`
 

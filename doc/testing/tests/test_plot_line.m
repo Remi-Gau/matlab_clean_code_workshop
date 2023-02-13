@@ -2,6 +2,7 @@ function test_plot_line()
     % (C) Copyright 2023 Remi Gau
 
     % set up
+    % make sure we start from a "clean slate"
     if exist('my_figure.png', 'file')
         delete('my_figure.png');
     end
@@ -16,6 +17,7 @@ function test_plot_line()
     assert(exist('my_figure.png', 'file') == 2);
 
     % teardown
+    % remove an file created during the test
     delete('my_figure.png');
     close all;
 

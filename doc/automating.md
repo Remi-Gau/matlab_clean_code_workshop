@@ -11,20 +11,20 @@
 pip install pre-commit
 ```
 
-- [ ] add `.pre-commit-config.yaml` to your repository
-- [ ] add basic "hooks"
-- [ ] add hooks for miss_hit
-- [ ] run on all files
-- [ ] commit
+- [x] add `.pre-commit-config.yaml` to your repository
+- [x] add basic "hooks"
+- [x] add hooks for miss_hit
+- [x] run on all files
+- [x] commit
 
 ## CI/CD in github
 
-- [ ] create a github repository
-- [ ] push your code to github
-- [ ] create a workflow to
-    - [ ] checkout your repository
-    - [ ] install miss_hit
-    - [ ] run miss_hit on your code
+- [x] create a github repository
+- [x] push your code to github
+- [x] create a workflow to
+    - [x] checkout your repository
+    - [x] install miss_hit
+    - [x] run miss_hit on your code
 
 ## Pre-commit-CI
 
@@ -34,19 +34,19 @@ pip install pre-commit
 
 ## running tests in github
 
-- [ ] create a workflow to
-    - [ ] checkout your repository
-    - [ ] install MoxUnit and MoCov
-    - [ ] install Matlab
-    - [ ] run your tests
+- [x] create a workflow to
+    - [x] checkout your repository
+    - [x] install MoxUnit and MoCov
+    - [x] install Matlab
+    - [x] run your tests
 
-<!-- 
+<!--
 ## CI/CD in gitlab
 
 ### Setting up a CI/CD pipeline
 
-!!! tip 
+!!! tip
 
-    Create scripts that you can run locally and in CI. 
-    
+    Create scripts that you can run locally and in CI.
+
 -->
