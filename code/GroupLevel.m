@@ -330,3 +330,6 @@ fclose (fid);
 
 
 clear A B C AVOffsetMat List MaxBlockLengthMAC MaxBlockLengthMAI Run SizeList Trials ans i j n t vblS Color fid
+clear MatFilesList ans
+
+save(SavedGroupMat)
