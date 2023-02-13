@@ -64,6 +64,10 @@ It calls the MATLAB script `.github/workflows/Tests_Matlab.m`.
 
 ### Setting up a CI/CD pipeline
 
+```yaml
+{% include "../.gitlab-ci.yml" %}
+```
+
 <!--
 !!! tip
 

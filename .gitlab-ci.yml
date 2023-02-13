@@ -1,10 +1,14 @@
 ---
 .matlab_defaults:
   image:
-    name: mathworks/matlab:latest # Replace the value with the name of the MATLAB container image you want to use
+    # Replace the value with the name
+    # of the MATLAB container image you want to use
+    name: mathworks/matlab:latest
     entrypoint: ['']
   variables:
-    MLM_LICENSE_FILE: 27000@licmatlab.hrz.uni-marburg.de # Replace the value with the port number and DNS address for your network license manager
+    # Replace the value with the port number
+    # and DNS address for your network license manager
+    MLM_LICENSE_FILE: 27000@licmatlab.hrz.uni-marburg.de
 
 stages:
 - lint
