@@ -46,7 +46,7 @@ jobs:
     #  .github/workflows/Tests_Matlab.m
     - name: Run unit tests MATLAB
       # documentation: https://github.com/matlab-actions/run-command
-      uses: matlab-actions/run-command@v1.1.3
+      uses: matlab-actions/run-command@v1.2.0
       with:
         command: |
           cd(fullfile(getenv('GITHUB_WORKSPACE'), '.github', 'workflows')); run Tests_Matlab;
