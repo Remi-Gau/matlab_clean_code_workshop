@@ -20,5 +20,3 @@ This behavioral data comes from:
 > participants’ percept: fused McGurk percept vs. segregated auditory percept
 > (Figure 1C). Furthermore, we identified ‘bottom-up incongruency’ by comparing
 > audiovisually incongruent and congruent trials.
-
-![](data/Figure_1.png)
