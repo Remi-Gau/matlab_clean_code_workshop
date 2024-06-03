@@ -40,7 +40,7 @@ jobs:
       # documentation: https://github.com/matlab-actions/setup-matlab
       uses: matlab-actions/setup-matlab@v2.2.0
       with:
-        release: R2020a
+        release: R2023b
 
     # Actually run the tests by running the script:
     #  .github/workflows/Tests_Matlab.m
