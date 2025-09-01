@@ -27,7 +27,7 @@ jobs:
     # so your job can access it
     - name: Clone repo
       # documentation: https://github.com/actions/checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     # We install the dependecies
     # python via a github action
