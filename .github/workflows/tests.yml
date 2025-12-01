@@ -27,7 +27,7 @@ jobs:
     # so your job can access it
     - name: Clone repo
       # documentation: https://github.com/actions/checkout
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
 
     # We install the dependecies
     # MoxUnit and MOcov for testing and coverage
