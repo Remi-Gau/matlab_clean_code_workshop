@@ -1,0 +1,1152 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../formatting/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>1 - Testing - Clean code workshop: MATLAB</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#testing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Clean code workshop: MATLAB" class="md-header__button md-logo" aria-label="Clean code workshop: MATLAB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Clean code workshop: MATLAB
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1 - Testing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Remi-Gau/matlab_clean_code_workshop" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Remi-Gau/matlab_clean_code_workshop
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Clean code workshop: MATLAB" class="md-nav__button md-logo" aria-label="Clean code workshop: MATLAB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Clean code workshop: MATLAB
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Remi-Gau/matlab_clean_code_workshop" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Remi-Gau/matlab_clean_code_workshop
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1 - Testing
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1 - Testing
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-assert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using assert
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smoke-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Smoke test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unit-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit test
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unit test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#other-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plot_line" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_line
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-testing-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using a testing framework
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using a testing framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-moxunit" class="md-nav__link">
+    <span class="md-ellipsis">
+      With MoxUnit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create_participant_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_participant_file
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-matlab" class="md-nav__link">
+    <span class="md-ellipsis">
+      With MATLAB
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code coverage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-legacy-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing "legacy" code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../formatting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - Formatting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../refactoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - Refactoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../automating/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - Automating
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structuring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - Structuring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References and resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-assert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using assert
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smoke-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Smoke test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unit-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit test
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unit test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#other-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plot_line" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_line
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-testing-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using a testing framework
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using a testing framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-moxunit" class="md-nav__link">
+    <span class="md-ellipsis">
+      With MoxUnit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create_participant_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_participant_file
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-matlab" class="md-nav__link">
+    <span class="md-ellipsis">
+      With MATLAB
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code coverage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-legacy-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing "legacy" code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="testing"><a class="toclink" href="#testing">Testing</a><a class="headerlink" href="#testing" title="Permanent link">#</a></h1>
+<!--
+!!! quote ""
+
+    Untested code is broken code.
+-->
+
+<pre class="mermaid"><code>graph LR
+    A[input] --&gt; B(function)
+    B --&gt; C[output]</code></pre>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> create a function</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span>c<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">add_numbers</span><span class="p">(</span>a, b<span class="p">)</span>
+<span class="w">    </span><span class="c">% Add 2 numbers.</span>
+
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">~</span><span class="nb">isnumeric</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="w">        </span><span class="n">err</span><span class="p">.</span><span class="n">message</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;a must a scalar value.&#39;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">err</span><span class="p">.</span><span class="n">identifier</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;add_numbers:ScalarExpected&#39;</span><span class="p">;</span>
+<span class="w">        </span><span class="nb">error</span><span class="p">(</span><span class="n">err</span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span>
+
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="k">end</span>
+</code></pre></div>
+<!--
+Code without tests is code that you are afraid to change.
+
+Code without tests is code with undefined behavior.
+-->
+
+<h2 id="using-assert"><a class="toclink" href="#using-assert">Using <code>assert</code></a><a class="headerlink" href="#using-assert" title="Permanent link">#</a></h2>
+<!--
+!!! quote ""
+
+    Some testing is better then no testing
+-->
+
+<pre class="mermaid"><code>graph LR
+    A[input] --&gt; B(function)
+    B --&gt; C[output]
+    C --&gt; D(assert)</code></pre>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> use <code>assert</code> inside the function to check some aspect
+      of the behavior of the function</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span>c<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">add_numbers_with_assert</span><span class="p">(</span>a, b<span class="p">)</span>
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">numel</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;b must be a scalar&#39;</span><span class="p">);</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2 id="smoke-test"><a class="toclink" href="#smoke-test">Smoke test</a><a class="headerlink" href="#smoke-test" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>flowchart LR
+    subgraph test
+        direction LR
+        A[some_input] --&gt; B(function)
+        B --&gt; C[some_output]
+    end</code></pre>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> create a "smoke" test by writing a function that:<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> calls the function with some input</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">test_add_numbers_smoke</span><span class="p">()</span>
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">add_numbers</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<h2 id="unit-test"><a class="toclink" href="#unit-test">Unit test</a><a class="headerlink" href="#unit-test" title="Permanent link">#</a></h2>
+<pre class="mermaid"><code>flowchart LR
+    subgraph test
+        direction LR
+        A[known_input] --&gt; B(function)
+        B --&gt; C[output]
+        C --&gt; E(assertEqual)
+        D[expected_output] --&gt; E
+    end</code></pre>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> create a unit test by writing a function that:<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> calls the function with a specific input</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> asserts that that the output is as expected</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">test_add_numbers_unit</span><span class="p">()</span>
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">add_numbers</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> test the function with a variety of inputs</li>
+</ul>
+<h3 id="other-example"><a class="toclink" href="#other-example">Other example</a><a class="headerlink" href="#other-example" title="Permanent link">#</a></h3>
+<h4 id="plot_line"><a class="toclink" href="#plot_line"><code>plot_line</code></a><a class="headerlink" href="#plot_line" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span>handle<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">plot_line</span><span class="p">(</span>x, y<span class="p">)</span>
+<span class="w">    </span><span class="c">% Create a PNG file for the line for values x and y.</span>
+<span class="w">    </span><span class="c">%</span>
+
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+
+<span class="w">    </span><span class="nb">handle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">figure</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;line&#39;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+
+<span class="w">    </span><span class="nb">xlabel</span><span class="p">(</span><span class="s">&#39;x values&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">ylabel</span><span class="p">(</span><span class="s">&#39;y values&#39;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nb">gcf</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;my_figure.png&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;-dpng&#39;</span><span class="p">);</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">test_plot_line</span><span class="p">()</span>
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+
+<span class="w">    </span><span class="c">% set up</span>
+<span class="w">    </span><span class="c">% make sure we start from a &quot;clean slate&quot;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">exist</span><span class="p">(</span><span class="s">&#39;my_figure.png&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;file&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="s">&#39;my_figure.png&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="nb">close</span><span class="w"> </span><span class="nb">all</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">;</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nb">handle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">plot_line</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">strcmp</span><span class="p">(</span><span class="nb">handle</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;line&#39;</span><span class="p">));</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">exist</span><span class="p">(</span><span class="s">&#39;my_figure.png&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;file&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c">% teardown</span>
+<span class="w">    </span><span class="c">% remove an file created during the test</span>
+<span class="w">    </span><span class="nb">delete</span><span class="p">(</span><span class="s">&#39;my_figure.png&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">close</span><span class="w"> </span><span class="s">all</span><span class="p">;</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<h2 id="using-a-testing-framework"><a class="toclink" href="#using-a-testing-framework">Using a testing framework</a><a class="headerlink" href="#using-a-testing-framework" title="Permanent link">#</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> rewrite the unit test so that it can be run
+      with MOxUnit or MATLAB testing framework</li>
+</ul>
+<h3 id="with-moxunit"><a class="toclink" href="#with-moxunit">With MoxUnit</a><a class="headerlink" href="#with-moxunit" title="Permanent link">#</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">test_suite</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">test_add_numbers_moxunit</span><span class="w"> </span><span class="c">%#ok&lt;STOUT&gt;</span>
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="c">% assignment of &#39;localfunctions&#39; is necessary in Matlab &gt;= 2016</span>
+<span class="w">        </span><span class="n">test_functions</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">localfunctions</span><span class="p">();</span><span class="w"> </span><span class="c">%#ok&lt;NASGU&gt;</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="c">% no problem; early Matlab versions can use initTestSuite fine</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="n">initTestSuite</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="nf">test_add_numbers_basic</span><span class="p">()</span>
+
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">add_numbers</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">assertEqual</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">success</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">moxunit_runtests</span><span class="p">(</span><span class="n">test_folder</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-verbose&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-recursive&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-cover&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">source_cover</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="other-example_1"><a class="toclink" href="#other-example_1">Other example</a><a class="headerlink" href="#other-example_1" title="Permanent link">#</a></h3>
+<h4 id="create_participant_file"><a class="toclink" href="#create_participant_file"><code>create_participant_file</code></a><a class="headerlink" href="#create_participant_file" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span>filename<span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nf">create_participant_file</span><span class="p">(</span>subject_nb, task_name, run_nb<span class="p">)</span>
+<span class="w">    </span><span class="c">% Create a partcipant CSV filename for a subject, task, run</span>
+<span class="w">    </span><span class="c">%</span>
+
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+
+<span class="w">    </span><span class="c">% use assert for input parameter validation</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">isnumeric</span><span class="p">(</span><span class="n">run_nb</span><span class="p">),</span><span class="w"> </span><span class="s">&#39;run number should be a number&#39;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c">% convert any eventual numeric value into a char</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">isnumeric</span><span class="p">(</span><span class="n">subject_nb</span><span class="p">)</span>
+<span class="w">        </span><span class="n">subject_nb</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">num2str</span><span class="p">(</span><span class="n">subject_nb</span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span>
+
+<span class="w">    </span><span class="n">filename</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s">&#39;sub-&#39;</span><span class="w"> </span><span class="n">subject_nb</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                </span><span class="s">&#39;_task-&#39;</span><span class="w"> </span><span class="n">task_name</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                </span><span class="s">&#39;_run-&#39;</span><span class="w"> </span><span class="nb">num2str</span><span class="p">(</span><span class="n">run_nb</span><span class="p">)</span><span class="w"> </span><span class="s">&#39;.csv&#39;</span><span class="p">];</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">test_suite</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">test_create_participant_file</span><span class="w"> </span><span class="c">%#ok&lt;STOUT&gt;</span>
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="c">% assignment of &#39;localfunctions&#39; is necessary in Matlab &gt;= 2016</span>
+<span class="w">        </span><span class="n">test_functions</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">localfunctions</span><span class="p">();</span><span class="w"> </span><span class="c">%#ok&lt;NASGU&gt;</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="c">% no problem; early Matlab versions can use initTestSuite fine</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="n">initTestSuite</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="nf">test_smoke</span>
+<span class="w">    </span><span class="n">run_numbers</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">-</span><span class="mi">10</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">run_numbers</span><span class="p">)</span>
+<span class="w">        </span><span class="n">create_participant_file</span><span class="p">(</span><span class="s">&#39;01&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;rest&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">run_numbers</span><span class="p">(</span><span class="nb">i</span><span class="p">));</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="nf">test_unit_one</span>
+<span class="w">    </span><span class="n">filename</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">create_participant_file</span><span class="p">(</span><span class="s">&#39;01&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;rest&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">expected_output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;sub-01_task-rest_run-1.csv&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">ischar</span><span class="p">(</span><span class="n">filename</span><span class="p">));</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">strcmp</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">expected_output</span><span class="p">));</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="nf">test_unit_two</span>
+<span class="w">    </span><span class="n">filename</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">create_participant_file</span><span class="p">(</span><span class="s">&#39;02&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;rest&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">expected_output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;sub-02_task-rest_run-1.csv&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">ischar</span><span class="p">(</span><span class="n">filename</span><span class="p">));</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">strcmp</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">expected_output</span><span class="p">));</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="nf">test_unit_three</span>
+<span class="w">    </span><span class="n">filename</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">create_participant_file</span><span class="p">(</span><span class="s">&#39;02&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;rest&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">expected_output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;sub-02_task-rest_run-2.csv&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">ischar</span><span class="p">(</span><span class="n">filename</span><span class="p">));</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">strcmp</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">expected_output</span><span class="p">));</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="nf">test_unit_five</span>
+<span class="w">    </span><span class="n">filename</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">create_participant_file</span><span class="p">(</span><span class="s">&#39;02&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;rest&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">expected_output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;sub-02_task-rest_run-1.csv&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">ischar</span><span class="p">(</span><span class="n">filename</span><span class="p">));</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">strcmp</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">expected_output</span><span class="p">));</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="nf">test_unit_subject_number_as_number</span>
+<span class="w">    </span><span class="n">filename</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">create_participant_file</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;rest&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">expected_output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#39;sub-2_task-rest_run-2.csv&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">strcmp</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">expected_output</span><span class="p">));</span>
+<span class="k">end</span>
+</code></pre></div>
+<h3 id="with-matlab"><a class="toclink" href="#with-matlab">With MATLAB</a><a class="headerlink" href="#with-matlab" title="Permanent link">#</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">tests</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">test_add_numbers_matlab</span>
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau</span>
+<span class="w">    </span><span class="n">tests</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">functiontests</span><span class="p">(</span><span class="nb">localfunctions</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="nf">test_add_numbers_basic</span><span class="p">(</span>testCase<span class="p">)</span><span class="w">  </span><span class="c">%#ok&lt;*INUSD&gt;</span>
+
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">c</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">add_numbers</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<h2 id="code-coverage"><a class="toclink" href="#code-coverage">Code coverage</a><a class="headerlink" href="#code-coverage" title="Permanent link">#</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> write a script to use MoxUnit to run all the tests
+      and generate a code coverage report</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c">% (C) Copyright 2023 Remi Gau</span>
+<span class="c">%</span>
+<span class="c">% Script to:</span>
+<span class="c">% - run all the moxunit tests on the analysis code</span>
+<span class="c">% - generate an coverage HTM and XML report</span>
+<span class="c">% - create a log file to report if any test failed (used in CI)</span>
+
+<span class="n">folderToCover</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">pwd</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;src&#39;</span><span class="p">);</span>
+<span class="n">testFolder</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">pwd</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;tests&#39;</span><span class="p">);</span>
+
+<span class="n">success</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">moxunit_runtests</span><span class="p">(</span><span class="n">testFolder</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-verbose&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-recursive&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-with_coverage&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-cover&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">folderToCover</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-cover_xml_file&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;coverage.xml&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-cover_html_dir&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">pwd</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;coverage_html&#39;</span><span class="p">));</span>
+
+<span class="k">if</span><span class="w"> </span><span class="n">success</span>
+<span class="w">    </span><span class="nb">system</span><span class="p">(</span><span class="s">&#39;echo 0 &gt; test_report.log&#39;</span><span class="p">);</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">system</span><span class="p">(</span><span class="s">&#39;echo 1 &gt; test_report.log&#39;</span><span class="p">);</span>
+<span class="k">end</span>
+</code></pre></div>
+<h2 id="testing-legacy-code"><a class="toclink" href="#testing-legacy-code">Testing "legacy" code</a><a class="headerlink" href="#testing-legacy-code" title="Permanent link">#</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> create a new repository and add the <code>code</code> and <code>data</code> folder in it</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> add tests that should check that the functions in <code>code</code> :<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> create figures</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> save data that is "equivalent" to the one already present in the <code>data</code> folder,</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">test_suite</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">test_analyse</span><span class="w"> </span><span class="c">%#ok&lt;STOUT&gt;</span>
+<span class="w">    </span><span class="c">% (C) Copyright 2023 Remi Gau developers</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="c">% assignment of &#39;localfunctions&#39; is necessary in Matlab &gt;= 2016</span>
+<span class="w">        </span><span class="n">test_functions</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">localfunctions</span><span class="p">();</span><span class="w"> </span><span class="c">%#ok&lt;NASGU&gt;</span>
+<span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="c">% no problem; early Matlab versions can use initTestSuite fine</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="n">initTestSuite</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="k">function</span><span class="w"> </span><span class="nf">test_analyse_basic</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c">%% set up</span>
+<span class="w">    </span><span class="n">root_dir</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">fileparts</span><span class="p">(</span><span class="nb">mfilename</span><span class="p">(</span><span class="s">&#39;fullpath&#39;</span><span class="p">)),</span><span class="w"> </span><span class="s">&#39;..&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">data_dir</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="n">root_dir</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;data&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">subject_dir</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;sub-01&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">output_figure</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="n">subject_dir</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                             </span><span class="s">&#39;Behavioral&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span><span class="c">.</span>
+<span class="w">                             </span><span class="s">&#39;Figures.ps&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">output_mat_file</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="n">subject_dir</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                               </span><span class="s">&#39;Behavioral&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                               </span><span class="s">&#39;Results_PIEMSI_1.mat&#39;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">exist</span><span class="p">(</span><span class="n">output_mat_file</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;file&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="n">output_mat_file</span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">exist</span><span class="p">(</span><span class="n">output_figure</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;file&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="n">output_figure</span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="nb">close</span><span class="w"> </span><span class="nb">all</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c">%% test</span>
+<span class="w">    </span><span class="nb">cd</span><span class="p">(</span><span class="n">subject_dir</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Analyse</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c">% check created files</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">exist</span><span class="p">(</span><span class="n">output_figure</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;file&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">assert</span><span class="p">(</span><span class="nb">exist</span><span class="p">(</span><span class="n">output_mat_file</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;file&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c">% check all values are those exepected</span>
+<span class="w">    </span><span class="n">expected</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">load</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="n">subject_dir</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                             </span><span class="s">&#39;Behavioral&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                             </span><span class="s">&#39;expected_results.mat&#39;</span><span class="p">));</span>
+<span class="w">    </span><span class="n">results</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">load</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="n">subject_dir</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                            </span><span class="s">&#39;Behavioral&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                            </span><span class="s">&#39;Results_PIEMSI_1.mat&#39;</span><span class="p">));</span>
+<span class="w">    </span><span class="n">assertEqual</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="w"> </span><span class="n">expected</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c">%% tear down</span>
+<span class="w">    </span><span class="c">% remove any files created during the test</span>
+<span class="w">    </span><span class="nb">delete</span><span class="p">(</span><span class="n">output_figure</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">delete</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="n">subject_dir</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Behavioral&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Fig*.eps&#39;</span><span class="p">));</span>
+<span class="w">    </span><span class="n">close</span><span class="w"> </span><span class="s">all</span><span class="p">;</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> get a code coverage report for the tests</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c">% (C) Copyright 2023 Remi Gau</span>
+<span class="c">%</span>
+<span class="c">% Script to:</span>
+<span class="c">% - run all the mowunit tests</span>
+<span class="c">% - generate an coverage HTM and XML report</span>
+<span class="c">% - create a log file to report if any test failed (used in CI)</span>
+
+<span class="n">folderToCover</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">pwd</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;code&#39;</span><span class="p">);</span>
+<span class="n">testFolder</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">pwd</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;tests&#39;</span><span class="p">);</span>
+
+<span class="n">success</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">moxunit_runtests</span><span class="p">(</span><span class="n">testFolder</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-verbose&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;-recursive&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;-with_coverage&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-cover&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">folderToCover</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-cover_xml_file&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;coverage.xml&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">...</span>
+<span class="w">                           </span><span class="s">&#39;-cover_html_dir&#39;</span><span class="p">,</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="nb">pwd</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;coverage_html&#39;</span><span class="p">));</span>
+
+<span class="k">if</span><span class="w"> </span><span class="n">success</span>
+<span class="w">    </span><span class="nb">system</span><span class="p">(</span><span class="s">&#39;echo 0 &gt; test_report.log&#39;</span><span class="p">);</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">system</span><span class="p">(</span><span class="s">&#39;echo 1 &gt; test_report.log&#39;</span><span class="p">);</span>
+<span class="k">end</span>
+</code></pre></div>
+<!--
+## F.I.R.S.T.
+
+Test should be:
+
+- Fast
+- Independent
+- Repeatable
+- Self-validating
+- Timely
+-->
+
+<h2 id="references"><a class="toclink" href="#references">References</a><a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p>See the <a href="../references/#testing-and-refactoring">references</a> page for more information.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      CC-BY-4.0
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>
